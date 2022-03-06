@@ -12,7 +12,7 @@ import 'reflect-metadata';
 import { Intents } from 'discord.js';
 import { Client } from 'discordx';
 import { importx } from '@discordx/importer';
-import { BOT_TOKEN, DB_PASS, DB_URL, DB_USER, SYNC_DB, __dirname } from './env.js';
+import { BOT_TOKEN, DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER, SYNC_DB, __dirname } from './env.js';
 import { logger } from './services/log.service.js';
 import { createConnection } from 'typeorm';
 import { ReactMessage, ReactRole, Category, GuildConfig } from './database/entities/index.js';
@@ -35,7 +35,9 @@ async function run() {
 
   await createConnection({
     type: 'mysql',
-    url: DB_URL,
+    host: DB_HOST,
+    port: DB_PORT,
+    database: DB_NAME,
     synchronize: SYNC_DB,
     username: DB_USER,
     password: DB_PASS,
