@@ -20,11 +20,8 @@ export const CREATE_REACT_ROLE = async (
   emojiTag: string | undefined,
   guildId: string,
   type: EReactRoleType
-) => {
-  const reactRole = new ReactRole();
-  Object.assign(reactRole, { emojiId, emojiTag, roleId, guildId, name, type });
-  return await reactRole.save();
-};
+) =>
+  await ReactRole.create({ emojiId, emojiTag, roleId, guildId, name, type }).save();
 
 export const DELETE_REACT_ROLE_BY_ROLE_ID = async (roleId: string) =>
   await ReactRole.delete({ roleId });
@@ -112,16 +109,13 @@ export const GET_GUILD_CATEGORIES = async (guildId: string) =>
 export const GET_ROLES_BY_CATEGORY_ID = async (categoryId: number) =>
   await ReactRole.find({ where: { category: { id: categoryId } } });
 
-export const CREATE_GUILD_CATEGORY = async (guildId: string, name: string, description?: string, mutuallyExclusive?: boolean) => {
-  const category = new Category();
-  Object.assign(category, {
+export const CREATE_GUILD_CATEGORY = async (guildId: string, name: string, description?: string, mutuallyExclusive?: boolean) =>
+  await Category.create({
     guildId,
     name,
     description: description ?? '',
     mutuallyExclusive: mutuallyExclusive ?? false
-  });
-  return await category.save();
-};
+  }).save();
 
 export const EDIT_CATEGORY_BY_ID = (id: number, category: Partial<ICategory>) =>
   Category.update({ id }, category);
