@@ -9,6 +9,7 @@
     "moduleResolution": "Node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
     "skipLibCheck": false,
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": true
