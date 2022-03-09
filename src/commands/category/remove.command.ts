@@ -11,8 +11,9 @@
 import { CommandInteraction } from 'discord.js';
 import { Discord, Slash, SlashOption } from 'discordx';
 import { GET_CATEGORY_BY_NAME, DELETE_CATEGORY_BY_ID, GET_REACT_ROLES_BY_CATEGORY_ID } from '../../database/database.js';
-import { logger } from '../../services/log.service.js';
+import { InteractionFailedHandlerGenerator, logger } from '../../services/log.service.js';
 const log = logger(import.meta);
+const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class CategoryRemoveCommand {
@@ -28,10 +29,7 @@ export abstract class CategoryRemoveCommand {
       log.debug(`Required option was empty for categoryName[${categoryName}] on guild[${interaction.guildId}]`);
       return await interaction
         .reply(`Hey! I don't think you passed in a name. Could you please try again?`)
-        .catch(e => {
-          log.error(`Interaction failed.`);
-          log.error(`${e}`);
-        });
+        .catch(InteractionFailedHandler);
     }
 
     const category = await GET_CATEGORY_BY_NAME(interaction.guildId, categoryName);
@@ -39,14 +37,11 @@ export abstract class CategoryRemoveCommand {
       log.debug(`Category[${categoryName}] does not exist on guild[${interaction.guildId}]. Most likely name typo.`);
       return await interaction
         .reply(`Hey! I could **not** find a category by the name of \`${categoryName}\`. This command is case sensitive to ensure you delete exactly what you want. Check the name and try again.`)
-        .catch((e) => {
-          log.error(`Interaction failed.`);
-          log.error(`${e}`);
-        });
+        .catch(InteractionFailedHandler);
     }
 
     const roles = await GET_REACT_ROLES_BY_CATEGORY_ID(category.id);
-    await Promise.all(roles.map(role => { role.categoryId = undefined; return role.save(); }));
+    await Promise.all(roles.map(role => { role.categoryId = null as any; role.save(); }));
 
     DELETE_CATEGORY_BY_ID(category.id)
       .then(async () => {
@@ -54,21 +49,14 @@ export abstract class CategoryRemoveCommand {
 
         await interaction
           .reply(`Hey! I successfully deleted the category \`${categoryName}\` for you and freed all the roles on it.`)
-          .catch((e) => {
-            log.error(`Interaction failed.`);
-            log.error(`${e}`);
-          });
+          .catch(InteractionFailedHandler);
       })
       .catch(async e => {
-        log.error(`Issues deleting category[${categoryName}] for guild[${interaction.guildId}]`);
-        log.error(e);
+        log.error(`Issues deleting category[${categoryName}] for guild[${interaction.guildId}]`, e);
 
         await interaction
           .reply(`Hey! I had an issue deleting the category. Please wait a second and try again.`)
-          .catch(e => {
-            log.error(`Interaction failed.`);
-            log.error(`${e}`);
-          });
+          .catch(InteractionFailedHandler);
       });
   };
 }

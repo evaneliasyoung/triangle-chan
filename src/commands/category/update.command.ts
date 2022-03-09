@@ -14,8 +14,9 @@ import { GET_REACT_MESSAGE_BY_MESSAGE_ID, GET_CATEGORY_BY_ID, GET_REACT_ROLES_BY
 import { EmbedService } from '../../services/embed.service.js';
 import { isTextChannel } from '../../utils/type-assertion.js';
 import { reactToMessage } from '../../utils/reactions.js';
-import { logger } from '../../services/log.service.js';
+import { InteractionFailedHandlerGenerator, logger } from '../../services/log.service.js';
 const log = logger(import.meta);
+const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class CategoryUpdateCommand {
@@ -35,10 +36,7 @@ export abstract class CategoryUpdateCommand {
           ephemeral: true,
           content: `Hey! Something happened and I can't see the passed in emssage link. Could you try again?`,
         })
-        .catch((e) => {
-          log.error(`Interaction failed.`);
-          log.error(`${e}`);
-        });
+        .catch(InteractionFailedHandler);
     }
 
     const [_, channelId, messageId] = messageLink.match(/\d+/g) ?? [];
@@ -47,10 +45,7 @@ export abstract class CategoryUpdateCommand {
     if (!channel || !isTextChannel(channel)) {
       return await interaction
         .reply(`Hey! I couldn't find that channel, make sure you're copying the message link right.`)
-        .catch((e) => {
-          log.error(`Interaction failed.`);
-          log.error(`${e}`);
-        });
+        .catch(InteractionFailedHandler);
     }
 
     const message = await channel.messages.fetch(messageId);
@@ -58,10 +53,7 @@ export abstract class CategoryUpdateCommand {
     if (!message) {
       return await interaction
         .reply(`Hey! I couldn't find that message, make sure you're copying the message link right.`)
-        .catch((e) => {
-          log.error(`Interaction failed.`);
-          log.error(`${e}`);
-        });
+        .catch(InteractionFailedHandler);
     }
 
     const reactMessage = await GET_REACT_MESSAGE_BY_MESSAGE_ID(messageId);
@@ -69,10 +61,11 @@ export abstract class CategoryUpdateCommand {
     if (!reactMessage) {
       log.debug(`No react messages exist with messageId[${messageId}] in guild[${interaction.guildId}]`);
 
-      return interaction.reply({
-        ephemeral: true,
-        content: `Hey! I looked and didn't see any react roles saved that are associated with that message.`,
-      });
+      return await interaction
+        .reply({
+          ephemeral: true,
+          content: `Hey! I looked and didn't see any react roles saved that are associated with that message.`,
+        });
     }
 
     if (!reactMessage.categoryId) return log.error(`ReactMessage has no category somehow`);
@@ -81,12 +74,9 @@ export abstract class CategoryUpdateCommand {
     if (!category) {
       log.debug(`Category not found with categoryId[${reactMessage.categoryId}]] in guild[${interaction.guildId}]`);
 
-      return interaction
+      return await interaction
         .reply(`Hey! I couldn't find a category with that name. The name is _case sensitive_ so make sure it's typed correctly.`)
-        .catch((e) => {
-          log.error(`Interaction failed.`);
-          log.error(`${e}`);
-        });
+        .catch(InteractionFailedHandler);
     }
 
     const categoryRoles = await GET_REACT_ROLES_BY_CATEGORY_ID(category.id);
@@ -94,10 +84,11 @@ export abstract class CategoryUpdateCommand {
     if (!categoryRoles || !categoryRoles.length) {
       log.debug(`Category[${category.id}] in guild[${category.guildId}] has no react roles associated with it.`);
 
-      return interaction.reply({
-        ephemeral: true,
-        content: `Hey! I see that message uses category \`${category.name}\` but it has no react roles in it.`,
-      });
+      return await interaction
+        .reply({
+          ephemeral: true,
+          content: `Hey! I see that message uses category \`${category.name}\` but it has no react roles in it.`,
+        });
     }
 
     try {
@@ -107,19 +98,19 @@ export abstract class CategoryUpdateCommand {
       await message.reactions.removeAll();
       await message
         .edit({ embeds: [embed] })
-        .then(() => {
+        .then(async () => {
           log.debug(`Updated category[${category.id}] embed.`);
 
-          interaction.reply({
+          await interaction.reply({
             ephemeral: true,
             content: `Hey! I updated the react role embed message related to this category.`,
           });
         })
-        .catch((e) => {
+        .catch(async e => {
           log.error(`Failed to update message for category[${category.id}]`);
           log.error(`${e}`);
 
-          interaction.reply({
+          await interaction.reply({
             ephemeral: true,
             content: `Hey! I wasn't able to update the message for some reason. Most likely a message history / manage permission issue.`,
           });

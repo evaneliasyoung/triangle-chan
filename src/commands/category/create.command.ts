@@ -11,8 +11,9 @@
 import { CommandInteraction } from 'discord.js';
 import { Discord, Slash, SlashOption } from 'discordx';
 import { GET_CATEGORY_BY_NAME, CREATE_GUILD_CATEGORY } from '../../database/database.js';
-import { logger } from '../../services/log.service.js';
+import { InteractionFailedHandlerGenerator, logger } from '../../services/log.service.js';
 const log = logger(import.meta);
+const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class CategoryCreateCommand {
@@ -34,50 +35,34 @@ export abstract class CategoryCreateCommand {
           ephemeral: true,
           content: `Hey! It says you submitted no category name! You need to submit that. Please try again.`,
         })
-        .catch((e) => {
-          log.error(`Interaction failed.`);
-          log.error(`${e}`);
-        });
+        .catch(InteractionFailedHandler);
+
     else if (categoryName.length > 90)
       return await interaction
         .reply({
           ephemeral: true,
           content: `Hey! Discord only allows 100 characters max for their embed titles. Try making the category name simple and make the rest the category description!`,
         })
-        .catch((e) => {
-          log.error(`Interaction failed.`);
-          log.error(`${e}`);
-        });
+        .catch(InteractionFailedHandler);
 
     if (await GET_CATEGORY_BY_NAME(interaction.guildId, categoryName))
       return await interaction
         .reply(`Hey! It turns out you already have a category with that name made. Try checking it out.`)
-        .catch((e) => {
-          log.error(`Interaction failed.`);
-          log.error(`${e}`);
-        });
-
+        .catch(InteractionFailedHandler);
 
     CREATE_GUILD_CATEGORY(interaction.guildId, categoryName, categoryDesc, mutuallyExclusive)
       .then(async () => {
         log.debug(`Successfully created category[${categoryName}] for guild[${interaction.guildId}]`);
         await interaction
           .reply(`Hey! I successfully created the category \`${categoryName}\` for you!`)
-          .catch((e) => {
-            log.error(`Interaction failed.`);
-            log.error(`${e}`);
-          });
+          .catch(InteractionFailedHandler);
       })
       .catch(async e => {
-        log.error(`Issue creating category[${categoryName}] for guild[${interaction.guildId}]`);
-        log.error(e);
+        log.error(`Issue creating category[${categoryName}] for guild[${interaction.guildId}]`, e);
 
         await interaction
           .reply(`Hey! I had some trouble creating that category for you. Please wait a minute and try again.`)
-          .catch(e => {
-            log.error(`Interaction failed.`);
-            log.error(`${e}`);
-          });
+          .catch(InteractionFailedHandler);
       });
   };
 }

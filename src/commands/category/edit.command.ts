@@ -12,9 +12,9 @@ import { CommandInteraction } from 'discord.js';
 import { Discord, Slash, SlashOption } from 'discordx';
 import { GET_CATEGORY_BY_NAME, EDIT_CATEGORY_BY_ID } from '../../database/database.js';
 import { ICategory } from '../../database/entities/category.entity.js';
-
-import { logger } from '../../services/log.service.js';
+import { InteractionFailedHandlerGenerator, logger } from '../../services/log.service.js';
 const log = logger(import.meta);
+const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class CategoryEditCommand {
@@ -39,10 +39,7 @@ export abstract class CategoryEditCommand {
           ephemeral: true,
           content: `Hey! You need to pass at _least_ one updated field about the category.`,
         })
-        .catch((e) => {
-          log.error(`Interaction failed.`);
-          log.error(`${e}`);
-        });
+        .catch(InteractionFailedHandler);
     }
 
     if (!name) {
@@ -52,10 +49,7 @@ export abstract class CategoryEditCommand {
           ephemeral: true,
           content: `Hey! I had an issue finding the category. Please wait a second and try again.`,
         })
-        .catch((e) => {
-          log.error(`Interaction failed.`);
-          log.error(`${e}`);
-        });
+        .catch(InteractionFailedHandler);
     }
 
     const category = await GET_CATEGORY_BY_NAME(interaction.guildId, name);
@@ -64,10 +58,7 @@ export abstract class CategoryEditCommand {
 
       return await interaction
         .reply(`Hey! I couldn't find a category with that name. The name is _case sensitive_ so make sure it's typed correctly.`)
-        .catch((e) => {
-          log.error(`Interaction failed.`);
-          log.error(`${e}`);
-        });
+        .catch(InteractionFailedHandler);
     }
 
     const updatedCategory: Partial<ICategory> = {
@@ -85,14 +76,8 @@ export abstract class CategoryEditCommand {
             ephemeral: true,
             content: `Hey! I successfully updated the category \`${category.name}\` for you.`,
           })
-          .catch(e => {
-            log.error(`Interaction failed.`);
-            log.error(`${e}`);
-          });
+          .catch(InteractionFailedHandler);
       })
-      .catch(e => {
-        log.error(`Failed to edit category[${category.id}] for guild[${interaction.guildId}]`);
-        log.error(`${e}`);
-      });
+      .catch(InteractionFailedHandler);
   };
 }

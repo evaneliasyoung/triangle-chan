@@ -13,10 +13,11 @@ import { Intents } from 'discord.js';
 import { Client } from 'discordx';
 import { importx } from '@discordx/importer';
 import { BOT_TOKEN, DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER, SYNC_DB, __dirname } from './env.js';
-import { logger } from './services/log.service.js';
+import { logger, MessageWithErrorHandlerGenerator } from './services/log.service.js';
 import { createConnection } from 'typeorm';
 import { ReactMessage, ReactRole, Category, GuildConfig } from './database/entities/index.js';
 const log = logger(import.meta);
+const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
 
 const client = new Client({
   intents: [
@@ -43,8 +44,8 @@ async function run() {
     password: DB_PASS,
     entities: [ReactMessage, ReactRole, Category, GuildConfig],
   })
-    .then(() => { log.debug(`connected to database`); })
-    .catch(e => { log.error(`failed to connect to database`, e); });
+    .then(() => { log.debug('connected to database'); })
+    .catch(MessageWithErrorHandler('failed to connect to database'));
 
   await importx(path);
   log.info('imported commands', { path });

@@ -30,3 +30,9 @@ export const logger = ({ url }: ImportMeta) => createLogger({
   exitOnError: true,
   silent: false
 });
+
+export const MessageWithErrorHandlerGenerator = (logger: winston.Logger) =>
+  (message: string) => (e: any) => { logger.error(message, e); };
+
+export const InteractionFailedHandlerGenerator = (logger: winston.Logger) =>
+  MessageWithErrorHandlerGenerator(logger)('Interaction failed.');

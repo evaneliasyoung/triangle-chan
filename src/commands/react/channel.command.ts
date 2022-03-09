@@ -8,22 +8,24 @@
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-import { AnyChannel, CommandInteraction, Guild, GuildBasedChannel, Permissions } from 'discord.js';
+import { AnyChannel, CommandInteraction, Guild, Permissions } from 'discord.js';
 import { Discord, Slash, SlashOption } from 'discordx';
 import { GET_GUILD_CATEGORIES, GET_REACT_ROLES_BY_CATEGORY_ID } from '../../database/database.js';
 import { EmbedService } from '../../services/embed.service.js';
 import { reactToMessage } from '../../utils/reactions.js';
 import { isTextChannel } from '../../utils/type-assertion.js';
 import { PermissionMappings } from '../permissions.js';
-import { logger } from '../../services/log.service.js';
+import { InteractionFailedHandlerGenerator, logger, MessageWithErrorHandlerGenerator } from '../../services/log.service.js';
 const log = logger(import.meta);
+const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
+const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class ReactChannelCommand {
   @Slash('react-channel', { description: 'Send all categories with react roles to the selected channel.' })
   async execute(
     @SlashOption('channel', { description: 'The channel what will receive reaction roles.', type: 'CHANNEL' })
-    channel: Extract<AnyChannel, { guild: Guild }>,
+    channel: Extract<AnyChannel, { guild: Guild; }>,
     interaction: CommandInteraction
   ) {
     if (!interaction.guildId) return log.error(`GuildID did not exist on interaction.`);
@@ -31,30 +33,22 @@ export abstract class ReactChannelCommand {
     try {
       await interaction
         .deferReply({ ephemeral: true })
-        .catch((e) => {
-          log.error(`Failed to defer interaction and the try/catch didn't catch it`);
-          log.error(`${e}`);
-        });
+        .catch(MessageWithErrorHandler(`Failed to defer interaction and the try/catch didn't catch it`));
     } catch (e) {
       log.error(`Failed to defer interaction`);
       log.error(`${e}`);
       return;
     }
 
-    const categories = await GET_GUILD_CATEGORIES(interaction.guildId).catch((e) => {
-      log.error(`Failed to get categories for guild[${interaction.guildId}]`);
-      log.error(e);
-    });
+    const categories = await GET_GUILD_CATEGORIES(interaction.guildId)
+      .catch(MessageWithErrorHandler(`Failed to get categories for guild[${interaction.guildId}]`));
 
     if (!categories) {
       log.debug(`Guild[${interaction.guildId}] has no categories.`);
 
-      return interaction
+      return await interaction
         .editReply(`Hey! You need to make some categories and fill them with react roles before running this command. Check out \`/category-add\`.`)
-        .catch((e) => {
-          log.error(`Interaction failed.`);
-          log.error(`${e}`);
-        });
+        .catch(InteractionFailedHandler);
     }
 
     const allCategoriesAreEmpty = `Hey! It appears all your categories are empty. I can't react to the message you want if you have at least one react role in at least one category. Check out \`/category-add\` to start adding roles to a category.`;
@@ -65,32 +59,23 @@ export abstract class ReactChannelCommand {
     if (!allEmptyCategories) {
       log.debug(`Guild[${interaction.guildId}] has categories but all of them are empty.`);
 
-      return interaction
+      return await interaction
         .editReply({ content: allCategoriesAreEmpty })
-        .catch((e) => {
-          log.error(`Interaction failed.`);
-          log.error(`${e}`);
-        });
+        .catch(InteractionFailedHandler);
     }
 
     if (!channel) {
       log.error(`Could not find channel on interaction for guild[${interaction.guildId}]`);
 
-      return interaction
+      return await interaction
         .editReply(`Hey! I failed to find the channel from the command. Please wait a second and try again.`)
-        .catch((e) => {
-          log.error(`Interaction failed.`);
-          log.error(`${e}`);
-        });
+        .catch(InteractionFailedHandler);
     } else if (!isTextChannel(channel)) {
       log.error(`Passed in channel[${channel.id}] was not a text channel for guild[${interaction.guildId}]`);
 
-      return interaction
+      return await interaction
         .editReply(`Hey! I only support sending embeds to text channels!`)
-        .catch((e) => {
-          log.error(`Interaction failed.`);
-          log.error(`${e}`);
-        });
+        .catch(InteractionFailedHandler);
     }
 
     const permissions = [
@@ -100,7 +85,7 @@ export abstract class ReactChannelCommand {
       Permissions.FLAGS.MANAGE_MESSAGES,
       Permissions.FLAGS.MANAGE_ROLES,
     ]
-      .map((p) => `\`${PermissionMappings.get(p)}\``)
+      .map(p => `\`${PermissionMappings.get(p)}\``)
       .join(' ');
 
     const permissionError =
@@ -115,7 +100,7 @@ Why do I need these permissions in this channel?
 - To update users roles.
 \`\`\``;
 
-    await new Promise((res) => {
+    await new Promise(res => {
       setTimeout(() => res(`I have to wait at least 3 seconds before Discord goes crazy.`), 3000);
     });
 
@@ -141,19 +126,16 @@ Why do I need these permissions in this channel?
         log.error(`Failed to send embeds`);
         log.error(`${e}`);
 
-        if (e?.httpStatus === 403) return interaction.editReply(permissionError);
+        if (e?.httpStatus === 403) return await interaction.editReply(permissionError);
 
-        return interaction.editReply(`Hey! I encounted an error. Report this to the support server. \`${e}\``);
+        return await interaction.editReply(`Hey! I encounted an error. Report this to the support server. \`${e}\``);
       }
 
-      await new Promise((res) => { setTimeout(() => res(`Send next category message.`), 1000); });
+      await new Promise(res => { setTimeout(() => res(`Send next category message.`), 1000); });
     }
 
     interaction
       .editReply({ content: 'Hey! I sent those embeds and am currently reacting to them.' })
-      .catch((e) => {
-        log.error(`Failed to edit interaction reply.`);
-        log.error(`${e}`);
-      });
+      .catch(MessageWithErrorHandler(`Failed to edit interaction reply.`));
   };
 }

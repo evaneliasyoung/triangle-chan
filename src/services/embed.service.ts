@@ -31,12 +31,12 @@ export class EmbedService {
     });
   };
 
-  static reactRolesFormattedString = (reactRoles: ReactRole[]) => reactRoles.map((r) =>
+  static reactRolesFormattedString = (reactRoles: ReactRole[]) => reactRoles.map(r =>
     `${r.emojiTag ?? r.emojiId} - <@&${r.roleId}>`).join('\n');
 
   static reactRoleListEmbed = (reactRoles: ReactRole[]) => {
-    const rolesNotInCategory = reactRoles.filter((r) => !r.categoryId);
-    const rolesInCategory = reactRoles.filter((r) => r.categoryId);
+    const rolesNotInCategory = reactRoles.filter(r => !r.categoryId);
+    const rolesInCategory = reactRoles.filter(r => r.categoryId);
     const inCategory = rolesInCategory.length ? `**In a category:**\n${this.reactRolesFormattedString(rolesInCategory)}\n` : '';
     const notInCategory = rolesNotInCategory.length ? `**Not in a category:**\n${this.reactRolesFormattedString(rolesNotInCategory)}` : '';
 

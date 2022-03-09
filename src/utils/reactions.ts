@@ -13,6 +13,9 @@ import { Logger } from 'winston';
 import { CREATE_REACT_MESSAGE, GET_REACT_MESSAGE_BY_CATEGORY_ID, GET_CATEGORY_BY_ID, DELETE_REACT_MESSAGES_BY_MESSAGE_ID, GET_REACT_ROLES_BY_CATEGORY_ID } from '../database/database.js';
 import { ReactRole } from '../database/entities/react-role.entity.js';
 import { EmbedService } from '../services/embed.service.js';
+import { logger, MessageWithErrorHandlerGenerator } from '../services/log.service.js';
+const log = logger(import.meta);
+const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
 
 export const reactToMessage = (
   message: Message,
@@ -34,10 +37,7 @@ export const reactToMessage = (
             messageId: message.id
           });
         })
-        .catch((e) => {
-          log.error(`Failed to react to message[${message.id}] with emoji[${r.emojiTag ?? r.emojiId}] in guild[${guildId}]`);
-          log.error(`${e}`);
-        });
+        .catch(MessageWithErrorHandler(`Failed to react to message[${message.id}] with emoji[${r.emojiTag ?? r.emojiId}] in guild[${guildId}]`));
     })
   );
 };
