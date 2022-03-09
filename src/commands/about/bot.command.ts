@@ -24,7 +24,7 @@ export abstract class AboutBotCommand {
         { name: 'Library', value: 'discord.ts / Node', inline: true },
         { name: 'Version', value: '0.1.0', inline: true },
       ],
-      color: COLOR.DEFAULT,
+      color: COLOR.BRLL,
       thumbnail: {
         url: interaction.client.user?.avatarURL()?.toString() ?? interaction.client.user?.defaultAvatarURL ?? undefined
       }

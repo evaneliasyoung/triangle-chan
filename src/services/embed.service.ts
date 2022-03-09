@@ -26,7 +26,7 @@ export default class EmbedService {
     return new MessageEmbed({
       title: category.name,
       description: `Mutually exclusive: **${category.mutuallyExclusive}**\n\nDesc: **${desc}**\n\n${reactRoles}`,
-      color: COLOR.DEFAULT
+      color: COLOR.BRLL
     });
   };
 
@@ -42,7 +42,7 @@ export default class EmbedService {
     return new MessageEmbed({
       title: 'All your reaction roles!',
       description: `This doesn't show what categories these roles are in.\nCheck out \`/category-list\` for more in-depth listing.\n\n${inCategory}${notInCategory}`,
-      color: COLOR.DEFAULT
+      color: COLOR.BRLL
     });
   };
 
@@ -50,7 +50,7 @@ export default class EmbedService {
     return new MessageEmbed({
       title: 'React roles not in a category',
       description: `These roles are up for grabs!\nCheck out \`/category-add\` if you want to add these to a category.\n\n${this.reactRolesFormattedString(reactRoles)}`,
-      color: COLOR.YELLOW
+      color: COLOR.HPSQ
     });
   };
 
@@ -59,7 +59,7 @@ export default class EmbedService {
     return new MessageEmbed({
       title: category.name,
       description: `${category.description}\n\n${reactRolesString}`,
-      color: COLOR.DEFAULT
+      color: COLOR.BRLL
     });
   };
 
@@ -90,7 +90,7 @@ export default class EmbedService {
         { name: 'Creation Time', value: dateToStringAndDuration(created), inline: false },
         { name: 'Emoji Count', value: emojiString, inline: false }
       ],
-      color: COLOR.DEFAULT
+      color: COLOR.BRLL
     });
   };
 }
