@@ -24,8 +24,19 @@ export enum EReactRoleType {
   removeOnly,
 }
 
+export interface IReactRole {
+  name: string;
+  roleId: string;
+  emojiId: string;
+  emojiTag?: string;
+  guildId: string;
+  type: EReactRoleType;
+  categoryId?: number;
+  category?: Category;
+}
+
 @Entity()
-export class ReactRole extends BaseEntity {
+export class ReactRole extends BaseEntity implements IReactRole {
   @PrimaryGeneratedColumn()
   id!: number;
 

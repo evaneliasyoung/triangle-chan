@@ -18,19 +18,19 @@ export interface ICategory {
 }
 
 @Entity()
-export class Category extends BaseEntity {
+export class Category extends BaseEntity implements ICategory {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column({ type: 'varchar', width: 256 })
   guildId!: string;
 
-  @Column()
+  @Column({ type: 'varchar', width: 90 })
   name!: string;
 
-  @Column()
-  description?: string;
+  @Column({ type: 'varchar', width: 4096 })
+  description!: string;
 
-  @Column()
-  mutuallyExclusive?: boolean;
+  @Column({ type: 'bool' })
+  mutuallyExclusive!: boolean;
 }

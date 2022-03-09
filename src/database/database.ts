@@ -4,13 +4,13 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-05
+ * @date      2022-03-08
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import { Category, ReactMessage, ReactRole } from './entities/index.js';
 import { ICategory } from './entities/category.entity.js';
-import { IReactMessage } from './entities/react-message.entity.js';
+import { IReactMessageOptions } from './entities/react-message.entity.js';
 import { EReactRoleType } from './entities/react-role.entity.js';
 
 export const CREATE_REACT_ROLE = async (
@@ -73,7 +73,7 @@ export const UPDATE_REACT_ROLE_CATEGORY = async (id: number, categoryId: number)
   return reactRole.save();
 };
 
-export const CREATE_REACT_MESSAGE = async (reactMessageOptions: IReactMessage) => {
+export const CREATE_REACT_MESSAGE = async (reactMessageOptions: IReactMessageOptions) => {
   const reactMessage = new ReactMessage();
   const { channelId, messageId, emojiId, guildId, roleId, isCustomMessage, categoryId } = reactMessageOptions;
   Object.assign(reactMessage, { channelId, messageId, emojiId, guildId, roleId, isCustomMessage });
@@ -86,7 +86,7 @@ export const CREATE_REACT_MESSAGE = async (reactMessageOptions: IReactMessage) =
 };
 
 export const GET_REACT_MESSAGE_BY_CATEGORY_ID = async (categoryId: number) =>
-  await ReactMessage.findOne({ where: { categoryId } });
+  await ReactMessage.find({ where: { category: { id: categoryId } } });
 
 export const GET_REACT_MESSAGE_BY_ROLE_ID = async (roleId: string) =>
   await ReactMessage.findOne({ where: { roleId } });
@@ -109,7 +109,7 @@ export const GET_GUILD_CATEGORIES = async (guildId: string) =>
 export const GET_ROLES_BY_CATEGORY_ID = async (categoryId: number) =>
   await ReactRole.find({ where: { category: { id: categoryId } } });
 
-export const CREATE_GUILD_CATEGORY = async (guildId: string, name: string, description?: string, mutuallyExclusive?: boolean) =>
+export const CREATE_GUILD_CATEGORY = async (guildId: string, name: string, description?: string | null, mutuallyExclusive?: boolean | null) =>
   await Category.create({
     guildId,
     name,

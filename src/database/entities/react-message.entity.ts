@@ -19,34 +19,41 @@ import {
 import { Category } from './category.entity.js';
 
 export interface IReactMessage {
-  guildId: string;
+  isCustomMessage: boolean;
   messageId: string;
   channelId: string;
-  roleId: string;
   emojiId: string;
+  category?: Category;
+  roleId: string;
+  guildId: string;
+}
+
+export interface IReactMessageOptions {
   isCustomMessage: boolean;
+  messageId: string;
+  channelId: string;
+  emojiId: string;
   categoryId: number;
+  roleId: string;
+  guildId: string;
 }
 
 @Entity()
-export class ReactMessage extends BaseEntity {
+export class ReactMessage extends BaseEntity implements IReactMessage {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column({type: 'bool'})
   isCustomMessage!: boolean;
 
-  @Column()
+  @Column({type: 'varchar', width: 256})
   messageId!: string;
 
-  @Column()
+  @Column({type: 'varchar', width: 256})
   channelId!: string;
 
-  @Column()
+  @Column({type: 'varchar', width: 256})
   emojiId!: string;
-
-  @Column()
-  categoryId!: number;
 
   @ManyToOne(() => Category, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'categoryId' })

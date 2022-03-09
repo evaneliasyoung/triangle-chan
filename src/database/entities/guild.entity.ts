@@ -8,10 +8,11 @@
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-import { BaseEntity, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
-export class GuildConfig extends BaseEntity {
+export interface IGuildConfig { }
+
+export class GuildConfig extends BaseEntity implements IGuildConfig {
   @PrimaryGeneratedColumn()
   id!: number;
 }

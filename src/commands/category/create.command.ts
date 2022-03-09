@@ -58,7 +58,7 @@ export abstract class CategoryCreateCommand {
         });
 
 
-    CREATE_GUILD_CATEGORY(interaction.guildId, categoryName, categoryDesc ?? undefined, !!mutuallyExclusive)
+    CREATE_GUILD_CATEGORY(interaction.guildId, categoryName, categoryDesc, mutuallyExclusive)
       .then(async () => {
         log.debug(`Successfully created category[${categoryName}] for guild[${interaction.guildId}]`);
         await interaction
