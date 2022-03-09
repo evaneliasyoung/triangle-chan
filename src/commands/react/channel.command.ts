@@ -16,6 +16,7 @@ import { reactToMessage } from '../../utils/reactions.js';
 import { isTextChannel } from '../../utils/type-assertion.js';
 import { PermissionMappings } from '../permissions.js';
 import { InteractionFailedHandlerGenerator, logger, MessageWithErrorHandlerGenerator } from '../../services/log.service.js';
+import { timeout } from '../../utils/timeout.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
@@ -100,9 +101,7 @@ Why do I need these permissions in this channel?
 - To update users roles.
 \`\`\``;
 
-    await new Promise(res => {
-      setTimeout(() => res(`I have to wait at least 3 seconds before Discord goes crazy.`), 3000);
-    });
+    await timeout(3000);
 
     for (const category of categories) {
       const categoryRoles = await GET_REACT_ROLES_BY_CATEGORY_ID(category.id);
@@ -131,7 +130,7 @@ Why do I need these permissions in this channel?
         return await interaction.editReply(`Hey! I encounted an error. Report this to the support server. \`${e}\``);
       }
 
-      await new Promise(res => { setTimeout(() => res(`Send next category message.`), 1000); });
+      await timeout(1000);
     }
 
     interaction
