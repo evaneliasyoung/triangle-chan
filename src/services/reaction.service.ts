@@ -40,15 +40,8 @@ export class ReactionHandler {
 
     if (category.mutuallyExclusive) return this.mutuallyExclusive(reactMessage, member, guild, type);
 
-    switch (type) {
-      case 'add':
-        member.roles.add(reactMessage.roleId)
-          .catch(MessageWithErrorHandler(`Cannot give role[${reactMessage.roleId}] to user[${member?.id}]`));
-        break;
-      case 'remove':
-        member.roles.remove(reactMessage.roleId)
-          .catch(MessageWithErrorHandler(`Cannot remove role[${reactMessage.roleId}] from user[${member?.id}]`));
-    }
+    member.roles[type](reactMessage.roleId)
+      .catch(MessageWithErrorHandler(`Cannot ${type} role[${reactMessage.roleId}] to user[${member?.id}]`));
   };
 
   mutuallyExclusive = async (
