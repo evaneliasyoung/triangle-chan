@@ -10,7 +10,7 @@
 
 import { Client, Message } from 'discord.js';
 import { Logger } from 'winston';
-import { CREATE_REACT_MESSAGE, GET_REACT_MESSAGE_BY_CATEGORY_ID, GET_ROLES_BY_CATEGORY_ID, GET_CATEGORY_BY_ID, DELETE_REACT_MESSAGES_BY_MESSAGE_ID } from '../database/database.js';
+import { CREATE_REACT_MESSAGE, GET_REACT_MESSAGE_BY_CATEGORY_ID, GET_CATEGORY_BY_ID, DELETE_REACT_MESSAGES_BY_MESSAGE_ID, GET_REACT_ROLES_BY_CATEGORY_ID } from '../database/database.js';
 import { ReactRole } from '../database/entities/react-role.entity.js';
 import { EmbedService } from '../services/embed.service.js';
 
@@ -63,7 +63,8 @@ export const updateReactMessages = async (
     const message = await channel.messages.fetch(reactMessage.messageId);
     if (!message) return log.debug(`Could not find message[${reactMessage.messageId}] in channel[${reactMessage.channelId}] in guild[${reactMessage.guildId}]`);
 
-    const categoryRoles = await GET_ROLES_BY_CATEGORY_ID(categoryId);
+    const categoryRoles = await GET_REACT_ROLES_BY_CATEGORY_ID(categoryId);
+    if (!reactMessage.categoryId) return log.error(`ReactMessage has no category somehow`);
     const category = await GET_CATEGORY_BY_ID(reactMessage.categoryId);
     if (!category) return log.error(`Category[${reactMessage.categoryId}] does not exist in guild[${reactMessage.guildId}]`);
 

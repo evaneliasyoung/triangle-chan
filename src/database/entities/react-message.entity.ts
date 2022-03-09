@@ -23,6 +23,7 @@ export interface IReactMessage {
   messageId: string;
   channelId: string;
   emojiId: string;
+  categoryId: number;
   category?: Category;
   roleId: string;
   guildId: string;
@@ -54,6 +55,9 @@ export class ReactMessage extends BaseEntity implements IReactMessage {
 
   @Column({type: 'varchar', width: 256})
   emojiId!: string;
+
+  @Column({type: 'bigint'})
+  categoryId!: number;
 
   @ManyToOne(() => Category, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'categoryId' })

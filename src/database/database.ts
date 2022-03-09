@@ -47,8 +47,8 @@ export const GET_REACT_ROLE_BY_ROLE_ID = async (roleId: string) =>
   await ReactRole.findOne({ where: { roleId } });
 
 
-export const GET_REACT_ROLES_BY_CATEGORY_ID = async (categoryId: number) =>
-  await ReactRole.find({ where: { category: { id: categoryId } } });
+export const GET_REACT_ROLES_BY_CATEGORY_ID = async (id: number) =>
+  await ReactRole.find({ where: { category: { id } } });
 
 
 export const UPDATE_REACT_ROLE_EMOJI_TAG = async (roleId: string, emojiTag: string) => {
@@ -86,13 +86,13 @@ export const CREATE_REACT_MESSAGE = async (reactMessageOptions: IReactMessageOpt
 };
 
 export const GET_REACT_MESSAGE_BY_CATEGORY_ID = async (categoryId: number) =>
-  await ReactMessage.find({ where: { category: { id: categoryId } } });
+  await ReactMessage.findOne({ where: { category: { id: categoryId } } });
 
 export const GET_REACT_MESSAGE_BY_ROLE_ID = async (roleId: string) =>
   await ReactMessage.findOne({ where: { roleId } });
 
 export const GET_REACT_MESSAGE_BY_MESSAGE_ID = async (messageId: string) =>
-  (await ReactMessage.find({ where: { messageId } }))[0];
+  await ReactMessage.findOne({ where: { messageId } });
 
 export const GET_REACT_MESSAGE_BY_MSGID_AND_EMOJI_ID = async (messageId: string, emojiId: string) =>
   await ReactMessage.findOne({ where: { messageId, emojiId } });
@@ -105,9 +105,6 @@ export const DELETE_REACT_MESSAGES_BY_MESSAGE_ID = async (messageId: string) =>
 
 export const GET_GUILD_CATEGORIES = async (guildId: string) =>
   await Category.find({ where: { guildId } });
-
-export const GET_ROLES_BY_CATEGORY_ID = async (categoryId: number) =>
-  await ReactRole.find({ where: { category: { id: categoryId } } });
 
 export const CREATE_GUILD_CATEGORY = async (guildId: string, name: string, description?: string | null, mutuallyExclusive?: boolean | null) =>
   await Category.create({

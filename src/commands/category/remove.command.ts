@@ -10,7 +10,7 @@
 
 import { CommandInteraction } from 'discord.js';
 import { Discord, Slash, SlashOption } from 'discordx';
-import { GET_CATEGORY_BY_NAME, DELETE_CATEGORY_BY_ID } from '../../database/database.js';
+import { GET_CATEGORY_BY_NAME, DELETE_CATEGORY_BY_ID, GET_REACT_ROLES_BY_CATEGORY_ID } from '../../database/database.js';
 import { logger } from '../../services/log.service.js';
 const log = logger(import.meta);
 
@@ -26,7 +26,7 @@ export abstract class CategoryRemoveCommand {
 
     if (!categoryName) {
       log.debug(`Required option was empty for categoryName[${categoryName}] on guild[${interaction.guildId}]`);
-      return interaction
+      return await interaction
         .reply(`Hey! I don't think you passed in a name. Could you please try again?`)
         .catch(e => {
           log.error(`Interaction failed.`);
@@ -37,13 +37,16 @@ export abstract class CategoryRemoveCommand {
     const category = await GET_CATEGORY_BY_NAME(interaction.guildId, categoryName);
     if (!category) {
       log.debug(`Category[${categoryName}] does not exist on guild[${interaction.guildId}]. Most likely name typo.`);
-      return interaction
+      return await interaction
         .reply(`Hey! I could **not** find a category by the name of \`${categoryName}\`. This command is case sensitive to ensure you delete exactly what you want. Check the name and try again.`)
         .catch((e) => {
           log.error(`Interaction failed.`);
           log.error(`${e}`);
         });
     }
+
+    const roles = await GET_REACT_ROLES_BY_CATEGORY_ID(category.id);
+    await Promise.all(roles.map(role => { role.categoryId = undefined; return role.save(); }));
 
     DELETE_CATEGORY_BY_ID(category.id)
       .then(async () => {

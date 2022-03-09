@@ -9,7 +9,7 @@
  */
 
 import { ButtonInteraction, CommandInteraction, MessageActionRow, MessageButton, MessageSelectMenu, SelectMenuInteraction } from 'discord.js';
-import { Discord, Slash } from 'discordx';
+import { ButtonComponent, Client, Discord, SelectMenuComponent, Slash } from 'discordx';
 import { GET_REACT_ROLE_BY_ID, GET_CATEGORY_BY_ID, GET_REACT_ROLES_NOT_IN_CATEGORIES, GET_REACT_ROLES_BY_CATEGORY_ID, UPDATE_REACT_ROLE_CATEGORY, GET_GUILD_CATEGORIES } from '../../database/database.js';
 import { ReactRole } from '../../database/entities/index.js';
 import { logger } from '../../services/log.service.js';
@@ -18,12 +18,13 @@ const log = logger(import.meta);
 
 @Discord()
 export abstract class CategoryAddCommand {
-  handleButton = async (interaction: ButtonInteraction, args: string[]) => {
+  @ButtonComponent(RegExp('^category-add_.*-.*$'))
+  async handleButton(interaction: ButtonInteraction, _client: Client) {
     if (!interaction.guildId) {
       return log.error(`GuildID did not exist on interaction.`);
     }
 
-    const [reactRoleId, categoryId] = args;
+    const [reactRoleId, categoryId] = interaction.customId.split('_')[1].split('-');
 
     const reactRole = await GET_REACT_ROLE_BY_ID(Number(reactRoleId));
     const category = await GET_CATEGORY_BY_ID(Number(categoryId));
@@ -106,8 +107,9 @@ export abstract class CategoryAddCommand {
     }
   };
 
-  handleSelect = async (interaction: SelectMenuInteraction, args: string[]) => {
-    const [guildId, categoryId] = args;
+  @SelectMenuComponent('select-category-add')
+  async handleSelect(interaction: SelectMenuInteraction, _client: Client) {
+    const [guildId, categoryId] = interaction.values[0].split('_')[1].split('-');
     const category = await GET_CATEGORY_BY_ID(Number(categoryId));
     if (!category) {
       log.error(`Could not find category[${categoryId}] after it was selected in dropdown.`);

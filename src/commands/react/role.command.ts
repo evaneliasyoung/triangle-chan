@@ -21,8 +21,8 @@ const log = logger(import.meta);
 export abstract class ReactRoleCommand {
   @Slash('react-role', { description: 'Create a new react role. Give the command a role and an emoji.' })
   async execute(
-    @SlashOption('role', { description: 'The role you want to use.', type: 'MENTIONABLE' })
-    role: GuildMember | User | Role,
+    @SlashOption('role', { description: 'The role you want to use.', type: 'ROLE' })
+    role: Role,
     @SlashOption('emoji', { description: 'The emoji you want to use.', type: 'STRING' })
     emoji: string,
     interaction: CommandInteraction
@@ -32,7 +32,7 @@ export abstract class ReactRoleCommand {
     const { guild } = interaction;
     if (!guild) return;
 
-    if (!role || !emoji || !mentionableIsRole(role)) {
+    if (!role || !emoji) {
       return await interaction
         .reply({ ephemeral: true, content: 'I had some issues finding that role or emoji. Please try again.', })
         .catch((e) => {
@@ -193,10 +193,6 @@ export abstract class ReactRoleCommand {
           });
       });
   }
-}
-
-function mentionableIsRole(mentionable: GuildMember | User | Role): mentionable is Role {
-  return Object.keys(mentionable).includes('hoist');
 }
 
 async function isValidRolePosition(interaction: Interaction, role: Role) {

@@ -75,6 +75,7 @@ export abstract class CategoryUpdateCommand {
       });
     }
 
+    if (!reactMessage.categoryId) return log.error(`ReactMessage has no category somehow`);
     const category = await GET_CATEGORY_BY_ID(reactMessage.categoryId);
 
     if (!category) {

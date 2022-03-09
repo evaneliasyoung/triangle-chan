@@ -1,5 +1,5 @@
 /**
- * @file      reamove.command.ts
+ * @file      remove.command.ts
  * @brief     Remove an existing reaction role from a drop down menu.
  *
  * @author    Evan Elias Young
@@ -9,7 +9,7 @@
  */
 
 import { CommandInteraction } from 'discord.js';
-import { Discord, Slash } from 'discordx';
+import { Discord, Slash, SlashOption } from 'discordx';
 import { DELETE_REACT_ROLE_BY_ROLE_ID, GET_REACT_ROLE_BY_ROLE_ID } from '../../database/database.js';
 import { ReactMessageUpdate as EReactMessageUpdate, updateReactMessages } from '../../utils/reactions.js';
 import { logger } from '../../services/log.service.js';
@@ -17,8 +17,9 @@ const log = logger(import.meta);
 
 @Discord()
 export abstract class ReactRemoveCommand {
-  @Slash('react-reamove', { description: 'Remove an existing reaction role from a drop down menu.' })
+  @Slash('react-remove', { description: 'Remove an existing reaction role from a drop down menu.' })
   async execute(
+    @SlashOption('role', { description: 'The reaction role you want deleted.', type: 'ROLE' })
     interaction: CommandInteraction
   ) {
     const role = interaction.options.get('role')?.role;
