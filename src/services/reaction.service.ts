@@ -23,7 +23,7 @@ export class ReactionHandler {
     const { guild } = message;
     if (!guild) return;
 
-    const emojiId = emoji.id || emoji.name;
+    const emojiId = emoji.id ?? emoji.name;
     if (!emojiId) return log.debug(`Emoji doesn't exist on message[${message.id}] reaction for guild[${guild.id}].`);
 
     const reactMessage = await GET_REACT_MESSAGE_BY_MSGID_AND_EMOJI_ID(message.id, emojiId)
