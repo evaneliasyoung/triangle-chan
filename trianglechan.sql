@@ -1,6 +1,6 @@
 ---
 --- @file      trianglechan.sql
---- @brief     Generates tables require for Triangle Chan.
+--- @brief     Generates tables require for Triangle-Chan.
 ---
 --- @author    Evan Elias Young
 --- @date      2022-03-08

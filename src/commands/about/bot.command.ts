@@ -17,7 +17,7 @@ export abstract class AboutBotCommand {
   @Slash('about-bot', { description: `The bot's information.` })
   async execute(interaction: CommandInteraction) {
     let embed = new MessageEmbed({
-      title: 'I\'m Triangle Chan  :wave:',
+      title: 'I\'m Triangle-Chan  :wave:',
       description: 'desc',
       fields: [
         { name: 'Author', value: 'Evan Elias Young', inline: true },
