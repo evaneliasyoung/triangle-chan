@@ -1,5 +1,5 @@
 /**
- * @file      create.command.ts
+ * @file      role.command.ts
  * @brief     Create a new react role. Give the command a role and an emoji.
  *
  * @author    Evan Elias Young
@@ -18,8 +18,8 @@ import { logger } from '../../services/log.service.js';
 const log = logger(import.meta);
 
 @Discord()
-export abstract class ReactCreateCommand {
-  @Slash('react-create', { description: 'Create a new react role. Give the command a role and an emoji.' })
+export abstract class ReactRoleCommand {
+  @Slash('react-role', { description: 'Create a new react role. Give the command a role and an emoji.' })
   async execute(
     @SlashOption('role', { description: 'The role you want to use.', type: 'MENTIONABLE' })
     role: GuildMember | User | Role,
@@ -33,7 +33,7 @@ export abstract class ReactCreateCommand {
     if (!guild) return;
 
     if (!role || !emoji || !mentionableIsRole(role)) {
-      return interaction
+      return await interaction
         .reply({ ephemeral: true, content: 'I had some issues finding that role or emoji. Please try again.', })
         .catch((e) => {
           log.error(`Interaction failed.`);
@@ -196,12 +196,13 @@ export abstract class ReactCreateCommand {
 }
 
 function mentionableIsRole(mentionable: GuildMember | User | Role): mentionable is Role {
-  return Object.keys(mentionable).includes('position');
+  return Object.keys(mentionable).includes('hoist');
 }
 
 async function isValidRolePosition(interaction: Interaction, role: Role) {
   const clientUser = await interaction.guild?.members.fetch(CLIENT_ID);
   if (!clientUser) return false;
+  log.debug('isValidRolePosition', { interaction, role, clientUser, roles: clientUser.roles, cache: clientUser.roles.cache });
 
   return clientUser.roles.cache.some((r) => r.position > role.position);
 }
