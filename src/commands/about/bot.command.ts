@@ -8,28 +8,22 @@
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-import { CommandInteraction, MessageEmbed } from 'discord.js';
+import { CommandInteraction } from 'discord.js';
 import { Discord, Slash } from 'discordx';
-import { COLOR } from '../../models/color.enum.js';
+import { BotInfo } from '../../info.js';
+import EmbedService from '../../services/embed.service.js';
 
 @Discord()
 export abstract class AboutBotCommand {
+  #embedService = new EmbedService();
+
   @Slash('about-bot', { description: `The bot's information.` })
   async execute(interaction: CommandInteraction) {
-    let embed = new MessageEmbed({
-      title: 'I\'m Triangle-Chan  :wave:',
-      description: 'desc',
-      fields: [
-        { name: 'Author', value: 'Evan Elias Young', inline: true },
-        { name: 'Library', value: 'discord.ts / Node', inline: true },
-        { name: 'Version', value: '0.1.0', inline: true },
-      ],
-      color: COLOR.BRLL,
-      thumbnail: {
-        url: interaction.client.user?.avatarURL()?.toString() ?? interaction.client.user?.defaultAvatarURL ?? undefined
-      }
-    });
+    const { client } = interaction;
+    const { user } = client;
 
-    interaction.reply({ embeds: [embed] });
+    if (!user) return await interaction.reply(`Oh no! I can't find myself in the Discord registry!`);
+
+    await interaction.reply({ embeds: [this.#embedService.aboutBotEmbed(client)] });
   }
 }

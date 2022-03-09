@@ -8,16 +8,43 @@
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-import { CommandInteraction, Guild, GuildMember, MessageEmbed, User } from 'discord.js';
+import { Guild, GuildBasedChannel, GuildMember, MessageEmbed, ThreadChannelTypes, Client } from 'discord.js';
+import { DateTime } from 'luxon';
 import { GET_REACT_ROLES_BY_CATEGORY_ID } from '../database/database.js';
 import { Category, ReactRole } from '../database/entities/index.js';
+import { BotInfo } from '../info.js';
 import { COLOR } from '../models/color.enum.js';
 import { Singleton } from '../models/singleton.model.js';
-import { dateToStringAndDuration, expandDateToUTC } from '../utils/luxon.js';
+import { dateToISO, dateToStringAndDuration, expandDateToUTC } from '../utils/luxon.js';
 import { toTitleCase } from '../utils/string.js';
 
 @Singleton
 export default class EmbedService {
+  #getChannelTypeString = (type: 'GUILD_CATEGORY' | 'GUILD_NEWS' | 'GUILD_STAGE_VOICE' | 'GUILD_STORE' | 'GUILD_TEXT' | ThreadChannelTypes | 'GUILD_VOICE') => {
+    switch (type) {
+      case 'GUILD_CATEGORY':
+        return 'Category';
+      case 'GUILD_NEWS':
+        return 'News';
+      case 'GUILD_NEWS_THREAD':
+        return 'News Thread';
+      case 'GUILD_PRIVATE_THREAD':
+        return 'Private Thread';
+      case 'GUILD_PUBLIC_THREAD':
+        return 'Public Thread';
+      case 'GUILD_STAGE_VOICE':
+        return 'Stage Voice';
+      case 'GUILD_STORE':
+        return 'Store';
+      case 'GUILD_TEXT':
+        return 'Text';
+      case 'GUILD_VOICE':
+        return 'Voice';
+      default:
+        return '[UNKOWN]';
+    }
+  };
+
   categoryReactRoleEmbed = async (category: Category) => {
     const categoryRoles = await GET_REACT_ROLES_BY_CATEGORY_ID(category.id);
     const reactRoles = categoryRoles.length ? this.reactRolesFormattedString(categoryRoles) : `This category has no react roles! Add some react roles to this category by using \`/category-add\`!`;
@@ -93,4 +120,60 @@ export default class EmbedService {
       color: COLOR.BRLL
     });
   };
+
+  aboutChannelEmbed = (channel: GuildBasedChannel) => {
+    const { id, createdAt, type, name } = channel;
+    const topic: string = channel.isText() && !channel.isThread() ? channel.topic ?? 'None' : 'None';
+    const created: DateTime = expandDateToUTC(createdAt);
+
+    return new MessageEmbed({
+      title: name,
+      description: 'Channel Statistics',
+      fields: [
+        { name: 'ID', value: id, inline: true },
+        { name: 'Type', value: this.#getChannelTypeString(type), inline: true },
+        { name: 'Topic', value: topic, inline: true },
+        { name: 'Creation Type', value: dateToStringAndDuration(created), inline: true }
+      ],
+      color: COLOR.BRLL
+    });
+  };
+
+  aboutMemberEmbed = (member: GuildMember) => {
+    const { joinedAt, user } = member!;
+    const { username, discriminator, id, createdAt } = user;
+
+    const icon: string = user.avatarURL() ?? user.defaultAvatarURL;
+    const created: DateTime = expandDateToUTC(createdAt);
+    const joined: DateTime = expandDateToUTC(joinedAt ?? new Date());
+
+    return new MessageEmbed({
+      title: `Member Information`,
+      thumbnail: { url: icon },
+      description: `${username}#${discriminator}`,
+      fields: [
+        { name: 'ID', value: id, inline: false },
+        { name: 'Account Creation Time', value: dateToStringAndDuration(created), inline: false },
+        { name: 'Joined Server At', value: dateToStringAndDuration(joined), inline: false },
+      ],
+      color: COLOR.BRLL
+    });
+  };
+
+  aboutBotEmbed = (client: Client) => new MessageEmbed({
+    description: BotInfo.tagline,
+    fields: [
+      { name: 'Author', value: 'MoM Chapter', inline: true },
+      { name: 'Library', value: BotInfo.library, inline: true },
+      { name: 'Version', value: BotInfo.version, inline: true },
+      { name: 'Date', value: dateToISO(BotInfo.date), inline: true },
+      { name: 'Servers', value: client.guilds.cache.size.toString(), inline: true },
+      { name: 'Channels', value: client.channels.cache.size.toString(), inline: true },
+      { name: 'Users', value: client.users.cache.size.toString(), inline: true },
+    ],
+    thumbnail: {
+      url: client.user!.avatarURL()?.toString() ?? client.user!.defaultAvatarURL ?? undefined
+    },
+    color: COLOR.BRLL
+  });
 }

@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-05
+ * @date      2022-03-09
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -12,6 +12,7 @@
 import { ClientEvents, PresenceData } from 'discord.js';
 import { Discord, Client, On } from 'discordx';
 import { logger } from '../services/log.service.js';
+import { BotInfo } from '../info.js';
 const log = logger(import.meta);
 
 @Discord()
@@ -24,7 +25,7 @@ abstract class CommonEvents {
     log.info('initializing commands', options);
     await client.initApplicationCommands(options);
 
-    const presence: PresenceData = { activities: [{ name: 'Triangle', type: 'WATCHING' }] };
+    const presence: PresenceData = { activities: [BotInfo.activity] };
     log.info('setting presence', presence);
     client.user?.setPresence(presence);
 
