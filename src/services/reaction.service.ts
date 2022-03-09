@@ -28,7 +28,7 @@ export class ReactionHandler {
 
     const reactMessage = await GET_REACT_MESSAGE_BY_MSGID_AND_EMOJI_ID(message.id, emojiId)
       .catch(MessageWithErrorHandler(`Failed to query for react message.`));
-    if (!reactMessage) return;
+    if (!reactMessage) return await reaction.remove().catch(MessageWithErrorHandler('Failed to remove unused react emoji.'));
     if (!reactMessage.categoryId) return log.error(`React role[${reactMessage.id}] in guild[${guild.id}] does NOT have a category set.`);
 
     const member = await guild.members.fetch(user.id)
