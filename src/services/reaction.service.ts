@@ -38,13 +38,14 @@ export class ReactionHandler {
     const category = await GET_CATEGORY_BY_ID(reactMessage.categoryId);
     if (!category) return log.error(`Category[${reactMessage.categoryId}] does not exist for guild[${guild.id}]`);
 
-    if (category.mutuallyExclusive) return this.mutuallyExclusive(reactMessage, member, guild, type);
+    if (category.mutuallyExclusive) return this.mutuallyExclusive(reaction, reactMessage, member, guild, type);
 
     member.roles[type](reactMessage.roleId)
       .catch(MessageWithErrorHandler(`Cannot ${type} role[${reactMessage.roleId}] to user[${member?.id}]`));
   };
 
   mutuallyExclusive = async (
+    reaction: MessageReaction | PartialMessageReaction,
     reactMessage: ReactMessage,
     member: GuildMember,
     guild: Guild,
@@ -53,22 +54,29 @@ export class ReactionHandler {
     if (type === 'remove')
       return member.roles
         .remove(reactMessage.roleId)
-        .catch(() => log.debug(`Failed to remove role[${reactMessage.roleId}] from user[${member.id}] because they unreacted.`));
+        .catch(MessageWithErrorHandler(`Failed to remove role[${reactMessage.roleId}] from user[${member.id}] because they unreacted.`));
 
     if (!reactMessage.categoryId) return log.error(`React role[${reactMessage.id}] category is undefined.`);
 
-    const categoryRoles = (await GET_REACT_ROLES_BY_CATEGORY_ID(reactMessage.categoryId)).map(r => r.roleId);
+    const reactRoles = (await GET_REACT_ROLES_BY_CATEGORY_ID(reactMessage.categoryId));
+
+    const categoryRoles = reactRoles.map(r => r.roleId);
     const updatedRoleList = member.roles.cache.filter(r => r.id === reactMessage.roleId || !categoryRoles.includes(r.id));
 
     const role = await guild.roles.fetch(reactMessage.roleId)
       .catch(MessageWithErrorHandler(`Failed to fetch role[${reactMessage.roleId}] for guild[${guild.id}]`));
     if (!role) return log.debug(`Role not found.`);
 
+    await Promise.all(reaction.message.reactions.cache.map(other => new Promise<void>(async (resolve, reject) => {
+      if (other.emoji.id ?? other.emoji.name !== reactMessage.emojiId) {
+        const members = await other.users.fetch().catch(reject);
+        if (members!.has(member.id)) await other.users.remove(member).catch(reject);
+      }
+      resolve();
+    })));
     updatedRoleList.set(role.id, role);
     await member
-      .edit({
-        roles: updatedRoleList,
-      })
+      .edit({ roles: updatedRoleList })
       .catch(MessageWithErrorHandler(`Failed to update members roles.`));
   };
 }
