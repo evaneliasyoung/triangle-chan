@@ -11,7 +11,7 @@
 import { CommandInteraction } from 'discord.js';
 import { Discord, Slash } from 'discordx';
 import { GET_REACT_ROLES_BY_GUILD } from '../../database/database.js';
-import { EmbedService } from '../../services/embed.service.js';
+import EmbedService from '../../services/embed.service.js';
 import { InteractionFailedHandlerGenerator, logger, MessageWithErrorHandlerGenerator } from '../../services/log.service.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
@@ -19,6 +19,8 @@ const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class ReactListCommand {
+  #embedService = new EmbedService();
+
   @Slash('react-list', { description: 'List all reaction roles that are currently active.' })
   async execute(
     interaction: CommandInteraction
@@ -36,7 +38,7 @@ export abstract class ReactListCommand {
     await interaction
       .reply({
         content: `Hey! Here's your react roles.`,
-        embeds: [EmbedService.reactRoleListEmbed(reactRoles)],
+        embeds: [this.#embedService.reactRoleListEmbed(reactRoles)],
       })
       .catch(InteractionFailedHandler);
   };

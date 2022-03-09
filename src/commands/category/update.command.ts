@@ -11,7 +11,7 @@
 import { CommandInteraction } from 'discord.js';
 import { Discord, Slash, SlashOption } from 'discordx';
 import { GET_REACT_MESSAGE_BY_MESSAGE_ID, GET_CATEGORY_BY_ID, GET_REACT_ROLES_BY_CATEGORY_ID, DELETE_REACT_MESSAGES_BY_MESSAGE_ID } from '../../database/database.js';
-import { EmbedService } from '../../services/embed.service.js';
+import EmbedService from '../../services/embed.service.js';
 import { isTextChannel } from '../../utils/type-assertion.js';
 import { reactToMessage } from '../../utils/reactions.js';
 import { InteractionFailedHandlerGenerator, logger } from '../../services/log.service.js';
@@ -20,6 +20,8 @@ const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class CategoryUpdateCommand {
+  #embedService = new EmbedService();
+
   @Slash('category-update', { description: 'Have an existing react role embed you want updated? Use this command!' })
   async execute(
     @SlashOption('message-link', { description: 'The link to the category embed messge. This will be used to find and update the embed.' })
@@ -92,7 +94,7 @@ export abstract class CategoryUpdateCommand {
     }
 
     try {
-      const embed = EmbedService.reactRoleEmbed(categoryRoles, category);
+      const embed = this.#embedService.reactRoleEmbed(categoryRoles, category);
 
       await DELETE_REACT_MESSAGES_BY_MESSAGE_ID(reactMessage.messageId);
       await message.reactions.removeAll();

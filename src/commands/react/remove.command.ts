@@ -12,12 +12,15 @@ import { CommandInteraction, Role } from 'discord.js';
 import { Discord, Slash, SlashOption } from 'discordx';
 import { DELETE_REACT_ROLE_BY_ROLE_ID, GET_REACT_ROLE_BY_ROLE_ID } from '../../database/database.js';
 import { ReactMessageUpdate as EReactMessageUpdate, updateReactMessages } from '../../utils/reactions.js';
+import EmbedService from '../../services/embed.service.js';
 import { InteractionFailedHandlerGenerator, logger } from '../../services/log.service.js';
 const log = logger(import.meta);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class ReactRemoveCommand {
+  #embedService = new EmbedService();
+
   @Slash('react-remove', { description: 'Remove an existing reaction role from a drop down menu.' })
   async execute(
     @SlashOption('role', { description: 'The reaction role you want deleted.', type: 'ROLE' })
@@ -68,7 +71,8 @@ export abstract class ReactRemoveCommand {
           interaction.client,
           reactRole.categoryId,
           log,
-          EReactMessageUpdate.reactRoleRemove
+          EReactMessageUpdate.reactRoleRemove,
+          this.#embedService
         );
       }
     } catch (e) {

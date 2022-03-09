@@ -12,14 +12,14 @@ import { MessageEmbed, User } from 'discord.js';
 import { GET_REACT_ROLES_BY_CATEGORY_ID } from '../database/database.js';
 import { Category, ReactRole } from '../database/entities/index.js';
 import { COLOR } from '../models/color.enum.js';
+import { Singleton } from '../models/singleton.model.js';
 
-export class EmbedService {
-  constructor() { }
-
-  static #userTagInfo = (user: User | string) =>
+@Singleton
+export default class EmbedService {
+  #userTagInfo = (user: User | string) =>
     `${typeof user === 'string' ? user : user?.tag} (<@${typeof user === 'string' ? user : user.id}>)`;
 
-  static categoryReactRoleEmbed = async (category: Category) => {
+  categoryReactRoleEmbed = async (category: Category) => {
     const categoryRoles = await GET_REACT_ROLES_BY_CATEGORY_ID(category.id);
     const reactRoles = categoryRoles.length ? this.reactRolesFormattedString(categoryRoles) : `This category has no react roles! Add some react roles to this category by using \`/category-add\`!`;
     const desc = category.description === '' || !category.description ? 'Description not set. Set it in `/category-edit`' : category.description;
@@ -31,10 +31,10 @@ export class EmbedService {
     });
   };
 
-  static reactRolesFormattedString = (reactRoles: ReactRole[]) => reactRoles.map(r =>
+  reactRolesFormattedString = (reactRoles: ReactRole[]) => reactRoles.map(r =>
     `${r.emojiTag ?? r.emojiId} - <@&${r.roleId}>`).join('\n');
 
-  static reactRoleListEmbed = (reactRoles: ReactRole[]) => {
+  reactRoleListEmbed = (reactRoles: ReactRole[]) => {
     const rolesNotInCategory = reactRoles.filter(r => !r.categoryId);
     const rolesInCategory = reactRoles.filter(r => r.categoryId);
     const inCategory = rolesInCategory.length ? `**In a category:**\n${this.reactRolesFormattedString(rolesInCategory)}\n` : '';
@@ -47,7 +47,7 @@ export class EmbedService {
     });
   };
 
-  static freeReactRoles = async (reactRoles: ReactRole[]) => {
+  freeReactRoles = async (reactRoles: ReactRole[]) => {
     return new MessageEmbed({
       title: 'React roles not in a category',
       description: `These roles are up for grabs!\nCheck out \`/category-add\` if you want to add these to a category.\n\n${this.reactRolesFormattedString(reactRoles)}`,
@@ -55,7 +55,7 @@ export class EmbedService {
     });
   };
 
-  static reactRoleEmbed = (reactRoles: ReactRole[], category: Category) => {
+  reactRoleEmbed = (reactRoles: ReactRole[], category: Category) => {
     const reactRolesString = this.reactRolesFormattedString(reactRoles);
     return new MessageEmbed({
       title: category.name,
@@ -64,7 +64,7 @@ export class EmbedService {
     });
   };
 
-  static tutorialEmbed = (pageId: number) => {
+  tutorialEmbed = (pageId: number) => {
     return new MessageEmbed({
       title: 'title', description: 'description',
       color: COLOR.DEFAULT

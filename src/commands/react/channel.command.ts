@@ -11,7 +11,7 @@
 import { AnyChannel, CommandInteraction, Guild, Permissions } from 'discord.js';
 import { Discord, Slash, SlashOption } from 'discordx';
 import { GET_GUILD_CATEGORIES, GET_REACT_ROLES_BY_CATEGORY_ID } from '../../database/database.js';
-import { EmbedService } from '../../services/embed.service.js';
+import EmbedService from '../../services/embed.service.js';
 import { reactToMessage } from '../../utils/reactions.js';
 import { isTextChannel } from '../../utils/type-assertion.js';
 import { PermissionMappings } from '../permissions.js';
@@ -23,6 +23,8 @@ const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class ReactChannelCommand {
+  #embedService = new EmbedService();
+
   @Slash('react-channel', { description: 'Send all categories with react roles to the selected channel.' })
   async execute(
     @SlashOption('channel', { description: 'The channel what will receive reaction roles.', type: 'CHANNEL' })
@@ -107,7 +109,7 @@ Why do I need these permissions in this channel?
       const categoryRoles = await GET_REACT_ROLES_BY_CATEGORY_ID(category.id);
       if (!categoryRoles.length) continue;
 
-      const embed = EmbedService.reactRoleEmbed(categoryRoles, category);
+      const embed = this.#embedService.reactRoleEmbed(categoryRoles, category);
 
       try {
         const reactEmbedMessage = await channel.send({ embeds: [embed] });

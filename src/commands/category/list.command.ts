@@ -4,14 +4,14 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-05
+ * @date      2022-03-09
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import { CommandInteraction, MessageEmbed } from 'discord.js';
 import { Discord, Slash } from 'discordx';
 import { GET_GUILD_CATEGORIES, GET_REACT_ROLES_NOT_IN_CATEGORIES } from '../../database/database.js';
-import { EmbedService } from '../../services/embed.service.js';
+import EmbedService from '../../services/embed.service.js';
 import { InteractionFailedHandlerGenerator, logger, MessageWithErrorHandlerGenerator } from '../../services/log.service.js';
 import { spliceIntoChunks } from '../../utils/splice-into-chunks.js';
 const log = logger(import.meta);
@@ -20,6 +20,8 @@ const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class CategoryListCommand {
+  #embedService = new EmbedService();
+
   @Slash('category-list', { description: 'List all your categories and the roles within them.' })
   async execute(
     interaction: CommandInteraction
@@ -42,9 +44,9 @@ export abstract class CategoryListCommand {
     const embeds: MessageEmbed[] = [];
 
     const rolesNotInCategory = await GET_REACT_ROLES_NOT_IN_CATEGORIES(interaction.guildId);
-    if (rolesNotInCategory.length) embeds.push(await EmbedService.freeReactRoles(rolesNotInCategory));
+    if (rolesNotInCategory.length) embeds.push(await this.#embedService.freeReactRoles(rolesNotInCategory));
 
-    for (const cat of categories) embeds.push(await EmbedService.categoryReactRoleEmbed(cat));
+    for (const cat of categories) embeds.push(await this.#embedService.categoryReactRoleEmbed(cat));
 
     for (const chunk of spliceIntoChunks(embeds, 10)) {
       interaction.channel

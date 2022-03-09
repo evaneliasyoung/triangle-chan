@@ -12,7 +12,7 @@ import { Client, Message } from 'discord.js';
 import { Logger } from 'winston';
 import { CREATE_REACT_MESSAGE, GET_REACT_MESSAGE_BY_CATEGORY_ID, GET_CATEGORY_BY_ID, DELETE_REACT_MESSAGES_BY_MESSAGE_ID, GET_REACT_ROLES_BY_CATEGORY_ID } from '../database/database.js';
 import { ReactRole } from '../database/entities/react-role.entity.js';
-import { EmbedService } from '../services/embed.service.js';
+import EmbedService from '../services/embed.service.js';
 import { logger, MessageWithErrorHandlerGenerator } from '../services/log.service.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
@@ -51,7 +51,8 @@ export const updateReactMessages = async (
   client: Client,
   categoryId: number,
   log: Logger,
-  type: ReactMessageUpdate
+  type: ReactMessageUpdate,
+  embedService: EmbedService
 ) => {
   try {
     const reactMessage = await GET_REACT_MESSAGE_BY_CATEGORY_ID(categoryId);
@@ -68,7 +69,7 @@ export const updateReactMessages = async (
     const category = await GET_CATEGORY_BY_ID(reactMessage.categoryId);
     if (!category) return log.error(`Category[${reactMessage.categoryId}] does not exist in guild[${reactMessage.guildId}]`);
 
-    const embed = EmbedService.reactRoleEmbed(categoryRoles, category);
+    const embed = embedService.reactRoleEmbed(categoryRoles, category);
     if (!reactMessage.isCustomMessage)
       await message
         .edit({ embeds: [embed] })
