@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-09
+ * @date      2022-03-10
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -40,25 +40,25 @@ export class ReactRole extends BaseEntity implements IReactRole {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column('varchar')
   name!: string;
 
-  @Column()
+  @Column('varchar')
   roleId!: string;
 
-  @Column()
+  @Column('varchar')
   emojiId!: string;
 
-  @Column({ nullable: true })
+  @Column('varchar', { nullable: true })
   emojiTag?: string;
 
-  @Column()
+  @Column('varchar')
   guildId!: string;
 
-  @Column()
+  @Column('int')
   type!: EReactRoleType;
 
-  @Column('int', { nullable: true })
+  @Column('unsigned big int', { nullable: true })
   categoryId?: number;
 
   @ManyToOne(() => Category, { onDelete: 'SET NULL' })

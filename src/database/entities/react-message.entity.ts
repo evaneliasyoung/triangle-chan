@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-09
+ * @date      2022-03-10
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -63,9 +63,9 @@ export class ReactMessage extends BaseEntity implements IReactMessage {
   @JoinColumn({ name: 'categoryId' })
   category?: Category;
 
-  @Column()
+  @Column('varchar')
   roleId!: string;
 
-  @Column()
+  @Column('varchar')
   guildId!: string;
 }
