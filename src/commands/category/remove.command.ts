@@ -4,13 +4,13 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-09
+ * @date      2022-03-10
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import { CommandInteraction } from 'discord.js';
 import { Discord, Slash, SlashOption } from 'discordx';
-import { GET_CATEGORY_BY_NAME, DELETE_CATEGORY_BY_ID, GET_REACT_ROLES_BY_CATEGORY_ID } from '../../database/database.js';
+import { GET_CATEGORY_BY_NAME, DELETE_CATEGORY_BY_ID, FREE_ROLES_BY_CATEGORY_ID } from '../../database/database.js';
 import { InteractionFailedHandlerGenerator, logger } from '../../services/log.service.js';
 const log = logger(import.meta);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
@@ -40,8 +40,7 @@ export abstract class CategoryRemoveCommand {
         .catch(InteractionFailedHandler);
     }
 
-    const roles = await GET_REACT_ROLES_BY_CATEGORY_ID(category.id);
-    await Promise.all(roles.map(role => { role.categoryId = null as any; role.save(); }));
+    await FREE_ROLES_BY_CATEGORY_ID(category.id);
 
     DELETE_CATEGORY_BY_ID(category.id)
       .then(async () => {

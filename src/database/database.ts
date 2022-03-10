@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-08
+ * @date      2022-03-10
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -105,6 +105,13 @@ export const DELETE_REACT_MESSAGES_BY_MESSAGE_ID = async (messageId: string) =>
 
 export const GET_GUILD_CATEGORIES = async (guildId: string) =>
   await Category.find({ where: { guildId } });
+
+export const FREE_ROLES_BY_CATEGORY_ID = async (id: number) =>
+  await Promise
+    .all((await GET_REACT_ROLES_BY_CATEGORY_ID(id))
+      .map(role =>
+        ReactRole.update(role.id, { categoryId: undefined })
+      ));
 
 export const CREATE_GUILD_CATEGORY = async (guildId: string, name: string, description?: string | null, mutuallyExclusive?: boolean | null) =>
   await Category.create({
