@@ -8,7 +8,7 @@
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-import { CommandInteraction, Interaction, MessageActionRow, MessageButton, MessageEmbed, Role, User } from 'discord.js';
+import { CommandInteraction, Interaction, MessageActionRow, MessageButton, MessageEmbed, Role } from 'discord.js';
 import { Discord, Slash, SlashOption } from 'discordx';
 import emojiRegex from 'emoji-regex';
 import { CREATE_REACT_ROLE, GET_REACT_ROLES_BY_GUILD_ID, GET_REACT_ROLE_BY_EMOJI, GET_REACT_ROLE_BY_ROLE_ID } from '../../database/database.js';
@@ -167,7 +167,7 @@ export abstract class ReactRoleCommand {
   }
 }
 
-async function isValidRolePosition(interaction: Interaction, role: Role) {
+export async function isValidRolePosition(interaction: Interaction, role: Role) {
   const clientUser = await interaction.guild?.members.fetch(CLIENT_ID);
   if (!clientUser) return false;
   log.debug('isValidRolePosition', { interaction, role, clientUser, roles: clientUser.roles, cache: clientUser.roles.cache });

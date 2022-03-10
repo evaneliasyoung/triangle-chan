@@ -9,6 +9,7 @@
  */
 
 export { Category } from './entities/category.entity.js';
+export { Counter } from './entities/counter.entity.js';
 export { GuildConfig } from './entities/guild.entity.js';
 export { ReactMessage } from './entities/react-message.entity.js';
 export { ReactRole } from './entities/react-role.entity.js';

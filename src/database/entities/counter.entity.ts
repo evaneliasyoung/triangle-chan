@@ -17,6 +17,8 @@ export enum ECounterType {
   role
 }
 
+export type TCounterType = 'total' | 'online' | 'donor' | 'role';
+
 export interface ICounter {
   guildId: string;
   channelId: string;
@@ -29,7 +31,7 @@ export class Counter extends BaseEntity implements ICounter {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ type: 'varchar', width: 90 })
+  @Column({ type: 'varchar', width: 18 })
   name!: string;
 
   @Column('varchar')
@@ -44,9 +46,26 @@ export class Counter extends BaseEntity implements ICounter {
   @Column({ type: 'int' })
   type!: ECounterType;
 
-  @Column({ type: 'varchar', width: 256 })
+  @Column({ type: 'varchar', width: 256, nullable: true })
   roleId?: string;
 }
+
+export const CREATE_COUNTER = async (
+  name: string,
+  emojiId: string,
+  guildId: string,
+  channelId: string,
+  type: ECounterType,
+  roleId?: string
+) =>
+  await Counter.create({
+    name,
+    emojiId,
+    guildId,
+    channelId,
+    type,
+    roleId
+  }).save();
 
 export const DELETE_COUNTER_BY_ID = async (id: number) =>
   await Counter.delete({ id });

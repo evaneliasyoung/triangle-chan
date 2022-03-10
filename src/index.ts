@@ -15,7 +15,7 @@ import { importx } from '@discordx/importer';
 import { BOT_TOKEN, DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER, SYNC_DB, __dirname } from './env.js';
 import { logger, MessageWithErrorHandlerGenerator } from './services/log.service.js';
 import { createConnection } from 'typeorm';
-import { ReactMessage, ReactRole, Category, GuildConfig } from './database/database.js';
+import { Category, Counter, GuildConfig, ReactMessage, ReactRole } from './database/database.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
 
@@ -42,7 +42,7 @@ async function run() {
     synchronize: SYNC_DB,
     username: DB_USER,
     password: DB_PASS,
-    entities: [ReactMessage, ReactRole, Category, GuildConfig],
+    entities: [Category, Counter, GuildConfig, ReactMessage, ReactRole],
   })
     .then(() => { log.debug('connected to database'); })
     .catch(MessageWithErrorHandler('failed to connect to database'));
