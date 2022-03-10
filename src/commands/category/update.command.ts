@@ -4,13 +4,13 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-09
+ * @date      2022-03-10
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import { CommandInteraction } from 'discord.js';
 import { Discord, Slash, SlashOption } from 'discordx';
-import { GET_REACT_MESSAGE_BY_MESSAGE_ID, GET_CATEGORY_BY_ID, GET_REACT_ROLES_BY_CATEGORY_ID, DELETE_REACT_MESSAGES_BY_MESSAGE_ID } from '../../database/database.js';
+import { GET_REACT_MESSAGE_BY_MESSAGE_ID, GET_CATEGORY_BY_ID, GET_REACT_ROLES_BY_CATEGORY_ID, DELETE_REACT_MESSAGE_BY_ID } from '../../database/database.js';
 import EmbedService from '../../services/embed.service.js';
 import { isTextChannel } from '../../utils/type-assertion.js';
 import { reactToMessage } from '../../utils/reactions.js';
@@ -96,7 +96,7 @@ export abstract class CategoryUpdateCommand {
     try {
       const embed = this.#embedService.reactRoleEmbed(categoryRoles, category);
 
-      await DELETE_REACT_MESSAGES_BY_MESSAGE_ID(reactMessage.messageId);
+      await DELETE_REACT_MESSAGE_BY_ID(reactMessage.messageId);
       await message.reactions.removeAll();
       await message
         .edit({ embeds: [embed] })

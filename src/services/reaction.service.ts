@@ -4,13 +4,13 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-09
+ * @date      2022-03-10
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import { MessageReaction, PartialMessageReaction, User, PartialUser, GuildMember, Guild } from 'discord.js';
 import { GET_REACT_MESSAGE_BY_MSGID_AND_EMOJI_ID, GET_CATEGORY_BY_ID, GET_REACT_ROLES_BY_CATEGORY_ID } from '../database/database.js';
-import { ReactMessage } from '../database/entities/index.js';
+import { ReactMessage } from '../database/database.js';
 import { logger, MessageWithErrorHandlerGenerator } from './log.service.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);

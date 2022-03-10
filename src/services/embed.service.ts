@@ -11,7 +11,7 @@
 import { Guild, GuildBasedChannel, GuildMember, MessageEmbed, ThreadChannelTypes, Client } from 'discord.js';
 import { DateTime } from 'luxon';
 import { GET_REACT_ROLES_BY_CATEGORY_ID } from '../database/database.js';
-import { Category, ReactRole } from '../database/entities/index.js';
+import { Category, ReactRole } from '../database/database.js';
 import { BotInfo } from '../info.js';
 import { COLOR } from '../models/color.enum.js';
 import { Singleton } from '../models/singleton.model.js';

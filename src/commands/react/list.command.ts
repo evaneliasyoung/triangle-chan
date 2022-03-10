@@ -4,13 +4,13 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-09
+ * @date      2022-03-10
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import { CommandInteraction } from 'discord.js';
 import { Discord, Slash } from 'discordx';
-import { GET_REACT_ROLES_BY_GUILD } from '../../database/database.js';
+import { GET_REACT_ROLES_BY_GUILD_ID } from '../../database/database.js';
 import EmbedService from '../../services/embed.service.js';
 import { InteractionFailedHandlerGenerator, logger, MessageWithErrorHandlerGenerator } from '../../services/log.service.js';
 const log = logger(import.meta);
@@ -27,7 +27,7 @@ export abstract class ReactListCommand {
   ) {
     if (!interaction.isCommand() || !interaction.guildId) return;
 
-    const reactRoles = await GET_REACT_ROLES_BY_GUILD(interaction.guildId)
+    const reactRoles = await GET_REACT_ROLES_BY_GUILD_ID(interaction.guildId)
       .catch(MessageWithErrorHandler(`Failed to fetch react roles for guild[${interaction.guildId}]`));
 
     if (!reactRoles || !reactRoles.length)

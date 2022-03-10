@@ -11,7 +11,7 @@
 import { ButtonInteraction, CommandInteraction, MessageActionRow, MessageButton, MessageSelectMenu, SelectMenuInteraction } from 'discord.js';
 import { ButtonComponent, Client, Discord, SelectMenuComponent, Slash } from 'discordx';
 import { GET_REACT_ROLE_BY_ID, GET_CATEGORY_BY_ID, GET_REACT_ROLES_NOT_IN_CATEGORIES, GET_REACT_ROLES_BY_CATEGORY_ID, UPDATE_REACT_ROLE_CATEGORY, GET_GUILD_CATEGORIES } from '../../database/database.js';
-import { ReactRole } from '../../database/entities/index.js';
+import { ReactRole } from '../../database/database.js';
 import { InteractionFailedHandlerGenerator, logger, MessageWithErrorHandlerGenerator } from '../../services/log.service.js';
 import { spliceIntoChunks } from '../../utils/splice-into-chunks.js';
 const log = logger(import.meta);

@@ -4,14 +4,14 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-09
+ * @date      2022-03-10
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-import { CommandInteraction, GuildMember, Interaction, MessageActionRow, MessageButton, MessageEmbed, Role, User } from 'discord.js';
+import { CommandInteraction, Interaction, MessageActionRow, MessageButton, MessageEmbed, Role, User } from 'discord.js';
 import { Discord, Slash, SlashOption } from 'discordx';
 import emojiRegex from 'emoji-regex';
-import { CREATE_REACT_ROLE, GET_REACT_ROLES_BY_GUILD, GET_REACT_ROLE_BY_EMOJI, GET_REACT_ROLE_BY_ROLE_ID } from '../../database/database.js';
+import { CREATE_REACT_ROLE, GET_REACT_ROLES_BY_GUILD_ID, GET_REACT_ROLE_BY_EMOJI, GET_REACT_ROLE_BY_ROLE_ID } from '../../database/database.js';
 import { EReactRoleType } from '../../database/entities/react-role.entity.js';
 import { CLIENT_ID } from '../../env.js';
 import { InteractionFailedHandlerGenerator, logger, MessageWithErrorHandlerGenerator } from '../../services/log.service.js';
@@ -40,7 +40,7 @@ export abstract class ReactRoleCommand {
         .catch(InteractionFailedHandler);
     }
 
-    const reactRolesNotInCategory = (await GET_REACT_ROLES_BY_GUILD(guild.id)).filter(r => !r.categoryId).length;
+    const reactRolesNotInCategory = (await GET_REACT_ROLES_BY_GUILD_ID(guild.id)).filter(r => !r.categoryId).length;
 
     if (reactRolesNotInCategory >= 24) return await interaction.reply(`Hey! It turns out you have ${reactRolesNotInCategory} react roles not in a category.\nPlease add some react roles to a category before creating anymore. If however \`/category-add\` isn't responded please *remove* some react roles to get below 25 **not ina  category**. This is due to a Discord limitation!`);
 
