@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-09
+ * @date      2022-03-10
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -15,7 +15,7 @@ import { importx } from '@discordx/importer';
 import { BOT_TOKEN, DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER, SYNC_DB, __dirname } from './env.js';
 import { logger, MessageWithErrorHandlerGenerator } from './services/log.service.js';
 import { createConnection } from 'typeorm';
-import { ReactMessage, ReactRole, Category, GuildConfig } from './database/entities/index.js';
+import { ReactMessage, ReactRole, Category, GuildConfig } from './database/database.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
 
