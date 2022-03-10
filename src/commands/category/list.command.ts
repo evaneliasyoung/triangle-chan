@@ -39,12 +39,12 @@ export abstract class CategoryListCommand {
     await interaction
       .reply(`Hey! Let me build these embeds for you real quick and send them...`)
       .catch(InteractionFailedHandler);
-    const embeds: MessageEmbed[] = [];
 
     const rolesNotInCategory = await GET_REACT_ROLES_NOT_IN_CATEGORIES(interaction.guildId);
-    if (rolesNotInCategory.length) embeds.push(await this.#embedService.freeReactRoles(rolesNotInCategory));
-
-    for (const cat of categories) embeds.push(await this.#embedService.categoryReactRoleEmbed(cat));
+    const embeds: MessageEmbed[] = [
+      await this.#embedService.freeReactRoles(rolesNotInCategory),
+      ...await Promise.all(categories.map(this.#embedService.categoryReactRoleEmbed))
+    ];
 
     for (const chunk of spliceIntoChunks(embeds, 10)) {
       interaction.channel
