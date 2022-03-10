@@ -8,8 +8,32 @@
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-import { AnyChannel, GuildBasedChannel, TextChannel } from 'discord.js';
+import { AnyChannel, GuildBasedChannel, TextChannel, VoiceChannel } from 'discord.js';
+import { ECounterType, TCounterType } from '../database/entities/counter.entity.js';
 
 export function isTextChannel(channel?: AnyChannel | GuildBasedChannel | null): channel is TextChannel {
   return channel?.type === 'GUILD_TEXT';
+}
+
+export function isVoiceChannel(channel?: AnyChannel | GuildBasedChannel | null): channel is VoiceChannel {
+  return channel?.type === 'GUILD_VOICE';
+}
+
+export function textIsCounterType(text?: string | null): text is TCounterType {
+  return text === 'total' ||
+    text === 'online' ||
+    text === 'donor' ||
+    text === 'role';
+}
+
+export function textAsCounterType(text?: string | null): ECounterType {
+  switch (text) {
+    case 'total':
+    case 'online':
+    case 'donor':
+    case 'role':
+      return ECounterType[text];
+    default:
+      throw 'invalid text';
+  }
 }
