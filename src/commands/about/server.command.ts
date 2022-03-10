@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-09
- * @date      2022-03-09
+ * @date      2022-03-10
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -17,9 +17,7 @@ export abstract class AboutServerCommand {
   #embedService = new EmbedService();
 
   @Slash('about-server', { description: 'Provides information about a server.' })
-  async execute(
-    interaction: CommandInteraction
-  ) {
+  async execute(interaction: CommandInteraction) {
     const { guild, member } = interaction;
     if (!guild) return await interaction.reply(`I'm having trouble finding the server you're talking about.`);
 

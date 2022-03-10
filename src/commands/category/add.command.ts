@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-09
+ * @date      2022-03-10
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -22,9 +22,7 @@ const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 export abstract class CategoryAddCommand {
   @ButtonComponent(RegExp('^category-add_.*-.*$'))
   async handleButton(interaction: ButtonInteraction, _client: Client) {
-    if (!interaction.guildId) {
-      return log.error(`GuildID did not exist on interaction.`);
-    }
+    if (!interaction.guildId) return log.error(`GuildID did not exist on interaction.`);
 
     const [reactRoleId, categoryId] = interaction.customId.split('_')[1].split('-');
 
@@ -137,9 +135,7 @@ export abstract class CategoryAddCommand {
     );
 
   @Slash('category-add', { description: 'Add reaction roles to a specific category.' })
-  async execute(
-    interaction: CommandInteraction
-  ) {
+  async execute(interaction: CommandInteraction) {
     if (!interaction.guildId) return log.error(`GuildID did not exist on interaction.`);
     const categories = await GET_GUILD_CATEGORIES(interaction.guildId);
 

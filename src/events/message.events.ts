@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-05
+ * @date      2022-03-10
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -17,12 +17,12 @@ abstract class MessageEvents {
   #reactionService = new ReactionHandler();
 
   @On('messageReactionAdd')
-  async onReactionAdd([reaction, user]: ClientEvents['messageReactionAdd'], client: Client, guard: any) {
+  async onReactionAdd([reaction, user]: ClientEvents['messageReactionAdd'], _client: Client, _guard: any) {
     return await this.#reactionService.handleReaction(reaction, user, 'add');
   }
 
   @On('messageReactionRemove')
-  async onReactionRemove([reaction, user]: ClientEvents['messageReactionRemove'], client: Client, guard: any) {
+  async onReactionRemove([reaction, user]: ClientEvents['messageReactionRemove'], _client: Client, _guard: any) {
     return await this.#reactionService.handleReaction(reaction, user, 'remove');
   }
 }

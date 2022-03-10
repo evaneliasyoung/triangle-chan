@@ -4,10 +4,9 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-09
+ * @date      2022-03-10
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
-
 
 import { ClientEvents, PresenceData } from 'discord.js';
 import { Discord, Client, On } from 'discordx';
@@ -18,7 +17,11 @@ const log = logger(import.meta);
 @Discord()
 abstract class CommonEvents {
   @On('ready')
-  async onReady(n: never[], client: Client, guard: any) {
+  async onReady(
+    _n: never[],
+    client: Client,
+    _guard: any
+  ) {
     await client.guilds.fetch();
 
     const options = { guild: { log: true }, global: { log: true } };

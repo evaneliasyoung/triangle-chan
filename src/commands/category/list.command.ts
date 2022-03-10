@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-09
+ * @date      2022-03-10
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -23,9 +23,7 @@ export abstract class CategoryListCommand {
   #embedService = new EmbedService();
 
   @Slash('category-list', { description: 'List all your categories and the roles within them.' })
-  async execute(
-    interaction: CommandInteraction
-  ) {
+  async execute(interaction: CommandInteraction) {
     if (!interaction.guildId) return log.error(`GuildID did not exist on interaction.`);
 
     const categories = await GET_GUILD_CATEGORIES(interaction.guildId)

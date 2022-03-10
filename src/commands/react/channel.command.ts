@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-09
+ * @date      2022-03-10
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -114,7 +114,7 @@ Why do I need these permissions in this channel?
       try {
         const reactEmbedMessage = await channel.send({ embeds: [embed] });
 
-        reactToMessage(
+        await reactToMessage(
           reactEmbedMessage,
           interaction.guildId,
           categoryRoles,
@@ -135,7 +135,7 @@ Why do I need these permissions in this channel?
       await timeout(1000);
     }
 
-    interaction
+    await interaction
       .editReply({ content: 'Hey! I sent those embeds and am currently reacting to them.' })
       .catch(MessageWithErrorHandler(`Failed to edit interaction reply.`));
   };
