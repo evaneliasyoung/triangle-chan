@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-08
- * @date      2022-03-10
+ * @date      2022-03-11
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -13,7 +13,7 @@ import { Random } from '../utils/random.js';
 
 @Singleton
 export default class LanguageService {
-  WAIT_REPLIES = ["I'll think about it...", "Procrastinating...", "Putting it off..."] as const;
+  readonly WAIT_REPLIES = [`I'll think about it...`, `Procrastinating...`, `Putting it off...`] as const;
 
   get wait() { return Random.pick(this.WAIT_REPLIES); }
 }

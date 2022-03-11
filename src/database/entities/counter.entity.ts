@@ -8,7 +8,7 @@
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum ECounterType {
   total = 1,
