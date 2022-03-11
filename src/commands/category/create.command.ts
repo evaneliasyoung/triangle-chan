@@ -19,17 +19,17 @@ const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 export abstract class CategoryCreateCommand {
   @Slash('category-create', { description: 'Create a new category to categorize your reaction roles in.' })
   async execute(
-    @SlashOption('category-name', { description: 'The name of the category.', type: 'STRING' })
-    categoryName: string,
-    @SlashOption('category-desc', { description: 'Give your category a description.', type: 'STRING', required: false })
-    categoryDesc: string | null,
+    @SlashOption('name', { description: 'The name of the category.', type: 'STRING' })
+    name: string,
+    @SlashOption('description', { description: 'Give your category a description.', type: 'STRING', required: false })
+    description: string | null,
     @SlashOption('mutually-exclusive', { description: 'Make roles from this category mutually exclusive.', type: 'BOOLEAN', required: false })
     mutuallyExclusive: boolean | null,
     interaction: CommandInteraction
   ) {
     if (!interaction.guildId) return log.error(`GuildID did not exist on interaction.`);
 
-    if (!categoryName)
+    if (!name)
       return await interaction
         .reply({
           ephemeral: true,
@@ -37,7 +37,7 @@ export abstract class CategoryCreateCommand {
         })
         .catch(InteractionFailedHandler);
 
-    else if (categoryName.length > 90)
+    else if (name.length > 90)
       return await interaction
         .reply({
           ephemeral: true,
@@ -45,20 +45,20 @@ export abstract class CategoryCreateCommand {
         })
         .catch(InteractionFailedHandler);
 
-    if (await GET_CATEGORY_BY_NAME(interaction.guildId, categoryName))
+    if (await GET_CATEGORY_BY_NAME(interaction.guildId, name))
       return await interaction
         .reply(`Hey! It turns out you already have a category with that name made. Try checking it out.`)
         .catch(InteractionFailedHandler);
 
-    CREATE_GUILD_CATEGORY(interaction.guildId, categoryName, categoryDesc, mutuallyExclusive)
+    CREATE_GUILD_CATEGORY(interaction.guildId, name, description, mutuallyExclusive)
       .then(async () => {
-        log.debug(`Successfully created category[${categoryName}] for guild[${interaction.guildId}]`);
+        log.debug(`Successfully created category[${name}] for guild[${interaction.guildId}]`);
         await interaction
-          .reply(`Hey! I successfully created the category \`${categoryName}\` for you!`)
+          .reply(`Hey! I successfully created the category \`${name}\` for you!`)
           .catch(InteractionFailedHandler);
       })
       .catch(async e => {
-        log.error(`Issue creating category[${categoryName}] for guild[${interaction.guildId}]`, e);
+        log.error(`Issue creating category[${name}] for guild[${interaction.guildId}]`, e);
 
         await interaction
           .reply(`Hey! I had some trouble creating that category for you. Please wait a minute and try again.`)
