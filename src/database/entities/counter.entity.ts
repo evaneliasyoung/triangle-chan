@@ -20,6 +20,8 @@ export enum ECounterType {
 export type TCounterType = 'total' | 'online' | 'boost' | 'role';
 
 export interface ICounter {
+  name: string;
+  emojiId: string;
   guildId: string;
   channelId: string;
   type: ECounterType;
@@ -77,4 +79,10 @@ export const GET_COUNTERS_BY_GUILD_ID = async (guildId: string) =>
   await Counter.find({ guildId });
 
 export const GET_COUNTER_BY_ID = async (id: number) =>
-  await Counter.find({ id });
+  await Counter.findOne({ id });
+
+export const GET_COUNTER_BY_NAME = async (guildId: string, name: string) =>
+  await Counter.findOne({ guildId, name });
+
+export const EDIT_COUNTER_BY_ID = async (id: number, counter: Partial<ICounter>) =>
+  await Counter.update({ id }, counter);

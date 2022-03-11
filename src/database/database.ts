@@ -27,7 +27,9 @@ export {
   DELETE_COUNTER_BY_ID,
   DLETE_ALL_COUNTERS_BY_GUILD_ID,
   GET_COUNTERS_BY_GUILD_ID,
-  GET_COUNTER_BY_ID
+  GET_COUNTER_BY_ID,
+  GET_COUNTER_BY_NAME,
+  EDIT_COUNTER_BY_ID
 } from './entities/counter.entity.js';
 
 export {
