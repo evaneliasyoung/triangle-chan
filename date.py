@@ -5,12 +5,12 @@
 
 @author    Evan Elias Young
 @date      2022-02-07
-@date      2022-02-07
+@date      2022-03-11
 @copyright Copyright 2022 Evan Elias Young. All rights reserved.
 """
 
 from typing import Optional
-from os.path import curdir, abspath, getmtime
+from os.path import abspath, getmtime
 from datetime import datetime as dt
 from re import Pattern, compile as regex
 from glob import glob
