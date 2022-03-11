@@ -13,11 +13,11 @@ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 export enum ECounterType {
   total = 1,
   online,
-  donor,
+  boost,
   role
 }
 
-export type TCounterType = 'total' | 'online' | 'donor' | 'role';
+export type TCounterType = 'total' | 'online' | 'boost' | 'role';
 
 export interface ICounter {
   guildId: string;

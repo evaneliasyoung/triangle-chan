@@ -22,7 +22,7 @@ export function isVoiceChannel(channel?: AnyChannel | GuildBasedChannel | null):
 export function textIsCounterType(text?: string | null): text is TCounterType {
   return text === 'total' ||
     text === 'online' ||
-    text === 'donor' ||
+    text === 'boost' ||
     text === 'role';
 }
 
@@ -30,7 +30,7 @@ export function textAsCounterType(text?: string | null): ECounterType {
   switch (text) {
     case 'total':
     case 'online':
-    case 'donor':
+    case 'boost':
     case 'role':
       return ECounterType[text];
     default:
