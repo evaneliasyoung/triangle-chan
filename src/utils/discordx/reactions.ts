@@ -4,16 +4,16 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-10
+ * @date      2022-03-11
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import { Client, Message } from 'discord.js';
 import { Logger } from 'winston';
-import { CREATE_REACT_MESSAGE, GET_REACT_MESSAGE_BY_CATEGORY_ID, GET_CATEGORY_BY_ID, DELETE_REACT_MESSAGE_BY_ID, GET_REACT_ROLES_BY_CATEGORY_ID } from '../database/database.js';
-import { ReactRole } from '../database/entities/react-role.entity.js';
-import EmbedService from '../services/embed.service.js';
-import { logger, MessageWithErrorHandlerGenerator } from '../services/log.service.js';
+import { CREATE_REACT_MESSAGE, GET_REACT_MESSAGE_BY_CATEGORY_ID, GET_CATEGORY_BY_ID, DELETE_REACT_MESSAGE_BY_ID, GET_REACT_ROLES_BY_CATEGORY_ID } from '../../database/database.js';
+import { ReactRole } from '../../database/entities/react-role.entity.js';
+import EmbedService from '../../services/embed.service.js';
+import { logger, MessageWithErrorHandlerGenerator } from '../../services/log.service.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
 

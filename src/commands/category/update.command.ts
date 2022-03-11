@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-10
+ * @date      2022-03-11
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -13,7 +13,7 @@ import { Discord, Slash, SlashOption } from 'discordx';
 import { GET_REACT_MESSAGE_BY_MESSAGE_ID, GET_CATEGORY_BY_ID, GET_REACT_ROLES_BY_CATEGORY_ID, DELETE_REACT_MESSAGE_BY_ID } from '../../database/database.js';
 import EmbedService from '../../services/embed.service.js';
 import { isTextChannel } from '../../utils/type-assertion.js';
-import { reactToMessage } from '../../utils/reactions.js';
+import { reactToMessage } from '../../utils/discordx/reactions.js';
 import { InteractionFailedHandlerGenerator, logger } from '../../services/log.service.js';
 const log = logger(import.meta);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);

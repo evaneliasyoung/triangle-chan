@@ -17,7 +17,3 @@ export enum ECommandCategory {
 }
 
 export type TCommandCategory = keyof typeof ECommandCategory;
-
-export function isCommandCategory(text: any): text is ECommandCategory {
-  return typeof text === 'string' && text in ECommandCategory;
-};

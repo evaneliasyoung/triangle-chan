@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-10
+ * @date      2022-03-11
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -12,11 +12,11 @@ import { AnyChannel, CommandInteraction, Guild, Permissions } from 'discord.js';
 import { Discord, Slash, SlashOption } from 'discordx';
 import { GET_GUILD_CATEGORIES, GET_REACT_ROLES_BY_CATEGORY_ID } from '../../database/database.js';
 import EmbedService from '../../services/embed.service.js';
-import { reactToMessage } from '../../utils/reactions.js';
+import { reactToMessage } from '../../utils/discordx/reactions.js';
 import { isTextChannel } from '../../utils/type-assertion.js';
 import { PermissionMappings } from '../permissions.js';
 import { InteractionFailedHandlerGenerator, logger, MessageWithErrorHandlerGenerator } from '../../services/log.service.js';
-import { timeout } from '../../utils/timeout.js';
+import { timeout } from '../../utils/native/timeout.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);

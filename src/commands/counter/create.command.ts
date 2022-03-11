@@ -12,7 +12,7 @@ import { AnyChannel, CommandInteraction, Guild, MessageActionRow, MessageButton,
 import { Discord, Slash, SlashOption } from 'discordx';
 import emojiRegex from 'emoji-regex';
 import { CREATE_COUNTER, ECounterType } from '../../database/entities/counter.entity.js';
-import { isVoiceChannel, textAsCounterType, textIsCounterType } from '../../utils/type-assertion.js';
+import { isVoiceChannel, asCounterType, isCounterType } from '../../utils/type-assertion.js';
 import { isValidRolePosition } from '../react/role.command.js';
 import { InteractionFailedHandlerGenerator, logger, MessageWithErrorHandlerGenerator } from '../../services/log.service.js';
 const log = logger(import.meta);
@@ -53,7 +53,7 @@ export abstract class CounterCreateCommand {
         })
         .catch(InteractionFailedHandler);
 
-    if (!textIsCounterType(type))
+    if (!isCounterType(type))
       return await interaction
         .reply({
           ephemeral: true,
@@ -82,7 +82,7 @@ export abstract class CounterCreateCommand {
         .catch(InteractionFailedHandler);
     }
 
-    const counterType = textAsCounterType(type);
+    const counterType = asCounterType(type);
     if (counterType === ECounterType.role) {
       if (!role) return await interaction
         .reply({

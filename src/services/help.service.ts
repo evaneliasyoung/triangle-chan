@@ -9,8 +9,9 @@
  */
 
 import { DApplicationCommand, MetadataStorage } from 'discordx';
-import { TCommandCategory, isCommandCategory, ECommandCategory } from '../models/command-category.model.js';
+import { TCommandCategory, ECommandCategory } from '../models/command-category.model.js';
 import { Singleton } from '../models/singleton.model.js';
+import { isCommandCategory } from '../utils/type-assertion.js';
 
 @Singleton
 export default class HelpService {

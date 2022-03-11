@@ -1,15 +1,15 @@
 /**
- * @file      luxon.ts
- * @brief     Extensions for luxon and DateTime.
+ * @file      datetime.ts
+ * @brief     Luxon DateTime helper functions.
  *
  * @author    Evan Elias Young
  * @date      2022-03-09
- * @date      2022-03-10
+ * @date      2022-03-11
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-import humanizeDuration from 'humanize-duration';
-import { DateTime, Duration } from 'luxon';
+import { DateTime } from 'luxon';
+import { diffToString } from './duration.js';
 
 /**
  * Returns the huge localized string representing the Luxon DateTime object.
@@ -26,14 +26,6 @@ export const dateToHugeString = (date: DateTime) =>
  */
 export const dateToISO = (date: DateTime) =>
   date.toFormat('yyyy-MM-dd');
-
-/**
- * Returns the humanized string of the Duration.
- * @param diff The Luxon Duration object.
- * @returns The humanized string of the Duration.
- */
-export const diffToString = (diff: Duration) =>
-  `${humanizeDuration(diff.milliseconds, { conjunction: ' and ' })} ago`;
 
 /**
  * Returns the UTC converted Luxon DateTime object.

@@ -9,7 +9,7 @@
  */
 
 import { Singleton } from '../models/singleton.model.js';
-import { Random } from '../utils/random.js';
+import { Random } from '../utils/native/random.js';
 
 @Singleton
 export default class LanguageService {

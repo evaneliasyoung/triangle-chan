@@ -4,14 +4,14 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-10
+ * @date      2022-03-11
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import { CommandInteraction, Role } from 'discord.js';
 import { Discord, Slash, SlashOption } from 'discordx';
 import { DELETE_REACT_ROLE_BY_ROLE_ID, GET_REACT_ROLE_BY_ROLE_ID } from '../../database/database.js';
-import { ReactMessageUpdate as EReactMessageUpdate, updateReactMessages } from '../../utils/reactions.js';
+import { ReactMessageUpdate as EReactMessageUpdate, updateReactMessages } from '../../utils/discordx/reactions.js';
 import EmbedService from '../../services/embed.service.js';
 import { InteractionFailedHandlerGenerator, logger } from '../../services/log.service.js';
 const log = logger(import.meta);

@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-10
+ * @date      2022-03-11
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -15,7 +15,7 @@ import { logger, MessageWithErrorHandlerGenerator } from './log.service.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
 
-export class ReactionHandler {
+export default class ReactionHandler {
   handleReaction = async (reaction: MessageReaction | PartialMessageReaction, user: User | PartialUser, type: 'add' | 'remove') => {
     if (!reaction || user.bot) return;
 

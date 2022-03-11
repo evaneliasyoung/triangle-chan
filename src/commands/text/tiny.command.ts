@@ -11,7 +11,7 @@
 import { CommandInteraction } from 'discord.js';
 import { Discord, Slash, SlashOption } from 'discordx';
 import { InteractionFailedHandlerGenerator, logger } from '../../services/log.service.js';
-import { remapCharacters } from '../../utils/string.js';
+import { remapCharacters } from '../../utils/native/string.js';
 const log = logger(import.meta);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 

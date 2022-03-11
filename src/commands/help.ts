@@ -11,10 +11,11 @@
 import { Client, CommandInteraction, MessageActionRow, MessageEmbed, MessageSelectMenu, SelectMenuInteraction } from 'discord.js';
 import { Discord, SelectMenuComponent, Slash } from 'discordx';
 import { COLOR } from '../models/color.enum.js';
-import { ECommandCategory, isCommandCategory } from '../models/command-category.model.js';
+import { ECommandCategory } from '../models/command-category.model.js';
 import EmbedService from '../services/embed.service.js';
 import HelpService from '../services/help.service.js';
 import { logger, MessageWithErrorHandlerGenerator } from '../services/log.service.js';
+import { isCommandCategory } from '../utils/type-assertion.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
 

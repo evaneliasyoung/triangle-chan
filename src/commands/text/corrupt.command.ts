@@ -11,7 +11,7 @@
 import { CommandInteraction } from 'discord.js';
 import { Discord, Slash, SlashOption } from 'discordx';
 import { InteractionFailedHandlerGenerator, logger } from '../../services/log.service.js';
-import { Random } from '../../utils/random.js';
+import { Random } from '../../utils/native/random.js';
 const log = logger(import.meta);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 

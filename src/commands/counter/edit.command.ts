@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-10
- * @date      2022-03-10
+ * @date      2022-03-11
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -12,7 +12,7 @@ import { CommandInteraction, MessageActionRow, MessageButton, MessageEmbed, Role
 import { Discord, Slash, SlashOption } from 'discordx';
 import { EDIT_COUNTER_BY_ID, GET_COUNTER_BY_NAME } from '../../database/database.js';
 import { ECounterType, ICounter } from '../../database/entities/counter.entity.js';
-import { textAsCounterType, textIsCounterType } from '../../utils/type-assertion.js';
+import { asCounterType, isCounterType } from '../../utils/type-assertion.js';
 import { InteractionFailedHandlerGenerator, logger, MessageWithErrorHandlerGenerator } from '../../services/log.service.js';
 import emojiRegex from 'emoji-regex';
 import { isValidRolePosition } from '../react/role.command.js';
@@ -68,14 +68,14 @@ export abstract class CounterEditCommand {
     }
 
     let type = counter.type;
-    if (newType && !textIsCounterType(newType))
+    if (newType && !isCounterType(newType))
       return await interaction
         .reply({
           ephemeral: true,
           content: `Hey! I don't understand what type you meant by ${newType}. I only use \`total\`, \`online\`, \`boost\`, and \`role\`.`
         })
         .catch(InteractionFailedHandler);
-    if (newType) type = textAsCounterType(newType);
+    if (newType) type = asCounterType(newType);
 
     let emojiId = counter.emojiId;
     if (newEmoji) {

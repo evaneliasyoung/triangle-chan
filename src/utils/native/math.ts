@@ -4,14 +4,18 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-08
- * @date      2022-03-10
+ * @date      2022-03-11
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 const { floor } = Math;
 
-export const round = (x: number, digits: number = 0) =>
-  digits == 0 ? Math.round(x) : Math.round(x * 10 ** digits) / 10 ** digits;
+export function round(x: number, digits: number): number;
+export function round(x: number, digits: never): number;
+export function round(x: number, digits: any) {
+  if (typeof digits === 'undefined') digits = 0;
+  return digits > 0 ? Math.round(x * 10 ** digits) / 10 ** digits : Math.round(x);
+}
 
 export const iota = (stop: number, step: number = 1) =>
   range(0, stop, step);
@@ -19,7 +23,6 @@ export const iota = (stop: number, step: number = 1) =>
 export function range(start: number, stop: number, step: number): number[];
 export function range(start: number, stop: number, step: void): number[];
 export function range(start: number, stop: void, step: void): number[];
-
 export function range(start: any, stop: any, step: any = 1) {
   if (typeof step === 'undefined') step = 1;
   if (typeof stop === 'undefined') stop = start; start = 0;

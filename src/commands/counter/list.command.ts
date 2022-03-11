@@ -12,7 +12,7 @@ import { CommandInteraction, MessageEmbed } from 'discord.js';
 import { Discord, Slash } from 'discordx';
 import { GET_COUNTERS_BY_GUILD_ID } from '../../database/database.js';
 import EmbedService from '../../services/embed.service.js';
-import { spliceIntoChunks } from '../../utils/splice-into-chunks.js';
+import { chunk } from '../../utils/native/chunk.js';
 import { InteractionFailedHandlerGenerator, logger, MessageWithErrorHandlerGenerator } from '../../services/log.service.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
@@ -44,9 +44,9 @@ export abstract class CounterListCommand {
       ...await Promise.all(counters.map(this.#embedService.counterEmbed.bind(this.#embedService, interaction.client)))
     ];
 
-    for (const chunk of spliceIntoChunks(embeds, 10)) {
+    for (const embed of chunk(embeds, 10)) {
       interaction.channel
-        ?.send({ embeds: chunk })
+        ?.send({ embeds: embed })
         .catch(() =>
           log.error(`Failed to send counter embeds to channel[${interaction.channel?.id}] in guild[${interaction.guildId}]`)
         );

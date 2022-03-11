@@ -17,8 +17,8 @@ import { BotInfo } from '../info.js';
 import { COLOR } from '../models/color.enum.js';
 import { ECommandCategory } from '../models/command-category.model.js';
 import { Singleton } from '../models/singleton.model.js';
-import { dateToISO, dateToStringAndDuration, expandDateToUTC } from '../utils/luxon.js';
-import { toTitleCase } from '../utils/string.js';
+import { dateToISO, dateToStringAndDuration, expandDateToUTC } from '../utils/luxon/datetime.js';
+import { toTitleCase } from '../utils/native/string.js';
 
 @Singleton
 export default class EmbedService {

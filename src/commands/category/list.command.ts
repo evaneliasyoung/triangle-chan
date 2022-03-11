@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-10
+ * @date      2022-03-11
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -13,7 +13,7 @@ import { Discord, Slash } from 'discordx';
 import { GET_GUILD_CATEGORIES, GET_REACT_ROLES_NOT_IN_CATEGORIES } from '../../database/database.js';
 import EmbedService from '../../services/embed.service.js';
 import { InteractionFailedHandlerGenerator, logger, MessageWithErrorHandlerGenerator } from '../../services/log.service.js';
-import { spliceIntoChunks } from '../../utils/splice-into-chunks.js';
+import { chunk } from '../../utils/native/chunk.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
@@ -46,9 +46,9 @@ export abstract class CategoryListCommand {
       ...await Promise.all(categories.map(this.#embedService.categoryReactRoleEmbed))
     ];
 
-    for (const chunk of spliceIntoChunks(embeds, 10)) {
+    for (const embed of chunk(embeds, 10)) {
       interaction.channel
-        ?.send({ embeds: chunk })
+        ?.send({ embeds: embed })
         .catch(() =>
           log.error(`Failed to send category embeds to channel[${interaction.channel?.id}] in guild[${interaction.guildId}]`)
         );

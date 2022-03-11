@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-10
+ * @date      2022-03-11
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -13,7 +13,7 @@ import { ButtonComponent, Client, Discord, SelectMenuComponent, Slash } from 'di
 import { GET_REACT_ROLE_BY_ID, GET_CATEGORY_BY_ID, GET_REACT_ROLES_NOT_IN_CATEGORIES, GET_REACT_ROLES_BY_CATEGORY_ID, UPDATE_REACT_ROLE_CATEGORY, GET_GUILD_CATEGORIES } from '../../database/database.js';
 import { ReactRole } from '../../database/database.js';
 import { InteractionFailedHandlerGenerator, logger, MessageWithErrorHandlerGenerator } from '../../services/log.service.js';
-import { spliceIntoChunks } from '../../utils/splice-into-chunks.js';
+import { chunk } from '../../utils/native/chunk.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
@@ -121,7 +121,7 @@ export abstract class CategoryAddCommand {
   };
 
   private buildReactRoleButtons = async (reactRoles: ReactRole[], categoryId: number) =>
-    spliceIntoChunks(reactRoles, 5).map(chunk =>
+    chunk(reactRoles, 5).map(chunk =>
       new MessageActionRow({
         components: chunk.map((r, i) =>
           new MessageButton({
