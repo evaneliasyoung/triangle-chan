@@ -4,13 +4,13 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-10
+ * @date      2022-03-11
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import { Guild, GuildBasedChannel, GuildMember, MessageEmbed, ThreadChannelTypes, Client } from 'discord.js';
 import { DateTime } from 'luxon';
-import { GET_REACT_ROLES_BY_CATEGORY_ID } from '../database/database.js';
+import { Counter, GET_REACT_ROLES_BY_CATEGORY_ID } from '../database/database.js';
 import { Category, ReactRole } from '../database/database.js';
 import { BotInfo } from '../info.js';
 import { COLOR } from '../models/color.enum.js';
@@ -176,4 +176,21 @@ export default class EmbedService {
     },
     color: COLOR.BRLL
   });
+
+  counterEmbed = async (client: Client, counter: Counter) => {
+    const { guildId, name, type, roleId, emojiId } = counter;
+    let description = `Emoji: ${emojiId}\nType: **${['Total', 'Online', 'Boost', 'Role'][type - 1]}**`;
+    if (roleId) {
+      const guild = await client.guilds.fetch(guildId);
+      const { roles } = guild;
+      const role = await roles.fetch(roleId);
+      if (role) description += `\nRole: ${role}`;
+    }
+    return new MessageEmbed({
+      title: `${name} Counter`,
+      description,
+      color: COLOR.BRLL
+    });
+  };
+
 }

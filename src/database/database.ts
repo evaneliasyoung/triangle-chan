@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-10
+ * @date      2022-03-11
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -25,6 +25,7 @@ export {
 
 export {
   DELETE_COUNTER_BY_ID,
+  DELETE_COUNTER_BY_NAME,
   DLETE_ALL_COUNTERS_BY_GUILD_ID,
   GET_COUNTERS_BY_GUILD_ID,
   GET_COUNTER_BY_ID,

@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-10
- * @date      2022-03-10
+ * @date      2022-03-11
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -71,6 +71,9 @@ export const CREATE_COUNTER = async (
 
 export const DELETE_COUNTER_BY_ID = async (id: number) =>
   await Counter.delete({ id });
+
+export const DELETE_COUNTER_BY_NAME = async (name: string) =>
+  await Counter.delete({ name });
 
 export const DLETE_ALL_COUNTERS_BY_GUILD_ID = async (guildId: string) =>
   await Counter.delete({ guildId });
