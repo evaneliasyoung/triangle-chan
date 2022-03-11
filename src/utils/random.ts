@@ -4,11 +4,11 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-08
- * @date      2022-03-10
+ * @date      2022-03-11
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-const { random, floor } = Math;
+const { random, floor, round } = Math;
 
 export namespace Random {
   export function number(min: void, max: void): number;
@@ -24,7 +24,7 @@ export namespace Random {
   export function integer(min: number, max: number): number;
 
   export function integer(min: any, max: any) {
-    return floor(Random.number(min, max));
+    return (typeof min !== 'number' && typeof max !== 'number' ? round : floor)(Random.number(min, max));
   }
 
   export function boolean(): boolean {
