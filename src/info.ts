@@ -14,7 +14,7 @@ import { DateTime } from 'luxon';
 export namespace BotInfo {
   export const tagline = `Triangle-Chan: The Tenaciously Tasteful Discord Tease`;
   export const library = '[discord.ts / Node](https://github.com/oceanroleplay/discord.ts)';
-  export const version = '0.2.0-b8';
+  export const version = '0.2.0-b10';
   export const date = DateTime.fromObject({ year: 2022, month: 3, day: 11 });
   export const activity: ActivitiesOptions = { name: 'Triangle', type: 'WATCHING' };
 }

@@ -9,11 +9,13 @@
  */
 
 import { Guild, GuildBasedChannel, GuildMember, MessageEmbed, ThreadChannelTypes, Client } from 'discord.js';
+import { DApplicationCommand } from 'discordx';
 import { DateTime } from 'luxon';
 import { Counter, GET_REACT_ROLES_BY_CATEGORY_ID } from '../database/database.js';
 import { Category, ReactRole } from '../database/database.js';
 import { BotInfo } from '../info.js';
 import { COLOR } from '../models/color.enum.js';
+import { ECommandCategory } from '../models/command-category.model.js';
 import { Singleton } from '../models/singleton.model.js';
 import { dateToISO, dateToStringAndDuration, expandDateToUTC } from '../utils/luxon.js';
 import { toTitleCase } from '../utils/string.js';
@@ -44,6 +46,16 @@ export default class EmbedService {
         return '[UNKNOWN]';
     }
   };
+
+  helpEmbed = (category: ECommandCategory, commands: DApplicationCommand[]) =>
+    new MessageEmbed({
+      title: `**${category.toUpperCase()} commands**`,
+      fields: commands.map(({ name, description }) => ({
+        name: `/${name}`,
+        value: description
+      })),
+      color: COLOR.DEVL
+    });
 
   categoryReactRoleEmbed = async (category: Category) => {
     const categoryRoles = await GET_REACT_ROLES_BY_CATEGORY_ID(category.id);
