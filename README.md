@@ -19,9 +19,9 @@ Users can create "Reaction Roles," "Counter Channels," and more to organize thei
 [snyk-url]: https://snyk.io/test/github/evaneliasyoung/triangle-chan
 
 ## Purpose
-### Reaction Roles
-### Counter Channels
-### Elected & Appointed Roles
+- Reaction Roles
+- Counter Channels
+- Elected & Appointed Roles
 
 ## Environment
 ```env
