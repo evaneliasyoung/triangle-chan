@@ -7,7 +7,7 @@
 
 Triangle-Chan is a [Discord](https://discord.com/) application with a variety of functions.
 
-Users can create "Reaction Roles," "Counter Channels," and more to organize their serviers.
+Users can create "Reaction Roles," "Counter Channels," and more to organize their servers.
 
 [release-image]: https://img.shields.io/github/package-json/v/evaneliasyoung/triangle-chan/main
 [release-url]: https://github.com/evaneliasyoung/triangle-chan
