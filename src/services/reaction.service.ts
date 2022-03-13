@@ -4,12 +4,12 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-11
+ * @date      2022-03-13
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import { MessageReaction, PartialMessageReaction, User, PartialUser, GuildMember, Guild } from 'discord.js';
-import { GET_REACT_MESSAGE_BY_MSGID_AND_EMOJI_ID, GET_CATEGORY_BY_ID, GET_REACT_ROLES_BY_CATEGORY_ID } from '../database/database.js';
+import { GET_REACT_MESSAGE_BY_MSGID_AND_EMOJI_ID, GET_CATEGORY_BY_ID, GET_REACT_ROLES_BY_CATEGORY_ID, GET_REACT_MESSAGE_BY_MESSAGE_ID } from '../database/database.js';
 import { ReactMessage } from '../database/database.js';
 import { logger, MessageWithErrorHandlerGenerator } from './log.service.js';
 const log = logger(import.meta);
@@ -25,6 +25,10 @@ export default class ReactionHandler {
 
     const emojiId = emoji.id ?? emoji.name;
     if (!emojiId) return log.debug(`Emoji doesn't exist on message[${message.id}] reaction for guild[${guild.id}].`);
+
+    const hasReact = await GET_REACT_MESSAGE_BY_MESSAGE_ID(message.id)
+      .catch(MessageWithErrorHandler(`Failed to query for react message.`));
+    if (!hasReact) return log.debug('not a react message, ingore.');
 
     const reactMessage = await GET_REACT_MESSAGE_BY_MSGID_AND_EMOJI_ID(message.id, emojiId)
       .catch(MessageWithErrorHandler(`Failed to query for react message.`));
