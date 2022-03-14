@@ -8,13 +8,17 @@
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-import { ActivitiesOptions } from 'discord.js';
-import { DateTime } from 'luxon';
+import {ActivitiesOptions} from 'discord.js';
+import {DateTime} from 'luxon';
 
 export namespace BotInfo {
   export const tagline = `Triangle-Chan: The Tenaciously Tasteful Discord Tease`;
-  export const library = '[discord.ts / Node](https://github.com/oceanroleplay/discord.ts)';
-  export const version = '0.2.1';
-  export const date = DateTime.fromObject({ year: 2022, month: 3, day: 13 });
-  export const activity: ActivitiesOptions = { name: 'Triangle', type: 'WATCHING' };
+  export const library =
+    '[discord.ts / Node](https://github.com/oceanroleplay/discord.ts)';
+  export const version = '0.3.0';
+  export const date = DateTime.fromObject({year: 2022, month: 3, day: 13});
+  export const activity: ActivitiesOptions = {
+    name: 'Triangle',
+    type: 'WATCHING',
+  };
 }

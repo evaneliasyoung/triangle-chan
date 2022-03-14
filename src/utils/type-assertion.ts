@@ -8,15 +8,30 @@
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-import { AnyChannel, GuildBasedChannel, TextChannel, VoiceChannel } from 'discord.js';
-import { ECounterType, TCounterType } from '../database/entities/counter.entity.js';
-import { ECommandCategory, TCommandCategory } from '../models/command-category.model.js';
+import {
+  AnyChannel,
+  GuildBasedChannel,
+  TextChannel,
+  VoiceChannel,
+} from 'discord.js';
+import {
+  ECounterType,
+  TCounterType,
+} from '../database/entities/counter.entity.js';
+import {
+  ECommandCategory,
+  TCommandCategory,
+} from '../models/command-category.model.js';
 
-export function isTextChannel(channel?: AnyChannel | GuildBasedChannel | null): channel is TextChannel {
+export function isTextChannel(
+  channel?: AnyChannel | GuildBasedChannel | null
+): channel is TextChannel {
   return channel?.type === 'GUILD_TEXT';
 }
 
-export function isVoiceChannel(channel?: AnyChannel | GuildBasedChannel | null): channel is VoiceChannel {
+export function isVoiceChannel(
+  channel?: AnyChannel | GuildBasedChannel | null
+): channel is VoiceChannel {
   return channel?.type === 'GUILD_VOICE';
 }
 

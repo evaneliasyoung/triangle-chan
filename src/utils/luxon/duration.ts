@@ -9,7 +9,7 @@
  */
 
 import humanizeDuration from 'humanize-duration';
-import { DateTime, Duration } from 'luxon';
+import {DateTime, Duration} from 'luxon';
 
 /**
  * Returns the humanized string of the Duration.
@@ -17,4 +17,4 @@ import { DateTime, Duration } from 'luxon';
  * @returns The humanized string of the Duration.
  */
 export const diffToString = (diff: Duration) =>
-  `${humanizeDuration(diff.milliseconds, { conjunction: ' and ' })} ago`;
+  `${humanizeDuration(diff.milliseconds, {conjunction: ' and '})} ago`;

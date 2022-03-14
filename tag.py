@@ -5,7 +5,7 @@
 
 @author    Evan Elias Young
 @date      2022-03-09
-@date      2022-03-09
+@date      2022-03-13
 @copyright Copyright 2022 Evan Elias Young. All rights reserved.
 """
 
@@ -103,7 +103,7 @@ def update_info(ver: Version, info: list[str]) -> None:
             info[i] = (
                 "  export const date = DateTime.fromObject("
                 + now.strftime(
-                    f"{{ year: %Y, month: %{NOPAD_CHAR}m, day: %{NOPAD_CHAR}d }}"
+                    f"{{year: %Y, month: %{NOPAD_CHAR}m, day: %{NOPAD_CHAR}d}}"
                 )
                 + ");\n"
             )

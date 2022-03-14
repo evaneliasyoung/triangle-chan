@@ -8,8 +8,8 @@
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-import { DateTime } from 'luxon';
-import { diffToString } from './duration.js';
+import {DateTime} from 'luxon';
+import {diffToString} from './duration.js';
 
 /**
  * Returns the huge localized string representing the Luxon DateTime object.
@@ -24,8 +24,7 @@ export const dateToHugeString = (date: DateTime) =>
  * @param date The Luxon DateTime object.
  * @returns The ISO string representing the Date.
  */
-export const dateToISO = (date: DateTime) =>
-  date.toFormat('yyyy-MM-dd');
+export const dateToISO = (date: DateTime) => date.toFormat('yyyy-MM-dd');
 
 /**
  * Returns the UTC converted Luxon DateTime object.
@@ -33,7 +32,7 @@ export const dateToISO = (date: DateTime) =>
  * @returns The UTC converted Luxon DateTime object.
  */
 export const expandDateToUTC = (date: Date) =>
-  DateTime.fromJSDate(date).setZone('utc', { keepLocalTime: false });
+  DateTime.fromJSDate(date).setZone('utc', {keepLocalTime: false});
 
 /**
  * Returns the huge localized DateTime string and humanized Duration string.

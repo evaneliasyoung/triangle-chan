@@ -8,12 +8,21 @@
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-import { CommandInteraction, Role } from 'discord.js';
-import { Discord, Slash, SlashOption } from 'discordx';
-import { DELETE_REACT_ROLE_BY_ROLE_ID, GET_REACT_ROLE_BY_ROLE_ID } from '../../database/database.js';
-import { ReactMessageUpdate as EReactMessageUpdate, updateReactMessages } from '../../utils/discordx/reactions.js';
+import {CommandInteraction, Role} from 'discord.js';
+import {Discord, Slash, SlashOption} from 'discordx';
+import {
+  DELETE_REACT_ROLE_BY_ROLE_ID,
+  GET_REACT_ROLE_BY_ROLE_ID,
+} from '../../database/database.js';
+import {
+  ReactMessageUpdate as EReactMessageUpdate,
+  updateReactMessages,
+} from '../../utils/discordx/reactions.js';
 import EmbedService from '../../services/embed.service.js';
-import { InteractionFailedHandlerGenerator, logger } from '../../services/log.service.js';
+import {
+  InteractionFailedHandlerGenerator,
+  logger,
+} from '../../services/log.service.js';
 const log = logger(import.meta);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
@@ -21,14 +30,21 @@ const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 export abstract class ReactRemoveCommand {
   #embedService = new EmbedService();
 
-  @Slash('react-remove', { description: 'Remove an existing reaction role from a drop down menu.' })
+  @Slash('react-remove', {
+    description: 'Remove an existing reaction role from a drop down menu.',
+  })
   async execute(
-    @SlashOption('role', { description: 'The reaction role you want deleted.', type: 'ROLE' })
+    @SlashOption('role', {
+      description: 'The reaction role you want deleted.',
+      type: 'ROLE',
+    })
     role: Role,
     interaction: CommandInteraction
   ) {
     if (!role) {
-      log.error(`Interaction was missing role property despite it being required.`);
+      log.error(
+        `Interaction was missing role property despite it being required.`
+      );
       return await interaction
         .reply({
           ephemeral: true,
@@ -55,7 +71,9 @@ export abstract class ReactRemoveCommand {
     try {
       await DELETE_REACT_ROLE_BY_ROLE_ID(role.id);
 
-      log.debug(`Successfully removed guilds[${interaction.guildId}] react role[${role.id}]`);
+      log.debug(
+        `Successfully removed guilds[${interaction.guildId}] react role[${role.id}]`
+      );
 
       const emojiMention = reactRole?.emojiTag ?? reactRole?.emojiId;
 
@@ -76,7 +94,9 @@ export abstract class ReactRemoveCommand {
         );
       }
     } catch (e) {
-      log.error(`Error'd when trying to delete react role[${role.id}] on guild[${interaction.guildId}]`);
+      log.error(
+        `Error'd when trying to delete react role[${role.id}] on guild[${interaction.guildId}]`
+      );
       log.error(`${e}`);
 
       interaction
@@ -86,5 +106,5 @@ export abstract class ReactRemoveCommand {
         })
         .catch(InteractionFailedHandler);
     }
-  };
+  }
 }

@@ -8,8 +8,8 @@
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-import { ClientEvents, Client } from 'discord.js';
-import { Discord, On } from 'discordx';
+import {ClientEvents, Client} from 'discord.js';
+import {Discord, On} from 'discordx';
 import ReactionHandler from '../services/reaction.service.js';
 
 @Discord()
@@ -17,12 +17,20 @@ abstract class MessageEvents {
   #reactionService = new ReactionHandler();
 
   @On('messageReactionAdd')
-  async onReactionAdd([reaction, user]: ClientEvents['messageReactionAdd'], _client: Client, _guard: any) {
+  async onReactionAdd(
+    [reaction, user]: ClientEvents['messageReactionAdd'],
+    _client: Client,
+    _guard: any
+  ) {
     return await this.#reactionService.handleReaction(reaction, user, 'add');
   }
 
   @On('messageReactionRemove')
-  async onReactionRemove([reaction, user]: ClientEvents['messageReactionRemove'], _client: Client, _guard: any) {
+  async onReactionRemove(
+    [reaction, user]: ClientEvents['messageReactionRemove'],
+    _client: Client,
+    _guard: any
+  ) {
     return await this.#reactionService.handleReaction(reaction, user, 'remove');
   }
 }

@@ -8,10 +8,13 @@
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-import { CommandInteraction } from 'discord.js';
-import { Discord, Slash } from 'discordx';
+import {CommandInteraction} from 'discord.js';
+import {Discord, Slash} from 'discordx';
 import CounterService from '../../services/counter.service.js';
-import { InteractionFailedHandlerGenerator, logger } from '../../services/log.service.js';
+import {
+  InteractionFailedHandlerGenerator,
+  logger,
+} from '../../services/log.service.js';
 const log = logger(import.meta);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
@@ -19,11 +22,11 @@ const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 export abstract class CounterSyncCommand {
   #counterService = new CounterService();
 
-  @Slash('counter-sync', { description: 'Syncs the counts of the counter channels.' })
-  async execute(
-    interaction: CommandInteraction
-  ) {
-    const { guild, guildId } = interaction;
+  @Slash('counter-sync', {
+    description: 'Syncs the counts of the counter channels.',
+  })
+  async execute(interaction: CommandInteraction) {
+    const {guild, guildId} = interaction;
     if (!guildId) return log.error(`GuildID did not exist on interaction.`);
     if (!guild) return log.error('Guild did not exist on interaction.');
 
@@ -38,6 +41,5 @@ export abstract class CounterSyncCommand {
         .reply(`I'm having trouble syncing the counters.`)
         .catch(InteractionFailedHandler);
     }
-
   }
 }

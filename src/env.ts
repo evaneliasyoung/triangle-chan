@@ -4,15 +4,15 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-10
+ * @date      2022-03-11
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import * as dotenv from 'dotenv';
-import { dirname } from '@discordx/importer';
+import {dirname} from '@discordx/importer';
 
 export const __dirname: string = dirname(import.meta.url);
-dotenv.config({ path: `${__dirname}/../.env` });
+dotenv.config({path: `${__dirname}/../.env`});
 
 export const CLIENT_ID: string = process.env.CLIENT_ID ?? '';
 export const BOT_TOKEN: string = process.env.BOT_TOKEN ?? '';

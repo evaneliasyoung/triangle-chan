@@ -4,38 +4,69 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-10
- * @date      2022-03-11
+ * @date      2022-03-13
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-import { AnyChannel, CommandInteraction, Guild, MessageActionRow, MessageButton, MessageEmbed, Role } from 'discord.js';
-import { Discord, Slash, SlashOption } from 'discordx';
+import {AnyChannel, CommandInteraction, Guild, Role} from 'discord.js';
+import {Discord, Slash, SlashOption} from 'discordx';
 import emojiRegex from 'emoji-regex';
-import { CREATE_COUNTER, ECounterType } from '../../database/entities/counter.entity.js';
-import { isVoiceChannel, asCounterType, isCounterType } from '../../utils/type-assertion.js';
-import { isValidRolePosition } from '../react/role.command.js';
-import { InteractionFailedHandlerGenerator, logger, MessageWithErrorHandlerGenerator } from '../../services/log.service.js';
+import {
+  CREATE_COUNTER,
+  ECounterType,
+} from '../../database/entities/counter.entity.js';
+import {
+  isVoiceChannel,
+  asCounterType,
+  isCounterType,
+} from '../../utils/type-assertion.js';
+import {
+  InteractionFailedHandlerGenerator,
+  logger,
+  MessageWithErrorHandlerGenerator,
+} from '../../services/log.service.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class CounterCreateCommand {
-  @Slash('counter-create', { description: 'Create a new counter to count members in the name of a voice channel.' })
+  @Slash('counter-create', {
+    description:
+      'Create a new counter to count members in the name of a voice channel.',
+  })
   async execute(
-    @SlashOption('name', { description: 'The name of the counter.', type: 'STRING' })
+    @SlashOption('name', {
+      description: 'The name of the counter.',
+      type: 'STRING',
+    })
     name: string,
-    @SlashOption('emoji', { description: 'The emoji you want to use.', type: 'STRING' })
+    @SlashOption('emoji', {
+      description: 'The emoji you want to use.',
+      type: 'STRING',
+    })
     emoji: string,
-    @SlashOption('channel', { description: 'The voice channel to update.', type: 'CHANNEL' })
-    channel: Extract<AnyChannel, { guild: Guild; }>,
-    @SlashOption('type', { description: 'The type of filter to use when counting members. [\`total\`, \`online\`, \`boost\`, \`role\`]', type: 'STRING' })
+    @SlashOption('channel', {
+      description: 'The voice channel to update.',
+      type: 'CHANNEL',
+    })
+    channel: Extract<AnyChannel, {guild: Guild}>,
+    @SlashOption('type', {
+      description:
+        'The type of filter to use when counting members. [`total`, `online`, `boost`, `role`]',
+      type: 'STRING',
+    })
     type: string,
-    @SlashOption('role', { description: `The role to count, if \`type\` is set to \`role\`.`, type: 'ROLE', required: false })
+    @SlashOption('role', {
+      description: `The role to count, if \`type\` is set to \`role\`.`,
+      type: 'ROLE',
+      required: false,
+    })
     role: Role | null | undefined,
     interaction: CommandInteraction
   ) {
-    if (!interaction.guildId) return log.error(`GuildID did not exist on interaction.`);
+    if (!interaction.guildId)
+      return log.error(`GuildID did not exist on interaction.`);
 
     if (!isVoiceChannel(channel))
       return await interaction
@@ -57,7 +88,7 @@ export abstract class CounterCreateCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! I don't understand what type you meant by ${type}. I only use \`total\`, \`online\`, \`boost\`, and \`role\`.`
+          content: `Hey! I don't understand what type you meant by ${type}. I only use \`total\`, \`online\`, \`boost\`, and \`role\`.`,
         })
         .catch(InteractionFailedHandler);
 
@@ -66,9 +97,11 @@ export abstract class CounterCreateCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You didn't pass in a proper emoji. You need to pass in a Discord emoji.`
+          content: `Hey! You didn't pass in a proper emoji. You need to pass in a Discord emoji.`,
         })
-        .catch(MessageWithErrorHandler(`Failed to alert user of invalid emojis.`));
+        .catch(
+          MessageWithErrorHandler(`Failed to alert user of invalid emojis.`)
+        );
 
     const emojiId = unicodeEmoji[0];
     if (!emojiId || emojiId === '') {
@@ -84,38 +117,24 @@ export abstract class CounterCreateCommand {
 
     const counterType = asCounterType(type);
     if (counterType === ECounterType.role) {
-      if (!role) return await interaction
-        .reply({
-          ephemeral: true,
-          content: `I'm having trouble finding the role that you are talking about.`
-        })
-        .catch(InteractionFailedHandler);
-      if (!isValidRolePosition(interaction, role)) {
-        const embed = new MessageEmbed({
-          title: 'Reaction Roles Setup',
-          description: `The role <@&${role.id}> is above me in the role list so I can't hand it out.\nPlease make sure I have a role that is above it.`
-        });
-
-        const button = new MessageActionRow({
-          components: [new MessageButton({
-            label: 'Discord Roles',
-            url: 'https://support.discord.com/hc/en-us/articles/214836687-Role-Management-101',
-            style: 'LINK'
-          })]
-        });
-
+      if (!role)
         return await interaction
           .reply({
             ephemeral: true,
-            embeds: [embed],
-            components: [button],
+            content: `I'm having trouble finding the role that you are talking about.`,
           })
           .catch(InteractionFailedHandler);
-      }
     }
-    await CREATE_COUNTER(name, emojiId, interaction.guildId, channel.id, counterType, role?.id);
+    await CREATE_COUNTER(
+      name,
+      emojiId,
+      interaction.guildId,
+      channel.id,
+      counterType,
+      role?.id
+    );
     await interaction
       .reply(`Hey! I successfully created the counter \`${name}\` for you!`)
       .catch(InteractionFailedHandler);
-  };
+  }
 }

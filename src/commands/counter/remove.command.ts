@@ -8,11 +8,14 @@
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-import { CommandInteraction } from 'discord.js';
-import { Discord, Slash, SlashOption } from 'discordx';
-import { DELETE_COUNTER_BY_NAME } from '../../database/database.js';
+import {CommandInteraction} from 'discord.js';
+import {Discord, Slash, SlashOption} from 'discordx';
+import {DELETE_COUNTER_BY_NAME} from '../../database/database.js';
 import CounterService from '../../services/counter.service.js';
-import { InteractionFailedHandlerGenerator, logger } from '../../services/log.service.js';
+import {
+  InteractionFailedHandlerGenerator,
+  logger,
+} from '../../services/log.service.js';
 const log = logger(import.meta);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
@@ -20,13 +23,19 @@ const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 export abstract class CounterRemoveCommand {
   #counterService = new CounterService();
 
-  @Slash('counter-remove', { description: 'Removes the counters from the voice channels.' })
+  @Slash('counter-remove', {
+    description: 'Removes the counters from the voice channels.',
+  })
   async execute(
-    @SlashOption('name', { description: 'The name of the counter, this is case sensitive and used to find your counter.', type: 'STRING' })
+    @SlashOption('name', {
+      description:
+        'The name of the counter, this is case sensitive and used to find your counter.',
+      type: 'STRING',
+    })
     name: string,
     interaction: CommandInteraction
   ) {
-    const { guild, guildId } = interaction;
+    const {guild, guildId} = interaction;
     if (!guildId) return log.error(`GuildID did not exist on interaction.`);
     if (!guild) return log.error('Guild did not exist on interaction.');
 

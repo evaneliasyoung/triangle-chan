@@ -8,12 +8,18 @@
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-import { Singleton } from '../models/singleton.model.js';
-import { Random } from '../utils/native/random.js';
+import {Singleton} from '../models/singleton.model.js';
+import {Random} from '../utils/native/random.js';
 
 @Singleton
 export default class LanguageService {
-  readonly WAIT_REPLIES = [`I'll think about it...`, `Procrastinating...`, `Putting it off...`] as const;
+  readonly WAIT_REPLIES = [
+    `I'll think about it...`,
+    `Procrastinating...`,
+    `Putting it off...`,
+  ] as const;
 
-  get wait() { return Random.pick(this.WAIT_REPLIES); }
+  get wait() {
+    return Random.pick(this.WAIT_REPLIES);
+  }
 }

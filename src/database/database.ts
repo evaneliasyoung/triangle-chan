@@ -8,11 +8,11 @@
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-export { Category } from './entities/category.entity.js';
-export { Counter } from './entities/counter.entity.js';
-export { GuildConfig } from './entities/guild.entity.js';
-export { ReactMessage } from './entities/react-message.entity.js';
-export { ReactRole } from './entities/react-role.entity.js';
+export {Category} from './entities/category.entity.js';
+export {Counter} from './entities/counter.entity.js';
+export {GuildConfig} from './entities/guild.entity.js';
+export {ReactMessage} from './entities/react-message.entity.js';
+export {ReactRole} from './entities/react-role.entity.js';
 
 export {
   GET_GUILD_CATEGORIES,
@@ -20,7 +20,7 @@ export {
   EDIT_CATEGORY_BY_ID,
   GET_CATEGORY_BY_NAME,
   GET_CATEGORY_BY_ID,
-  DELETE_CATEGORY_BY_ID
+  DELETE_CATEGORY_BY_ID,
 } from './entities/category.entity.js';
 
 export {
@@ -30,7 +30,7 @@ export {
   GET_COUNTERS_BY_GUILD_ID,
   GET_COUNTER_BY_ID,
   GET_COUNTER_BY_NAME,
-  EDIT_COUNTER_BY_ID
+  EDIT_COUNTER_BY_ID,
 } from './entities/counter.entity.js';
 
 export {
@@ -40,7 +40,7 @@ export {
   GET_REACT_MESSAGE_BY_MSGID_AND_EMOJI_ID,
   DELETE_REACT_MESSAGE_BY_ROLE_ID,
   DELETE_REACT_MESSAGE_BY_ID,
-  CREATE_REACT_MESSAGE
+  CREATE_REACT_MESSAGE,
 } from './entities/react-message.entity.js';
 
 export {
@@ -55,5 +55,5 @@ export {
   GET_REACT_ROLE_BY_EMOJI,
   UPDATE_REACT_ROLE_EMOJI_TAG,
   UPDATE_REACT_ROLE_CATEGORY,
-  FREE_ROLES_BY_CATEGORY_ID
+  FREE_ROLES_BY_CATEGORY_ID,
 } from './entities/react-role.entity.js';

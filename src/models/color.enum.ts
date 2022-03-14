@@ -4,57 +4,57 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-10
+ * @date      2022-03-11
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 export enum COLOR {
   /** Brand Green */
-  BDGN = 0x57F287,
+  BDGN = 0x57f287,
   /** Brand Yellow */
-  BDYL = 0xFEE75C,
+  BDYL = 0xfee75c,
   /** Brand Fuschsia */
-  BDFC = 0xEB459E,
+  BDFC = 0xeb459e,
   /** Brand Red */
-  BDRD = 0xED4245,
+  BDRD = 0xed4245,
   /** Online Green */
-  ONLN = 0x3DA560,
+  ONLN = 0x3da560,
   /** Idle Yellow */
-  IDLE = 0xF9A62B,
+  IDLE = 0xf9a62b,
   /** DND Red */
-  DNDR = 0xEC4145,
+  DNDR = 0xec4145,
   /** Bravery PUrple */
-  BRVY = 0x9B84EC,
+  BRVY = 0x9b84ec,
   /** Brilliance Red */
-  BRLL = 0xF37B68,
+  BRLL = 0xf37b68,
   /** Balance Cyan */
-  BLNC = 0x49DDC1,
+  BLNC = 0x49ddc1,
   /** Bug Hunter Green */
-  BHNT = 0x48B784,
+  BHNT = 0x48b784,
   /** Hypesquad Yellow */
-  HPSQ = 0xF8A532,
+  HPSQ = 0xf8a532,
   /** Greyple */
-  GRPL = 0x99AAB5,
+  GRPL = 0x99aab5,
   /** Not-Quite Black */
-  NQBL = 0x23272A,
+  NQBL = 0x23272a,
   /** Nitro Grey */
-  NTGR = 0xB7C2CE,
+  NTGR = 0xb7c2ce,
   /** Partner Blue */
-  PTNR = 0x4187ED,
+  PTNR = 0x4187ed,
   /** Dark Grey */
-  DGRY = 0x36393F,
+  DGRY = 0x36393f,
   /** Developer Blue */
-  DEVL = 0x3E70DD,
+  DEVL = 0x3e70dd,
   /** Nitro Blue */
-  NTBL = 0x4F5D7E,
+  NTBL = 0x4f5d7e,
   /** Blurple */
-  BLPL = 0x5865F2,
+  BLPL = 0x5865f2,
   /** Dark Blurple */
-  DBPL = 0x4E5D94,
+  DBPL = 0x4e5d94,
   /** Boost Pink */
-  BSTP = 0xF47FFF,
+  BSTP = 0xf47fff,
   /** Full White */
-  WHTE = 0xFFFFFF,
+  WHTE = 0xffffff,
   /** Full Black */
   BLCK = 0x000000,
 }

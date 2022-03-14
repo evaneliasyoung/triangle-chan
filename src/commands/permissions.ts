@@ -4,11 +4,11 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-10
+ * @date      2022-03-11
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-import { Permissions } from 'discord.js';
+import {Permissions} from 'discord.js';
 
 export const PermissionMappings: Map<bigint, string> = new Map([
   [Permissions.FLAGS.READ_MESSAGE_HISTORY, 'READ_MESSAGE_HISTORY'],

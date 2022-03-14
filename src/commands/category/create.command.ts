@@ -4,30 +4,50 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-10
+ * @date      2022-03-11
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
-import { CommandInteraction } from 'discord.js';
-import { Discord, Slash, SlashOption } from 'discordx';
-import { GET_CATEGORY_BY_NAME, CREATE_GUILD_CATEGORY } from '../../database/database.js';
-import { InteractionFailedHandlerGenerator, logger } from '../../services/log.service.js';
+import {CommandInteraction} from 'discord.js';
+import {Discord, Slash, SlashOption} from 'discordx';
+import {
+  GET_CATEGORY_BY_NAME,
+  CREATE_GUILD_CATEGORY,
+} from '../../database/database.js';
+import {
+  InteractionFailedHandlerGenerator,
+  logger,
+} from '../../services/log.service.js';
 const log = logger(import.meta);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class CategoryCreateCommand {
-  @Slash('category-create', { description: 'Create a new category to categorize your reaction roles in.' })
+  @Slash('category-create', {
+    description: 'Create a new category to categorize your reaction roles in.',
+  })
   async execute(
-    @SlashOption('name', { description: 'The name of the category.', type: 'STRING' })
+    @SlashOption('name', {
+      description: 'The name of the category.',
+      type: 'STRING',
+    })
     name: string,
-    @SlashOption('description', { description: 'Give your category a description.', type: 'STRING', required: false })
+    @SlashOption('description', {
+      description: 'Give your category a description.',
+      type: 'STRING',
+      required: false,
+    })
     description: string | null,
-    @SlashOption('mutually-exclusive', { description: 'Make roles from this category mutually exclusive.', type: 'BOOLEAN', required: false })
+    @SlashOption('mutually-exclusive', {
+      description: 'Make roles from this category mutually exclusive.',
+      type: 'BOOLEAN',
+      required: false,
+    })
     mutuallyExclusive: boolean | null,
     interaction: CommandInteraction
   ) {
-    if (!interaction.guildId) return log.error(`GuildID did not exist on interaction.`);
+    if (!interaction.guildId)
+      return log.error(`GuildID did not exist on interaction.`);
 
     if (!name)
       return await interaction
@@ -36,7 +56,6 @@ export abstract class CategoryCreateCommand {
           content: `Hey! It says you submitted no category name! You need to submit that. Please try again.`,
         })
         .catch(InteractionFailedHandler);
-
     else if (name.length > 90)
       return await interaction
         .reply({
@@ -47,22 +66,38 @@ export abstract class CategoryCreateCommand {
 
     if (await GET_CATEGORY_BY_NAME(interaction.guildId, name))
       return await interaction
-        .reply(`Hey! It turns out you already have a category with that name made. Try checking it out.`)
+        .reply(
+          `Hey! It turns out you already have a category with that name made. Try checking it out.`
+        )
         .catch(InteractionFailedHandler);
 
-    CREATE_GUILD_CATEGORY(interaction.guildId, name, description, mutuallyExclusive)
+    CREATE_GUILD_CATEGORY(
+      interaction.guildId,
+      name,
+      description,
+      mutuallyExclusive
+    )
       .then(async () => {
-        log.debug(`Successfully created category[${name}] for guild[${interaction.guildId}]`);
+        log.debug(
+          `Successfully created category[${name}] for guild[${interaction.guildId}]`
+        );
         await interaction
-          .reply(`Hey! I successfully created the category \`${name}\` for you!`)
+          .reply(
+            `Hey! I successfully created the category \`${name}\` for you!`
+          )
           .catch(InteractionFailedHandler);
       })
       .catch(async e => {
-        log.error(`Issue creating category[${name}] for guild[${interaction.guildId}]`, e);
+        log.error(
+          `Issue creating category[${name}] for guild[${interaction.guildId}]`,
+          e
+        );
 
         await interaction
-          .reply(`Hey! I had some trouble creating that category for you. Please wait a minute and try again.`)
+          .reply(
+            `Hey! I had some trouble creating that category for you. Please wait a minute and try again.`
+          )
           .catch(InteractionFailedHandler);
       });
-  };
+  }
 }
