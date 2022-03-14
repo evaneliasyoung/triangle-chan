@@ -12,7 +12,8 @@ import {ActivitiesOptions} from 'discord.js';
 import {DateTime} from 'luxon';
 
 export namespace BotInfo {
-  export const source = '[GitHub](https://github.com/evaneliasyoung/triangle-chan)'
+  export const source =
+    '[GitHub](https://github.com/evaneliasyoung/triangle-chan)';
   export const tagline = `Triangle-Chan: The Tenaciously Tasteful Discord Tease`;
   export const library =
     '[discord.ts / Node](https://github.com/oceanroleplay/discord.ts)';
