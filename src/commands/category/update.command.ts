@@ -43,7 +43,10 @@ export abstract class CategoryUpdateCommand {
     interaction: CommandInteraction
   ) {
     if (!interaction.guildId)
-      return log.error(`GuildID did not exist on interaction.`);
+      return await interaction.reply({
+        ephemeral: true,
+        content: 'Hey! `/category-update` can only be used in a server.',
+      });
 
     if (!messageLink) {
       log.error(

@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-09
- * @date      2022-03-13
+ * @date      2022-03-14
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -12,6 +12,7 @@ import {ActivitiesOptions} from 'discord.js';
 import {DateTime} from 'luxon';
 
 export namespace BotInfo {
+  export const source = '[GitHub](https://github.com/evaneliasyoung/triangle-chan)'
   export const tagline = `Triangle-Chan: The Tenaciously Tasteful Discord Tease`;
   export const library =
     '[discord.ts / Node](https://github.com/oceanroleplay/discord.ts)';

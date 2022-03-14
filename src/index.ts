@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-11
+ * @date      2022-03-14
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -34,6 +34,8 @@ import {
   ReactMessage,
   ReactRole,
 } from './database/database.js';
+import PermissionService from './services/permission.service.js';
+const permissionService = new PermissionService();
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
 
@@ -48,6 +50,8 @@ const client = new Client({
   ],
   partials: ['MESSAGE', 'REACTION', 'CHANNEL', 'GUILD_MEMBER'],
 });
+
+permissionService.client = client;
 
 async function run() {
   const path: string = `${__dirname}/{events,commands}/**/*.ts`;

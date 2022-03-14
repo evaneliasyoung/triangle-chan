@@ -47,7 +47,10 @@ export abstract class CategoryCreateCommand {
     interaction: CommandInteraction
   ) {
     if (!interaction.guildId)
-      return log.error(`GuildID did not exist on interaction.`);
+      return await interaction.reply({
+        ephemeral: true,
+        content: 'Hey! `/category-create` can only be used in a server.',
+      });
 
     if (!name)
       return await interaction

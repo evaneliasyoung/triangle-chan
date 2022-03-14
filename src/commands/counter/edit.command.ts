@@ -71,7 +71,10 @@ export abstract class CounterEditCommand {
     interaction: CommandInteraction
   ) {
     if (!interaction.guildId)
-      return log.error(`GuildID did not exist on interaction.`);
+      return await interaction.reply({
+        ephemeral: true,
+        content: 'Hey! `/counter-edit` can only be used in a server.',
+      });
 
     if (!newName && !newEmoji && !newType) {
       log.debug(`User didn't change anything about the counter`);

@@ -31,7 +31,10 @@ export abstract class CounterListCommand {
   })
   async execute(interaction: CommandInteraction) {
     if (!interaction.guildId)
-      return log.error(`GuildID did not exist on interaction.`);
+      return await interaction.reply({
+        ephemeral: true,
+        content: 'Hey! `/counter-list` can only be used in a server.',
+      });
 
     const counters = await GET_COUNTERS_BY_GUILD_ID(interaction.guildId).catch(
       MessageWithErrorHandler(

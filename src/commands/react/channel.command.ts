@@ -45,7 +45,10 @@ export abstract class ReactChannelCommand {
     interaction: CommandInteraction
   ) {
     if (!interaction.guildId)
-      return log.error(`GuildID did not exist on interaction.`);
+      return await interaction.reply({
+        ephemeral: true,
+        content: 'Hey! `/react-channel` can only be used in a server.',
+      });
 
     try {
       await interaction

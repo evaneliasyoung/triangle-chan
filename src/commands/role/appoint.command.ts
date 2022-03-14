@@ -44,6 +44,14 @@ export default abstract class RoleAppointCommand {
     role: Role,
     interaction: CommandInteraction
   ) {
+    if (!interaction.guildId)
+      return await interaction
+        .reply({
+          ephemeral: true,
+          content: 'Hey! `/role-appoint` can only be used in a server.',
+        })
+        .catch(InteractionFailedHandler);
+
     if (role.members.has(user.id))
       return await interaction
         .reply({

@@ -11,7 +11,6 @@
 import {CommandInteraction} from 'discord.js';
 import {Discord, Slash, SlashOption} from 'discordx';
 import {DELETE_COUNTER_BY_NAME} from '../../database/database.js';
-import CounterService from '../../services/counter.service.js';
 import {
   InteractionFailedHandlerGenerator,
   logger,
@@ -21,8 +20,6 @@ const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class CounterRemoveCommand {
-  #counterService = new CounterService();
-
   @Slash('counter-remove', {
     description: 'Removes the counters from the voice channels.',
   })
@@ -35,9 +32,11 @@ export abstract class CounterRemoveCommand {
     name: string,
     interaction: CommandInteraction
   ) {
-    const {guild, guildId} = interaction;
-    if (!guildId) return log.error(`GuildID did not exist on interaction.`);
-    if (!guild) return log.error('Guild did not exist on interaction.');
+    if (!interaction.guildId)
+      return await interaction.reply({
+        ephemeral: true,
+        content: 'Hey! `/counter-remove` can only be used in a server.',
+      });
 
     if (!name) {
       log.error(`Required option name was undefined.`);

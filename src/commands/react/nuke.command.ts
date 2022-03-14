@@ -77,6 +77,12 @@ export abstract class ReactNukeCommand {
     description: 'This will remove ALL react roles for this server.',
   })
   async execute(interaction: CommandInteraction) {
+    if (!interaction.guildId)
+      return await interaction.reply({
+        ephemeral: true,
+        content: 'Hey! `/react-nuke` can only be used in a server.',
+      });
+
     const buttons = new MessageActionRow({
       components: [
         new MessageButton({

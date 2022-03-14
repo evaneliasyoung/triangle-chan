@@ -34,7 +34,10 @@ export abstract class CategoryListCommand {
   })
   async execute(interaction: CommandInteraction) {
     if (!interaction.guildId)
-      return log.error(`GuildID did not exist on interaction.`);
+      return await interaction.reply({
+        ephemeral: true,
+        content: 'Hey! `/category-list` can only be used in a server.',
+      });
 
     const categories = await GET_GUILD_CATEGORIES(interaction.guildId).catch(
       MessageWithErrorHandler(

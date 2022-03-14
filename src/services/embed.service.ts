@@ -4,7 +4,7 @@
  *
  * @author    Evan Elias Young
  * @date      2022-03-05
- * @date      2022-03-13
+ * @date      2022-03-14
  * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
@@ -278,9 +278,10 @@ export default class EmbedService {
     new MessageEmbed({
       description: BotInfo.tagline,
       fields: [
-        {name: 'Author', value: 'MoM Chapter', inline: true},
+        {name: 'Source', value: BotInfo.source, inline: true},
         {name: 'Library', value: BotInfo.library, inline: true},
         {name: 'Version', value: BotInfo.version, inline: true},
+        {name: 'Author', value: 'MoM Chapter', inline: true},
         {name: 'Date', value: dateToISO(BotInfo.date), inline: true},
         {
           name: 'Servers',

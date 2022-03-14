@@ -111,7 +111,11 @@ export abstract class ReactMessageCommand {
     messageLink: string,
     interaction: CommandInteraction
   ) {
-    if (!interaction.isCommand() || !interaction.guildId) return;
+    if (!interaction.guildId)
+      return await interaction.reply({
+        ephemeral: true,
+        content: 'Hey! `/react-message` can only be used in a server.',
+      });
 
     if (!messageLink)
       return await interaction

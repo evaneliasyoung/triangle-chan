@@ -54,7 +54,13 @@ export abstract class ReactRoleCommand {
     emoji: string,
     interaction: CommandInteraction
   ) {
-    if (!interaction.isCommand() || !interaction.guildId) return;
+    if (!interaction.guildId)
+      return await interaction
+        .reply({
+          ephemeral: true,
+          content: 'Hey! `/react-role` can only be used in a server.',
+        })
+        .catch(InteractionFailedHandler);
 
     const {guild} = interaction;
     if (!guild) return;

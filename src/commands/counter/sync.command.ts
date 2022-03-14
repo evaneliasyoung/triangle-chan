@@ -26,9 +26,12 @@ export abstract class CounterSyncCommand {
     description: 'Syncs the counts of the counter channels.',
   })
   async execute(interaction: CommandInteraction) {
-    const {guild, guildId} = interaction;
-    if (!guildId) return log.error(`GuildID did not exist on interaction.`);
-    if (!guild) return log.error('Guild did not exist on interaction.');
+    const {guild} = interaction;
+    if (!guild)
+      return await interaction.reply({
+        ephemeral: true,
+        content: 'Hey! `/counter-` can only be used in a server.',
+      });
 
     try {
       await this.#counterService.handleGuild(guild);

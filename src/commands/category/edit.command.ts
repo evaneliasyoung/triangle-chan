@@ -58,7 +58,10 @@ export abstract class CategoryEditCommand {
     interaction: CommandInteraction
   ) {
     if (!interaction.guildId)
-      return log.error(`GuildID did not exist on interaction.`);
+      return await interaction.reply({
+        ephemeral: true,
+        content: 'Hey! `/category-edit` can only be used in a server.',
+      });
 
     if (!newName && !newDesc && mutuallyExclusive === null) {
       log.debug(`User didn't change anything about the category`);

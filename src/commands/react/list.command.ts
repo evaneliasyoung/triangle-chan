@@ -29,7 +29,11 @@ export abstract class ReactListCommand {
     description: 'List all reaction roles that are currently active.',
   })
   async execute(interaction: CommandInteraction) {
-    if (!interaction.isCommand() || !interaction.guildId) return;
+    if (!interaction.guildId)
+      return await interaction.reply({
+        ephemeral: true,
+        content: 'Hey! `/react-list` can only be used in a server.',
+      });
 
     const reactRoles = await GET_REACT_ROLES_BY_GUILD_ID(
       interaction.guildId

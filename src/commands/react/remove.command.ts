@@ -41,6 +41,12 @@ export abstract class ReactRemoveCommand {
     role: Role,
     interaction: CommandInteraction
   ) {
+    if (!interaction.guildId)
+      return await interaction.reply({
+        ephemeral: true,
+        content: 'Hey! `/react-` can only be used in a server.',
+      });
+
     if (!role) {
       log.error(
         `Interaction was missing role property despite it being required.`
