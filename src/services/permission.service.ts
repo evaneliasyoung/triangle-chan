@@ -17,7 +17,7 @@ const {
   SEND_MESSAGES,
   MANAGE_MESSAGES,
   MANAGE_ROLES,
-  MANAGE_CHANNELS
+  MANAGE_CHANNELS,
 } = Permissions.FLAGS;
 
 export enum EHasPerms {
