@@ -14,11 +14,17 @@ Users can create "Reaction Roles," "Counter Channels," and more to organize thei
 
 ## Purpose
 
-- Reaction Roles
+- Reaction & Appointed Roles
 
 - Counter Channels
 
 - About Member / Channel / Server
+
+- Text Syling
+
+- Random Numbers
+
+- General Utility
 
 ## Environment
 
@@ -54,10 +60,6 @@ optional arguments:
 Running `./tag.py 1.2.3-b4 -d` will locally make changes to `AppInfo` and `package.json`.
 
 Running `./tag.py 1.2.3` will make changes to the above files, commit, push, merge into `main`, and push again.
-
-### `date.py`
-
-Running `./date.py` will update the _second_ dateline annotation in each `.ts` file in the `src` directory.
 
 [discordjs-image]: https://img.shields.io/github/package-json/dependency-version/evaneliasyoung/triangle-chan/discord.js?color=5865F2
 [discordjs-url]: https://www.npmjs.com/package/discord.js
