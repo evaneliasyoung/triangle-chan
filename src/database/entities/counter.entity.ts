@@ -1,11 +1,6 @@
 /**
  * @file      counter.entity.ts
  * @brief     Counter channel database entity.
- *
- * @author    Evan Elias Young
- * @date      2022-03-10
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {BaseEntity, Column, Entity, PrimaryGeneratedColumn} from 'typeorm';

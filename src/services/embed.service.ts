@@ -1,11 +1,6 @@
 /**
  * @file      embed.service.ts
  * @brief     Embed service.
- *
- * @author    Evan Elias Young
- * @date      2022-03-05
- * @date      2022-03-14
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {

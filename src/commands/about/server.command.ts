@@ -1,11 +1,6 @@
 /**
  * @file      server.command.ts
  * @brief     Provides information about a server.
- *
- * @author    Evan Elias Young
- * @date      2022-03-09
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {CommandInteraction} from 'discord.js';

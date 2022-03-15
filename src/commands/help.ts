@@ -1,11 +1,6 @@
 /**
  * @file      corrupt.command.ts
  * @brief     Corrupts your text (Zalgo text).
- *
- * @author    Evan Elias Young
- * @date      2022-03-11
- * @date      2022-03-13
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {

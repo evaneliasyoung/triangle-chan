@@ -1,11 +1,6 @@
 /**
  * @file      category.entity.ts
  * @brief     Role category database entity.
- *
- * @author    Evan Elias Young
- * @date      2022-03-05
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {BaseEntity, Column, Entity, PrimaryGeneratedColumn} from 'typeorm';

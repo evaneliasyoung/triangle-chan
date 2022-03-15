@@ -1,11 +1,6 @@
 /**
  * @file      tiny.command.ts
  * @brief     Makes your text tiny.
- *
- * @author    Evan Elias Young
- * @date      2022-03-11
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {CommandInteraction} from 'discord.js';

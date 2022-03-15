@@ -1,11 +1,6 @@
 /**
  * @file      channel.command.ts
  * @brief     Send all categories with react roles to the selected channel.
- *
- * @author    Evan Elias Young
- * @date      2022-03-05
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {AnyChannel, CommandInteraction, Guild, Permissions} from 'discord.js';

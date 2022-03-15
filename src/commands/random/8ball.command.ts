@@ -1,11 +1,6 @@
 /**
  * @file      8ball.command.ts
  * @brief     Ask the 8 Ball a question and see what it has to say.
- *
- * @author    Evan Elias Young
- * @date      2022-03-11
- * @date      2022-03-12
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {CommandInteraction} from 'discord.js';

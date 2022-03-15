@@ -1,11 +1,6 @@
 /**
  * @file      permission.service.ts
  * @brief     Permission service.
- *
- * @author    Evan Elias Young
- * @date      2022-03-05
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {Permissions} from 'discord.js';

@@ -1,11 +1,6 @@
 /**
  * @file      remove.command.ts
  * @brief     Remove an existing reaction role from a drop down menu.
- *
- * @author    Evan Elias Young
- * @date      2022-03-05
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {CommandInteraction, Role} from 'discord.js';

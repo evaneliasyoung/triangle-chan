@@ -1,11 +1,6 @@
 /**
  * @file      appoint.command.ts
  * @brief     Appoints a member to a role, only one member can hold this role at a time.
- *
- * @author    Evan Elias Young
- * @date      2022-03-13
- * @date      2022-03-13
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {

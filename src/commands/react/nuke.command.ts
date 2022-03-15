@@ -1,11 +1,6 @@
 /**
  * @file      nuke.command.ts
  * @brief     This will remove ALL react roles for this server.
- *
- * @author    Evan Elias Young
- * @date      2022-03-05
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {

@@ -1,11 +1,6 @@
 /**
  * @file      create.command.ts
  * @brief     Create a new counter to count members in the name of a voice channel.
- *
- * @author    Evan Elias Young
- * @date      2022-03-10
- * @date      2022-03-13
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {AnyChannel, CommandInteraction, Guild, Role} from 'discord.js';

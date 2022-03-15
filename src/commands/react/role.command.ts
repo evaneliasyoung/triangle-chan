@@ -1,11 +1,6 @@
 /**
  * @file      role.command.ts
  * @brief     Create a new react role. Give the command a role and an emoji.
- *
- * @author    Evan Elias Young
- * @date      2022-03-05
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {

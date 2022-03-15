@@ -2,11 +2,6 @@
 """
 @file      tag.py
 @brief     Handles version tagging.
-
-@author    Evan Elias Young
-@date      2022-03-09
-@date      2022-03-13
-@copyright Copyright 2022 Evan Elias Young. All rights reserved.
 """
 
 import sys
@@ -96,7 +91,6 @@ def update_package(ver: Version, pkg: Any) -> None:
 
 
 def update_info(ver: Version, info: list[str]) -> None:
-    override_date: bool = False
     now: dt = dt.now()
     for i in range(len(info) - 1, 0, -1):
         if "export const date" in info[i]:
@@ -109,9 +103,6 @@ def update_info(ver: Version, info: list[str]) -> None:
             )
         elif "export const version" in info[i]:
             info[i] = f"  export const version = '{ver}';\n"
-        elif "@date" in info[i] and not override_date:
-            info[i] = " * @date      " + now.strftime("%Y-%m-%d") + "\n"
-            override_date = True
     with open("src/info.ts", "w") as f:
         f.writelines(info)
 

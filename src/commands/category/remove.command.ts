@@ -1,11 +1,6 @@
 /**
  * @file      remove.command.ts
  * @brief     Delete a category. Deleting a category frees all roles it contains..
- *
- * @author    Evan Elias Young
- * @date      2022-03-05
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {CommandInteraction} from 'discord.js';

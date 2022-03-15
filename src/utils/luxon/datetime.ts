@@ -1,11 +1,6 @@
 /**
  * @file      datetime.ts
  * @brief     Luxon DateTime helper functions.
- *
- * @author    Evan Elias Young
- * @date      2022-03-09
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {DateTime} from 'luxon';

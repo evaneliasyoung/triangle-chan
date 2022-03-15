@@ -1,11 +1,6 @@
 /**
  * @file      message.events.ts
  * @brief     Handles message events.
- *
- * @author    Evan Elias Young
- * @date      2022-03-05
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {ClientEvents, Client} from 'discord.js';

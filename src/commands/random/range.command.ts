@@ -1,11 +1,6 @@
 /**
  * @file      range.command.ts
  * @brief     Generates a random number between two values.
- *
- * @author    Evan Elias Young
- * @date      2022-03-11
- * @date      2022-03-12
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {CommandInteraction} from 'discord.js';

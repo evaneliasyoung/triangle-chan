@@ -1,11 +1,6 @@
 /**
  * @file      remove.command.ts
  * @brief     Removes the counters from the voice channels.
- *
- * @author    Evan Elias Young
- * @date      2022-03-11
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {CommandInteraction} from 'discord.js';

@@ -1,11 +1,6 @@
 /**
  * @file      random.ts
  * @brief     The random namespace.
- *
- * @author    Evan Elias Young
- * @date      2022-03-08
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 const {random, floor, round} = Math;

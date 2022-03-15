@@ -1,11 +1,6 @@
 /**
  * @file      sync.command.ts
  * @brief     Syncs the counts of the counter channels.
- *
- * @author    Evan Elias Young
- * @date      2022-03-10
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {CommandInteraction} from 'discord.js';

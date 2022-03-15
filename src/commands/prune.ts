@@ -1,11 +1,6 @@
 /**
  * @file      prune.ts
  * @brief     Removes the most recent messages.
- *
- * @author    Evan Elias Young
- * @date      2022-03-13
- * @date      2022-03-14
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {CommandInteraction} from 'discord.js';

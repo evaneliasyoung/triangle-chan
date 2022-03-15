@@ -1,11 +1,6 @@
 /**
  * @file      update.command.ts
  * @brief     Have an existing react role embed you want updated? Use this command!.
- *
- * @author    Evan Elias Young
- * @date      2022-03-05
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {CommandInteraction} from 'discord.js';

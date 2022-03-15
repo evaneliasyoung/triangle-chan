@@ -1,11 +1,6 @@
 /**
  * @file      language.service.ts
  * @brief     Language service.
- *
- * @author    Evan Elias Young
- * @date      2022-03-08
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {Singleton} from '../models/singleton.model.js';

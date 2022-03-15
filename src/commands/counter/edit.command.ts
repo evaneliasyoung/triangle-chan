@@ -1,11 +1,6 @@
 /**
  * @file      edit.command.ts
  * @brief     Edit any counter's name, emoji, or purpose.
- *
- * @author    Evan Elias Young
- * @date      2022-03-10
- * @date      2022-03-13
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {CommandInteraction, Role} from 'discord.js';

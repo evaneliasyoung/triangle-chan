@@ -1,11 +1,6 @@
 /**
  * @file      math.ts
  * @brief     Math extensions.
- *
- * @author    Evan Elias Young
- * @date      2022-03-08
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 const {floor} = Math;

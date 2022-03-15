@@ -1,11 +1,6 @@
 /**
  * @file      create.command.ts
  * @brief     Create a new category to categorize your reaction roles in..
- *
- * @author    Evan Elias Young
- * @date      2022-03-05
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {CommandInteraction} from 'discord.js';

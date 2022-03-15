@@ -1,11 +1,6 @@
 /**
  * @file      duration.ts
  * @brief     Luxon Duration helper functions.
- *
- * @author    Evan Elias Young
- * @date      2022-03-11
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import humanizeDuration from 'humanize-duration';

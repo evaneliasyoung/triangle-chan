@@ -2,11 +2,6 @@
 --- @file      trianglechan.sql
 --- @brief     Regenerates tables required for Triangle-Chan.
 ---
---- @author    Evan Elias Young
---- @date      2022-03-08
---- @date      2022-03-10
---- @copyright Copyright 2022 Evan Elias Young. All rights reserved.
----
 
 DROP SCHEMA IF EXISTS `trianglechan`;
 CREATE SCHEMA `trianglechan` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;

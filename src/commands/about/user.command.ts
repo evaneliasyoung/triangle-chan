@@ -1,11 +1,6 @@
 /**
  * @file      user.command.ts
  * @brief     Provides information about a user.
- *
- * @author    Evan Elias Young
- * @date      2022-03-13
- * @date      2022-03-13
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {CommandInteraction, GuildMember, User} from 'discord.js';

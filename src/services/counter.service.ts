@@ -1,11 +1,6 @@
 /**
  * @file      counter.service.ts
  * @brief     The counter service.
- *
- * @author    Evan Elias Young
- * @date      2022-03-11
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {Collection, Guild, GuildMember} from 'discord.js';

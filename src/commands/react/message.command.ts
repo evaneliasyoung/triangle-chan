@@ -1,11 +1,6 @@
 /**
  * @file      message.command.ts
  * @brief     Use this command to react with a specific category of roles to a message.
- *
- * @author    Evan Elias Young
- * @date      2022-03-05
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {

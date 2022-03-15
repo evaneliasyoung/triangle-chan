@@ -1,11 +1,6 @@
 /**
  * @file      database.ts
  * @brief     Database controller.
- *
- * @author    Evan Elias Young
- * @date      2022-03-05
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 export {Category} from './entities/category.entity.js';

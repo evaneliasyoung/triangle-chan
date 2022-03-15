@@ -1,11 +1,6 @@
 /**
  * @file      channel.command.ts
  * @brief     Provides information about a channel.
- *
- * @author    Evan Elias Young
- * @date      2022-03-13
- * @date      2022-03-13
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {CommandInteraction, GuildBasedChannel} from 'discord.js';

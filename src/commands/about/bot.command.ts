@@ -1,11 +1,6 @@
 /**
  * @file      bot.command.ts
  * @brief     Provides information about Triangle-Chan.
- *
- * @author    Evan Elias Young
- * @date      2022-03-05
- * @date      2022-03-13
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {CommandInteraction} from 'discord.js';

@@ -1,11 +1,6 @@
 /**
  * @file      edit.command.ts
  * @brief     Edit any category's name, description, or if it's mutually exclusive.
- *
- * @author    Evan Elias Young
- * @date      2022-03-05
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 import {CommandInteraction} from 'discord.js';

@@ -1,11 +1,6 @@
 /**
  * @file      chunk.ts
  * @brief     Splices an iterable into chunks.
- *
- * @author    Evan Elias Young
- * @date      2022-03-05
- * @date      2022-03-11
- * @copyright Copyright 2022 Evan Elias Young. All rights reserved.
  */
 
 export const chunk = <T>(arr: readonly T[], amount: number): T[][] => {
