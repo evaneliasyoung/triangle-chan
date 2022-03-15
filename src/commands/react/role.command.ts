@@ -26,12 +26,15 @@ import {
   logger,
   MessageWithErrorHandlerGenerator,
 } from '../../services/log.service.js';
+import PermissionService from '../../services/permission.service.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class ReactRoleCommand {
+  #permissionService = new PermissionService();
+
   @Slash('react-role', {
     description:
       'Create a new react role. Give the command a role and an emoji.',
@@ -54,6 +57,14 @@ export abstract class ReactRoleCommand {
         .reply({
           ephemeral: true,
           content: 'Hey! `/react-role` can only be used in a server.',
+        })
+        .catch(InteractionFailedHandler);
+
+    if (!this.#permissionService.canManageRoles(interaction.member))
+      return await interaction
+        .reply({
+          ephemeral: true,
+          content: `Hey! You don't have permission to use \`/role-remove\`.`,
         })
         .catch(InteractionFailedHandler);
 

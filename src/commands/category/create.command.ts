@@ -13,11 +13,14 @@ import {
   InteractionFailedHandlerGenerator,
   logger,
 } from '../../services/log.service.js';
+import PermissionService from '../../services/permission.service.js';
 const log = logger(import.meta);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class CategoryCreateCommand {
+  #permissionService = new PermissionService();
+
   @Slash('category-create', {
     description: 'Create a new category to categorize your reaction roles in.',
   })
@@ -46,6 +49,15 @@ export abstract class CategoryCreateCommand {
         ephemeral: true,
         content: 'Hey! `/category-create` can only be used in a server.',
       });
+
+    const {member} = interaction;
+    if (!this.#permissionService.canManageRoles(member))
+      return await interaction
+        .reply({
+          ephemeral: true,
+          content: `Hey! You don't have permission to use \`/category-create\` command.`,
+        })
+        .catch(InteractionFailedHandler);
 
     if (!name)
       return await interaction

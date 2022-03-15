@@ -16,12 +16,15 @@ import {
   logger,
   MessageWithErrorHandlerGenerator,
 } from '../../services/log.service.js';
+import PermissionService from '../../services/permission.service.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class ReactNukeCommand {
+  #permissionService = new PermissionService();
+
   @ButtonComponent('react-nuke_confirm')
   async handleButton(interaction: ButtonInteraction, _client: Client) {
     if (!interaction.guildId)
@@ -77,6 +80,14 @@ export abstract class ReactNukeCommand {
         ephemeral: true,
         content: 'Hey! `/react-nuke` can only be used in a server.',
       });
+
+    if (!this.#permissionService.canManageRoles(interaction.member))
+      return await interaction
+        .reply({
+          ephemeral: true,
+          content: `Hey! You don't have permission to use \`/role-nuke\`.`,
+        })
+        .catch(InteractionFailedHandler);
 
     const buttons = new MessageActionRow({
       components: [

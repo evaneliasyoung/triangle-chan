@@ -20,6 +20,7 @@ import {
   logger,
   MessageWithErrorHandlerGenerator,
 } from '../../services/log.service.js';
+import PermissionService from '../../services/permission.service.js';
 import {reactToMessage} from '../../utils/discordx/reactions.js';
 import {isTextChannel} from '../../utils/type-assertion.js';
 const log = logger(import.meta);
@@ -28,6 +29,8 @@ const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class ReactMessageCommand {
+  #permissionService = new PermissionService();
+
   handleSelect = async (interaction: SelectMenuInteraction, args: string[]) => {
     const [guildId, channelId, messageId, categoryId] = args;
 
@@ -111,6 +114,14 @@ export abstract class ReactMessageCommand {
         ephemeral: true,
         content: 'Hey! `/react-message` can only be used in a server.',
       });
+
+    if (!this.#permissionService.canManageRoles(interaction.member))
+      return await interaction
+        .reply({
+          ephemeral: true,
+          content: `Hey! You don't have permission to use \`/react-message\`.`,
+        })
+        .catch(InteractionFailedHandler);
 
     if (!messageLink)
       return await interaction

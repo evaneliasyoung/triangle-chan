@@ -14,11 +14,14 @@ import {
   InteractionFailedHandlerGenerator,
   logger,
 } from '../../services/log.service.js';
+import PermissionService from '../../services/permission.service.js';
 const log = logger(import.meta);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class CategoryEditCommand {
+  #permissionService = new PermissionService();
+
   @Slash('category-edit', {
     description: `Edit any category's name, description, or if it's mutually exclusive.`,
   })
@@ -57,6 +60,15 @@ export abstract class CategoryEditCommand {
         ephemeral: true,
         content: 'Hey! `/category-edit` can only be used in a server.',
       });
+
+    const {member} = interaction;
+    if (!this.#permissionService.canManageRoles(member))
+      return await interaction
+        .reply({
+          ephemeral: true,
+          content: `Hey! You don't have permission to use \`/category-create\` command.`,
+        })
+        .catch(InteractionFailedHandler);
 
     if (!newName && !newDesc && mutuallyExclusive === null) {
       log.debug(`User didn't change anything about the category`);

@@ -12,6 +12,7 @@ import {
   logger,
   MessageWithErrorHandlerGenerator,
 } from '../../services/log.service.js';
+import PermissionService from '../../services/permission.service.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
@@ -19,6 +20,7 @@ const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 @Discord()
 export abstract class ReactListCommand {
   #embedService = new EmbedService();
+  #permissionService = new PermissionService();
 
   @Slash('react-list', {
     description: 'List all reaction roles that are currently active.',
@@ -29,6 +31,14 @@ export abstract class ReactListCommand {
         ephemeral: true,
         content: 'Hey! `/react-list` can only be used in a server.',
       });
+
+    if (!this.#permissionService.canManageRoles(interaction.member))
+      return await interaction
+        .reply({
+          ephemeral: true,
+          content: `Hey! You don't have permission to use \`/react-list\`.`,
+        })
+        .catch(InteractionFailedHandler);
 
     const reactRoles = await GET_REACT_ROLES_BY_GUILD_ID(
       interaction.guildId

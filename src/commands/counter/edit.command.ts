@@ -20,12 +20,15 @@ import {
   MessageWithErrorHandlerGenerator,
 } from '../../services/log.service.js';
 import emojiRegex from 'emoji-regex';
+import PermissionService from '../../services/permission.service.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class CounterEditCommand {
+  #permissionService = new PermissionService();
+
   @Slash('counter-edit', {
     description: `Edit any counter's name, emoji, or purpose.`,
   })
@@ -70,6 +73,14 @@ export abstract class CounterEditCommand {
         ephemeral: true,
         content: 'Hey! `/counter-edit` can only be used in a server.',
       });
+
+    if (!this.#permissionService.canManageChannels(interaction.member))
+      return await interaction
+        .reply({
+          ephemeral: true,
+          content: `Hey! You don't have permission to use \`/counter-create\`.`,
+        })
+        .catch(InteractionFailedHandler);
 
     if (!newName && !newEmoji && !newType) {
       log.debug(`User didn't change anything about the counter`);

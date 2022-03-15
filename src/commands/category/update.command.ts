@@ -18,12 +18,14 @@ import {
   InteractionFailedHandlerGenerator,
   logger,
 } from '../../services/log.service.js';
+import PermissionService from '../../services/permission.service.js';
 const log = logger(import.meta);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class CategoryUpdateCommand {
   #embedService = new EmbedService();
+  #permissionService = new PermissionService();
 
   @Slash('category-update', {
     description:
@@ -42,6 +44,15 @@ export abstract class CategoryUpdateCommand {
         ephemeral: true,
         content: 'Hey! `/category-update` can only be used in a server.',
       });
+
+    const {member} = interaction;
+    if (!this.#permissionService.canManageRoles(member))
+      return await interaction
+        .reply({
+          ephemeral: true,
+          content: `Hey! You don't have permission to use \`/category-add\` command.`,
+        })
+        .catch(InteractionFailedHandler);
 
     if (!messageLink) {
       log.error(

@@ -18,12 +18,14 @@ import {
   InteractionFailedHandlerGenerator,
   logger,
 } from '../../services/log.service.js';
+import PermissionService from '../../services/permission.service.js';
 const log = logger(import.meta);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class ReactRemoveCommand {
   #embedService = new EmbedService();
+  #permissionService = new PermissionService();
 
   @Slash('react-remove', {
     description: 'Remove an existing reaction role from a drop down menu.',
@@ -41,6 +43,14 @@ export abstract class ReactRemoveCommand {
         ephemeral: true,
         content: 'Hey! `/react-` can only be used in a server.',
       });
+
+    if (!this.#permissionService.canManageRoles(interaction.member))
+      return await interaction
+        .reply({
+          ephemeral: true,
+          content: `Hey! You don't have permission to use \`/role-remove\`.`,
+        })
+        .catch(InteractionFailedHandler);
 
     if (!role) {
       log.error(

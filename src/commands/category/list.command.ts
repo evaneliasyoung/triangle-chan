@@ -15,6 +15,7 @@ import {
   logger,
   MessageWithErrorHandlerGenerator,
 } from '../../services/log.service.js';
+import PermissionService from '../../services/permission.service.js';
 import {chunk} from '../../utils/native/chunk.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
@@ -23,6 +24,7 @@ const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 @Discord()
 export abstract class CategoryListCommand {
   #embedService = new EmbedService();
+  #permissionService = new PermissionService();
 
   @Slash('category-list', {
     description: 'List all your categories and the roles within them.',
@@ -33,6 +35,15 @@ export abstract class CategoryListCommand {
         ephemeral: true,
         content: 'Hey! `/category-list` can only be used in a server.',
       });
+
+    const {member} = interaction;
+    if (!this.#permissionService.canManageRoles(member))
+      return await interaction
+        .reply({
+          ephemeral: true,
+          content: `Hey! You don't have permission to use \`/category-create\` command.`,
+        })
+        .catch(InteractionFailedHandler);
 
     const categories = await GET_GUILD_CATEGORIES(interaction.guildId).catch(
       MessageWithErrorHandler(

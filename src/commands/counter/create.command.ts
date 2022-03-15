@@ -20,12 +20,15 @@ import {
   logger,
   MessageWithErrorHandlerGenerator,
 } from '../../services/log.service.js';
+import PermissionService from '../../services/permission.service.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class CounterCreateCommand {
+  #permissionService = new PermissionService();
+
   @Slash('counter-create', {
     description:
       'Create a new counter to count members in the name of a voice channel.',
@@ -65,6 +68,14 @@ export abstract class CounterCreateCommand {
         ephemeral: true,
         content: 'Hey! `/counter-create` can only be used in a server.',
       });
+
+    if (!this.#permissionService.canManageChannels(interaction.member))
+      return await interaction
+        .reply({
+          ephemeral: true,
+          content: `Hey! You don't have permission to use \`/counter-create\`.`,
+        })
+        .catch(InteractionFailedHandler);
 
     if (!isVoiceChannel(channel))
       return await interaction

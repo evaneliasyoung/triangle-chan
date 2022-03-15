@@ -32,6 +32,7 @@ import {
   logger,
   MessageWithErrorHandlerGenerator,
 } from '../../services/log.service.js';
+import PermissionService from '../../services/permission.service.js';
 import {chunk} from '../../utils/native/chunk.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
@@ -39,6 +40,8 @@ const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class CategoryAddCommand {
+  #permissionService = new PermissionService();
+
   @ButtonComponent(RegExp('^category-add_.*-.*$'))
   async handleButton(interaction: ButtonInteraction, _client: Client) {
     if (!interaction.guildId)
@@ -214,6 +217,15 @@ export abstract class CategoryAddCommand {
         ephemeral: true,
         content: 'Hey! `/category-add` can only be used in a server.',
       });
+
+    const {member} = interaction;
+    if (!this.#permissionService.canManageRoles(member))
+      return await interaction
+        .reply({
+          ephemeral: true,
+          content: `Hey! You don't have permission to use \`/category-add\` command.`,
+        })
+        .catch(InteractionFailedHandler);
 
     const categories = await GET_GUILD_CATEGORIES(interaction.guildId);
 

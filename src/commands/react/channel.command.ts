@@ -19,6 +19,7 @@ import {
   MessageWithErrorHandlerGenerator,
 } from '../../services/log.service.js';
 import {timeout} from '../../utils/native/timeout.js';
+import PermissionService from '../../services/permission.service.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
@@ -26,6 +27,7 @@ const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 @Discord()
 export abstract class ReactChannelCommand {
   #embedService = new EmbedService();
+  #permissionService = new PermissionService();
 
   @Slash('react-channel', {
     description:
@@ -44,6 +46,14 @@ export abstract class ReactChannelCommand {
         ephemeral: true,
         content: 'Hey! `/react-channel` can only be used in a server.',
       });
+
+    if (!this.#permissionService.canManageRoles(interaction.member))
+      return await interaction
+        .reply({
+          ephemeral: true,
+          content: `Hey! You don't have permission to use \`/react-channel\`.`,
+        })
+        .catch(InteractionFailedHandler);
 
     try {
       await interaction

@@ -16,12 +16,15 @@ import {
   logger,
   InteractionFailedHandlerGenerator,
 } from '../../services/log.service.js';
+import PermissionService from '../../services/permission.service.js';
 import {isValidRolePosition} from '../react/role.command.js';
 const log = logger(import.meta);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export default abstract class RoleAppointCommand {
+  #permissionService = new PermissionService();
+
   @Slash('role-appoint', {
     description:
       'Appoints a member to a role, only one member can hold this role at a time.',
@@ -44,6 +47,14 @@ export default abstract class RoleAppointCommand {
         .reply({
           ephemeral: true,
           content: 'Hey! `/role-appoint` can only be used in a server.',
+        })
+        .catch(InteractionFailedHandler);
+
+    if (!this.#permissionService.canManageRoles(interaction.member))
+      return await interaction
+        .reply({
+          ephemeral: true,
+          content: `Hey! You don't have permission to use \`/role-appoint\`.`,
         })
         .catch(InteractionFailedHandler);
 

@@ -13,6 +13,7 @@ import {
   logger,
   MessageWithErrorHandlerGenerator,
 } from '../../services/log.service.js';
+import PermissionService from '../../services/permission.service.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
@@ -20,6 +21,7 @@ const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 @Discord()
 export abstract class CounterListCommand {
   #embedService = new EmbedService();
+  #permissionService = new PermissionService();
 
   @Slash('counter-list', {
     description: 'List all your counter and the purpose of each.',
@@ -30,6 +32,14 @@ export abstract class CounterListCommand {
         ephemeral: true,
         content: 'Hey! `/counter-list` can only be used in a server.',
       });
+
+    if (!this.#permissionService.canManageChannels(interaction.member))
+      return await interaction
+        .reply({
+          ephemeral: true,
+          content: `Hey! You don't have permission to use \`/counter-create\`.`,
+        })
+        .catch(InteractionFailedHandler);
 
     const counters = await GET_COUNTERS_BY_GUILD_ID(interaction.guildId).catch(
       MessageWithErrorHandler(

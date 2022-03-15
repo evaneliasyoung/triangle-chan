@@ -10,12 +10,14 @@ import {
   InteractionFailedHandlerGenerator,
   logger,
 } from '../../services/log.service.js';
+import PermissionService from '../../services/permission.service.js';
 const log = logger(import.meta);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class CounterSyncCommand {
   #counterService = new CounterService();
+  #permissionService = new PermissionService();
 
   @Slash('counter-sync', {
     description: 'Syncs the counts of the counter channels.',
@@ -27,6 +29,14 @@ export abstract class CounterSyncCommand {
         ephemeral: true,
         content: 'Hey! `/counter-` can only be used in a server.',
       });
+
+    if (!this.#permissionService.canManageChannels(interaction.member))
+      return await interaction
+        .reply({
+          ephemeral: true,
+          content: `Hey! You don't have permission to use \`/counter-create\`.`,
+        })
+        .catch(InteractionFailedHandler);
 
     try {
       await this.#counterService.handleGuild(guild);

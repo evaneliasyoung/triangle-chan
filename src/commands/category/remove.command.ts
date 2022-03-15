@@ -14,11 +14,14 @@ import {
   InteractionFailedHandlerGenerator,
   logger,
 } from '../../services/log.service.js';
+import PermissionService from '../../services/permission.service.js';
 const log = logger(import.meta);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
 export abstract class CategoryRemoveCommand {
+  #permissionService = new PermissionService();
+
   @Slash('category-remove', {
     description:
       'Delete a category. Deleting a category frees all roles it contains.',
@@ -35,6 +38,15 @@ export abstract class CategoryRemoveCommand {
         ephemeral: true,
         content: 'Hey! `/category-remove` can only be used in a server.',
       });
+
+    const {member} = interaction;
+    if (!this.#permissionService.canManageRoles(member))
+      return await interaction
+        .reply({
+          ephemeral: true,
+          content: `Hey! You don't have permission to use \`/category-add\` command.`,
+        })
+        .catch(InteractionFailedHandler);
 
     if (!name) {
       log.debug(
