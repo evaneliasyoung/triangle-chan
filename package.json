@@ -34,7 +34,7 @@
     "@discordx/importer": "^1.1.2",
     "@discordx/pagination": "^1.1.0",
     "@discordx/utilities": "^3.3.0",
-    "axios": "^0.24.0",
+    "axios": "^0.26.1",
     "bignumber.js": "^9.0.2",
     "cheerio": "^1.0.0-rc.10",
     "colors": "1.4.0",
