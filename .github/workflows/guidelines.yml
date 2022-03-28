@@ -1,0 +1,35 @@
+name: Guidelines
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+    branches-ignore:
+      - main
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    name: Setup
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Install Modules
+        run: npm i -D
+  format:
+    runs-on: ubuntu-latest
+    name: Code Format
+    needs: setup
+    steps:
+      - name: Run Prettier
+        run: npm run format-check
+  lint:
+    runs-on: ubuntu-latest
+    name: Code Lint
+    needs: setup
+    steps:
+      - name: Run ESLint
+        run: npm run Lint
