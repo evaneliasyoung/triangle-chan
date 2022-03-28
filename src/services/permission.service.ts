@@ -3,7 +3,7 @@
  * @brief     Permission service.
  */
 
-import {APIInteractionGuildMember} from 'discord-api-types/payloads/v9/_interactions/base';
+// import {APIInteractionGuildMember} from 'discord-api-types/payloads/v9/_interactions/base';
 import {GuildMember, Permissions} from 'discord.js';
 import {Client} from 'discordx';
 import {CLIENT_ID} from '../env.js';
@@ -37,7 +37,7 @@ export default class PermissionService {
   ) => permissions.has(perms, checkAdmin);
 
   memberHasPermissions = (
-    member: GuildMember | APIInteractionGuildMember | null,
+    member: GuildMember | null,
     checkAdmin: boolean,
     ...perms: bigint[]
   ): boolean => {
@@ -52,22 +52,18 @@ export default class PermissionService {
     return this.hasPermissions(member, checkAdmin, ...perms);
   };
 
-  canManageRoles = (
-    member: GuildMember | APIInteractionGuildMember | null,
-    checkAdmin?: boolean
-  ) => this.memberHasPermissions(member, checkAdmin ?? false, MANAGE_ROLES);
+  canManageRoles = (member: GuildMember | null, checkAdmin?: boolean) =>
+    this.memberHasPermissions(member, checkAdmin ?? false, MANAGE_ROLES);
 
-  canManageChannels = (
-    member: GuildMember | APIInteractionGuildMember | null,
-    checkAdmin?: boolean
-  ) => this.memberHasPermissions(member, checkAdmin ?? false, MANAGE_CHANNELS);
+  canManageChannels = (member: GuildMember | null, checkAdmin?: boolean) =>
+    this.memberHasPermissions(member, checkAdmin ?? false, MANAGE_CHANNELS);
 
   canClientPrepareReactMessage = async (
     guildId: string,
     channelId: string
   ): Promise<EHasPerms.error | boolean> => {
     if (!this.client) {
-      log.error(`Client could not be found. It it set?`);
+      log.error('Client could not be found. It it set?');
       return EHasPerms.error;
     }
     const guild = await this.client.guilds.fetch(guildId);

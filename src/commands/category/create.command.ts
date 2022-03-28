@@ -55,7 +55,8 @@ export abstract class CategoryCreateCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You don't have permission to use \`/category-create\` command.`,
+          content:
+            "Hey! You don't have permission to use `/category-create` command.",
         })
         .catch(InteractionFailedHandler);
 
@@ -63,21 +64,23 @@ export abstract class CategoryCreateCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! It says you submitted no category name! You need to submit that. Please try again.`,
+          content:
+            'Hey! It says you submitted no category name! You need to submit that. Please try again.',
         })
         .catch(InteractionFailedHandler);
     else if (name.length > 90)
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! Discord only allows 100 characters max for their embed titles. Try making the category name simple and make the rest the category description!`,
+          content:
+            'Hey! Discord only allows 100 characters max for their embed titles. Try making the category name simple and make the rest the category description!',
         })
         .catch(InteractionFailedHandler);
 
     if (await GET_CATEGORY_BY_NAME(interaction.guildId, name))
       return await interaction
         .reply(
-          `Hey! It turns out you already have a category with that name made. Try checking it out.`
+          'Hey! It turns out you already have a category with that name made. Try checking it out.'
         )
         .catch(InteractionFailedHandler);
 
@@ -105,7 +108,7 @@ export abstract class CategoryCreateCommand {
 
         await interaction
           .reply(
-            `Hey! I had some trouble creating that category for you. Please wait a minute and try again.`
+            'Hey! I had some trouble creating that category for you. Please wait a minute and try again.'
           )
           .catch(InteractionFailedHandler);
       });

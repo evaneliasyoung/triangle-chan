@@ -40,16 +40,17 @@ export abstract class CounterRemoveCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You don't have permission to use \`/counter-create\`.`,
+          content: "Hey! You don't have permission to use `/counter-create`.",
         })
         .catch(InteractionFailedHandler);
 
     if (!name) {
-      log.error(`Required option name was undefined.`);
+      log.error('Required option name was undefined.');
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! I had an issue finding the counter. Please wait a second and try again.`,
+          content:
+            'Hey! I had an issue finding the counter. Please wait a second and try again.',
         })
         .catch(InteractionFailedHandler);
     }
@@ -62,7 +63,7 @@ export abstract class CounterRemoveCommand {
     } catch (e) {
       log.debug('Failed to sync counters.', e);
       await interaction
-        .reply(`I'm having trouble removing the counter.`)
+        .reply("I'm having trouble removing the counter.")
         .catch(InteractionFailedHandler);
     }
   }

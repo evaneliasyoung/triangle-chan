@@ -54,7 +54,7 @@ export default abstract class RoleAppointCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You don't have permission to use \`/role-appoint\`.`,
+          content: "Hey! You don't have permission to use `/role-appoint`.",
         })
         .catch(InteractionFailedHandler);
 

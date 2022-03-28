@@ -5,12 +5,7 @@
     "prettier",
     "plugin:github/internal"
   ],
-  "plugins": [
-    "node",
-    "prettier",
-    "github",
-    "jest"
-  ],
+  "plugins": ["node", "prettier", "github", "jest"],
   "rules": {
     "prettier/prettier": "error",
     "block-scoped-var": "error",
@@ -41,14 +36,9 @@
   },
   "overrides": [
     {
-      "files": [
-        "**/*.ts",
-        "**/*.tsx"
-      ],
+      "files": ["**/*.ts", "**/*.tsx"],
       "parser": "@typescript-eslint/parser",
-      "extends": [
-        "plugin:@typescript-eslint/recommended"
-      ],
+      "extends": ["plugin:@typescript-eslint/recommended"],
       "rules": {
         "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/no-use-before-define": "off",

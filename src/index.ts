@@ -49,7 +49,7 @@ const client = new Client({
 permissionService.client = client;
 
 async function run() {
-  const path: string = `${__dirname}/{events,commands}/**/*.ts`;
+  const path = `${__dirname}/{events,commands}/**/*.ts`;
 
   await createConnection({
     type: 'mysql',

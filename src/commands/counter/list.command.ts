@@ -37,7 +37,7 @@ export abstract class CounterListCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You don't have permission to use \`/counter-create\`.`,
+          content: "Hey! You don't have permission to use `/counter-create`.",
         })
         .catch(InteractionFailedHandler);
 
@@ -51,14 +51,14 @@ export abstract class CounterListCommand {
       log.debug(`Guild[${interaction.guildId}] did not have any counters.`);
       return await interaction
         .reply(
-          `Hey! It appears that there aren't any counters for this server... however, if there ARE supposed to be some and you see this please wait a second and try again.`
+          "Hey! It appears that there aren't any counters for this server... however, if there ARE supposed to be some and you see this please wait a second and try again."
         )
         .catch(InteractionFailedHandler);
     }
 
     await interaction
       .reply(
-        `Hey! Let me build these embeds for you real quick and send them...`
+        'Hey! Let me build these embeds for you real quick and send them...'
       )
       .catch(InteractionFailedHandler);
 

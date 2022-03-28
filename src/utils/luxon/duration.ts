@@ -4,7 +4,7 @@
  */
 
 import humanizeDuration from 'humanize-duration';
-import {DateTime, Duration} from 'luxon';
+import {Duration} from 'luxon';
 
 /**
  * Returns the humanized string of the Duration.

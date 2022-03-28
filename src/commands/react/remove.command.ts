@@ -48,18 +48,19 @@ export abstract class ReactRemoveCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You don't have permission to use \`/role-remove\`.`,
+          content: "Hey! You don't have permission to use `/role-remove`.",
         })
         .catch(InteractionFailedHandler);
 
     if (!role) {
       log.error(
-        `Interaction was missing role property despite it being required.`
+        'Interaction was missing role property despite it being required.'
       );
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! For some reason I was unable to get the role that you told me to delete. Is it already deleted? Please try again. :)`,
+          content:
+            'Hey! For some reason I was unable to get the role that you told me to delete. Is it already deleted? Please try again. :)',
         })
         .catch(InteractionFailedHandler);
     }
@@ -74,7 +75,8 @@ export abstract class ReactRemoveCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! That role isn't in my system, perhaps you meant to pass in a different role?`,
+          content:
+            "Hey! That role isn't in my system, perhaps you meant to pass in a different role?",
         })
         .catch(InteractionFailedHandler);
     }
@@ -113,7 +115,8 @@ export abstract class ReactRemoveCommand {
       interaction
         .reply({
           ephemeral: true,
-          content: `Hey! I had an issue deleting that react role. Please wait a moment and try again.`,
+          content:
+            'Hey! I had an issue deleting that react role. Please wait a moment and try again.',
         })
         .catch(InteractionFailedHandler);
     }

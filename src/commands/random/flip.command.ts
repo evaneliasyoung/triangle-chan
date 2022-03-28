@@ -5,16 +5,16 @@
 
 import {CommandInteraction} from 'discord.js';
 import {Discord, Slash} from 'discordx';
-import {Random} from '../../utils/native/random.js';
+import {math} from '../../utils/native/math.js';
 
 @Discord()
-abstract class RandomFlipCommand {
+export default abstract class RandomFlipCommand {
   @Slash('random-flip', {
     description: 'Flips a coin which lands heads or tails.',
   })
   async execute(interaction: CommandInteraction) {
     await interaction.reply(
-      `The coin landed ${Random.boolean() ? 'heads' : 'tails'}!`
+      `The coin landed ${math.random.boolean() ? 'heads' : 'tails'}!`
     );
   }
 }

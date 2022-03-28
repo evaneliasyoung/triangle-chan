@@ -45,7 +45,7 @@ export abstract class CategoryAddCommand {
   @ButtonComponent(RegExp('^category-add_.*-.*$'))
   async handleButton(interaction: ButtonInteraction, _client: Client) {
     if (!interaction.guildId)
-      return log.error(`GuildID did not exist on interaction.`);
+      return log.error('GuildID did not exist on interaction.');
 
     const [reactRoleId, categoryId] = interaction.customId
       .split('_')[1]
@@ -71,7 +71,7 @@ export abstract class CategoryAddCommand {
         `Unable to find category roles for category[${categoryId}] in guild[${interaction.guildId}]`
       );
       return await interaction.reply(
-        `Hey! Something broke. But I'm working on it, please be patient!`
+        "Hey! Something broke. But I'm working on it, please be patient!"
       );
     }
 
@@ -80,7 +80,7 @@ export abstract class CategoryAddCommand {
 
       return await interaction
         .reply(
-          `Hey! Something weird happened so I couldn't complete that request for you. Please wait a second and try again.`
+          "Hey! Something weird happened so I couldn't complete that request for you. Please wait a second and try again."
         )
         .catch(InteractionFailedHandler);
     }
@@ -90,7 +90,7 @@ export abstract class CategoryAddCommand {
 
       return await interaction
         .reply(
-          `Hey! Something weird happened so I couldn't complete that request for you. Please wait a second and try again.`
+          "Hey! Something weird happened so I couldn't complete that request for you. Please wait a second and try again."
         )
         .catch(InteractionFailedHandler);
     }
@@ -158,7 +158,7 @@ export abstract class CategoryAddCommand {
       );
       return await interaction
         .reply(
-          `Hey! The category you selected... I can't find it. Does it exist anymore? Please wait a second and try running \`/category-add\` again.`
+          "Hey! The category you selected... I can't find it. Does it exist anymore? Please wait a second and try running `/category-add` again."
         )
         .catch(InteractionFailedHandler);
     }
@@ -181,10 +181,10 @@ export abstract class CategoryAddCommand {
         );
         interaction.channel
           ?.send(
-            `Hey! I had an issue making some buttons for you. I suspect that one of the react role emojis isn't actually an emoji. Check out \`/react-list\` to confirm this.`
+            "Hey! I had an issue making some buttons for you. I suspect that one of the react role emojis isn't actually an emoji. Check out `/react-list` to confirm this."
           )
           .catch(
-            MessageWithErrorHandler(`Failed to warn user about emojis buttons`)
+            MessageWithErrorHandler('Failed to warn user about emojis buttons')
           );
       });
   }
@@ -223,7 +223,8 @@ export abstract class CategoryAddCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You don't have permission to use \`/category-add\` command.`,
+          content:
+            "Hey! You don't have permission to use `/category-add` command.",
         })
         .catch(InteractionFailedHandler);
 
@@ -235,7 +236,7 @@ export abstract class CategoryAddCommand {
       );
       return await interaction
         .reply(
-          `Hey! There are no categories, go create one with \`/category-create\` and then try again.`
+          'Hey! There are no categories, go create one with `/category-create` and then try again.'
         )
         .catch(InteractionFailedHandler);
     }
@@ -250,7 +251,7 @@ export abstract class CategoryAddCommand {
       );
       return await interaction
         .reply(
-          `Hey! Before trying to add react roles to a category, make sure you created some. Try out \`/react-role\` to create some!`
+          'Hey! Before trying to add react roles to a category, make sure you created some. Try out `/react-role` to create some!'
         )
         .catch(InteractionFailedHandler);
     }
@@ -271,7 +272,8 @@ export abstract class CategoryAddCommand {
     await interaction
       .reply({
         ephemeral: true,
-        content: `Hey! Select *one* category from below and then we'll move to adding react roles to it.`,
+        content:
+          "Hey! Select *one* category from below and then we'll move to adding react roles to it.",
         components: [selectMenu],
       })
       .catch(InteractionFailedHandler);

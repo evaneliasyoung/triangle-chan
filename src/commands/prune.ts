@@ -22,7 +22,7 @@ export abstract class PruneCommand {
       maxValue: 100,
       required: false,
     })
-    amount: number = 1,
+    amount = 1,
     interaction: CommandInteraction
   ) {
     if (!interaction.guildId)
