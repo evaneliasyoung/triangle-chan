@@ -18,7 +18,7 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
       - name: Setup Node v16
-        uses: action/setup-node@v2
+        uses: actions/setup-node@v2
         with:
           node-version: '16'
           cache: 'npm'
