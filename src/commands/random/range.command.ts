@@ -5,7 +5,7 @@
 
 import {CommandInteraction} from 'discord.js';
 import {Discord, Slash, SlashOption} from 'discordx';
-import {random} from '../../utils/native/random.js';
+import {math} from '../../utils/native/math';
 
 @Discord()
 export default abstract class RandomRangeCommand {
@@ -17,6 +17,8 @@ export default abstract class RandomRangeCommand {
     max: number,
     interaction: CommandInteraction
   ) {
-    await interaction.reply(`Here's a random ${random.integer(min, max)}!`);
+    await interaction.reply(
+      `Here's a random ${math.random.integer(min, max)}!`
+    );
   }
 }

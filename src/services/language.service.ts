@@ -4,7 +4,7 @@
  */
 
 import {Singleton} from '../models/singleton.model.js';
-import {random} from '../utils/native/random.js';
+import {math} from '../utils/native/math.js';
 
 @Singleton
 export default class LanguageService {
@@ -15,6 +15,6 @@ export default class LanguageService {
   ] as const;
 
   get wait() {
-    return random.pick(this.WAIT_REPLIES);
+    return math.random.pick(this.WAIT_REPLIES);
   }
 }

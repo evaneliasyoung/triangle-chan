@@ -9,7 +9,7 @@ import {
   InteractionFailedHandlerGenerator,
   logger,
 } from '../../services/log.service.js';
-import {random} from '../../utils/native/random.js';
+import {math} from '../../utils/native/math.js';
 const log = logger(import.meta);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
@@ -153,9 +153,9 @@ export abstract class TextCorruptCommand {
       }
 
       TextCorruptCommand.slots.forEach(key => {
-        const amt: number = random.integer(0, key === 'middle' ? 2 : 4);
+        const amt: number = math.random.integer(0, key === 'middle' ? 2 : 4);
         for (let i = 0; i < amt; ++i) {
-          buf += random.pick(...TextCorruptCommand.chars[key]);
+          buf += math.random.pick(...TextCorruptCommand.chars[key]);
         }
       });
     }
