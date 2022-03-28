@@ -1,4 +1,4 @@
-name: Code Style
+name: Lint
 
 on:
   push:
@@ -11,13 +11,13 @@ on:
 jobs:
   prettier:
     runs-on: ubuntu-latest
-    name: Code Style
+    name: Linting
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
-      - name: Check Style
-        uses: actionsx/prettier@v2
-        with:
-          args: -c .
+      - name: Install modules
+        run: npm i -D
+      - name: Run ESLint
+        run: npm run lint
