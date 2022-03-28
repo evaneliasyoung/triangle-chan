@@ -1,6 +1,11 @@
 {
-  "extends": ["eslint:recommended", "plugin:node/recommended", "prettier"],
-  "plugins": ["node", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:node/recommended",
+    "prettier",
+    "plugin:github/internal"
+  ],
+  "plugins": ["node", "prettier", "github", "jest"],
   "rules": {
     "prettier/prettier": "error",
     "block-scoped-var": "error",
