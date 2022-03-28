@@ -3,12 +3,12 @@
  * @brief     String methods.
  */
 
-import {Random} from './random.js';
+import {math} from './math.js';
 
 const stringMap = (
   str: string,
-  callbackfn: (value: string, index: number, array: string[]) => any,
-  split: string = ''
+  callbackfn: (value: string, index: number, array: string[]) => unknown,
+  split = ''
 ) => str.split(split).map(callbackfn).join(split);
 
 export const toTitleCase = (str: string) =>
@@ -20,7 +20,7 @@ export const toTitleCase = (str: string) =>
 
 export const toRandomCase = (text: string) =>
   stringMap(text, c =>
-    Random.boolean() ? c.toUpperCase() : c.toLocaleLowerCase()
+    math.random.boolean() ? c.toUpperCase() : c.toLocaleLowerCase()
   );
 
 export const remapCharacters = (

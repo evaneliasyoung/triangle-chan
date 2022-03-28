@@ -8,14 +8,14 @@ import {Discord, On} from 'discordx';
 import ReactionHandler from '../services/reaction.service.js';
 
 @Discord()
-abstract class MessageEvents {
+export default abstract class MessageEvents {
   #reactionService = new ReactionHandler();
 
   @On('messageReactionAdd')
   async onReactionAdd(
     [reaction, user]: ClientEvents['messageReactionAdd'],
     _client: Client,
-    _guard: any
+    _guard: unknown
   ) {
     return await this.#reactionService.handleReaction(reaction, user, 'add');
   }
@@ -24,7 +24,7 @@ abstract class MessageEvents {
   async onReactionRemove(
     [reaction, user]: ClientEvents['messageReactionRemove'],
     _client: Client,
-    _guard: any
+    _guard: unknown
   ) {
     return await this.#reactionService.handleReaction(reaction, user, 'remove');
   }

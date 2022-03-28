@@ -2,8 +2,15 @@
  * @file      channel.command.ts
  * @brief     Send all categories with react roles to the selected channel.
  */
+/* eslint @typescript-eslint/no-explicit-any: [0] */
 
-import {AnyChannel, CommandInteraction, Guild, Permissions} from 'discord.js';
+import {
+  AnyChannel,
+  CommandInteraction,
+  Guild,
+  GuildMember,
+  Permissions,
+} from 'discord.js';
 import {Discord, Slash, SlashOption} from 'discordx';
 import {
   GET_GUILD_CATEGORIES,
@@ -47,11 +54,15 @@ export abstract class ReactChannelCommand {
         content: 'Hey! `/react-channel` can only be used in a server.',
       });
 
-    if (!this.#permissionService.canManageRoles(interaction.member))
+    if (
+      !this.#permissionService.canManageRoles(
+        interaction.member as GuildMember | null
+      )
+    )
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You don't have permission to use \`/react-channel\`.`,
+          content: "Hey! You don't have permission to use `/react-channel`.",
         })
         .catch(InteractionFailedHandler);
 
@@ -60,11 +71,11 @@ export abstract class ReactChannelCommand {
         .deferReply({ephemeral: true})
         .catch(
           MessageWithErrorHandler(
-            `Failed to defer interaction and the try/catch didn't catch it`
+            "Failed to defer interaction and the try/catch didn't catch it"
           )
         );
     } catch (e) {
-      log.error(`Failed to defer interaction`);
+      log.error('Failed to defer interaction');
       log.error(`${e}`);
       return;
     }
@@ -80,12 +91,13 @@ export abstract class ReactChannelCommand {
 
       return await interaction
         .editReply(
-          `Hey! You need to make some categories and fill them with react roles before running this command. Check out \`/category-add\`.`
+          'Hey! You need to make some categories and fill them with react roles before running this command. Check out `/category-add`.'
         )
         .catch(InteractionFailedHandler);
     }
 
-    const allCategoriesAreEmpty = `Hey! It appears all your categories are empty. I can't react to the message you want if you have at least one react role in at least one category. Check out \`/category-add\` to start adding roles to a category.`;
+    const allCategoriesAreEmpty =
+      "Hey! It appears all your categories are empty. I can't react to the message you want if you have at least one react role in at least one category. Check out `/category-add` to start adding roles to a category.";
     const categoryRoles = await Promise.all(
       categories.map(c => GET_REACT_ROLES_BY_CATEGORY_ID(c.id))
     );
@@ -109,7 +121,7 @@ export abstract class ReactChannelCommand {
 
       return await interaction
         .editReply(
-          `Hey! I failed to find the channel from the command. Please wait a second and try again.`
+          'Hey! I failed to find the channel from the command. Please wait a second and try again.'
         )
         .catch(InteractionFailedHandler);
     } else if (!isTextChannel(channel)) {
@@ -118,7 +130,7 @@ export abstract class ReactChannelCommand {
       );
 
       return await interaction
-        .editReply(`Hey! I only support sending embeds to text channels!`)
+        .editReply('Hey! I only support sending embeds to text channels!')
         .catch(InteractionFailedHandler);
     }
 
@@ -165,7 +177,7 @@ Why do I need these permissions in this channel?
           log
         );
       } catch (e: any) {
-        log.error(`Failed to send embeds`);
+        log.error('Failed to send embeds');
         log.error(`${e}`);
 
         if (e?.httpStatus === 403)
@@ -183,6 +195,6 @@ Why do I need these permissions in this channel?
       .editReply({
         content: 'Hey! I sent those embeds and am currently reacting to them.',
       })
-      .catch(MessageWithErrorHandler(`Failed to edit interaction reply.`));
+      .catch(MessageWithErrorHandler('Failed to edit interaction reply.'));
   }
 }

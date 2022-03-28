@@ -13,10 +13,7 @@ import {
   ECounterType,
   TCounterType,
 } from '../database/entities/counter.entity.js';
-import {
-  ECommandCategory,
-  TCommandCategory,
-} from '../models/command-category.model.js';
+import {ECommandCategory} from '../models/command-category.model.js';
 
 export function isTextChannel(
   channel?: AnyChannel | GuildBasedChannel | null
@@ -30,11 +27,15 @@ export function isVoiceChannel(
   return channel?.type === 'GUILD_VOICE';
 }
 
-export function isCommandCategory(text: any): text is ECommandCategory {
+export function isCommandCategory(
+  text: string | undefined | null
+): text is ECommandCategory {
   return typeof text === 'string' && text in ECommandCategory;
 }
 
-export function isCounterType(text: any): text is TCounterType {
+export function isCounterType(
+  text: string | undefined | null
+): text is TCounterType {
   return typeof text === 'string' && text in ECounterType;
 }
 

@@ -56,7 +56,7 @@ export abstract class CounterCreateCommand {
     })
     type: string,
     @SlashOption('role', {
-      description: `The role to count, if \`type\` is set to \`role\`.`,
+      description: 'The role to count, if `type` is set to `role`.',
       type: 'ROLE',
       required: false,
     })
@@ -73,7 +73,7 @@ export abstract class CounterCreateCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You don't have permission to use \`/counter-create\`.`,
+          content: "Hey! You don't have permission to use `/counter-create`.",
         })
         .catch(InteractionFailedHandler);
 
@@ -81,7 +81,8 @@ export abstract class CounterCreateCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! It says you used text-based channel! You need to use a voice-based channel. Please try again.`,
+          content:
+            'Hey! It says you used text-based channel! You need to use a voice-based channel. Please try again.',
         })
         .catch(InteractionFailedHandler);
 
@@ -89,7 +90,8 @@ export abstract class CounterCreateCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! I only allow 18 characters max for counter names. Try making the counter name simple!`,
+          content:
+            'Hey! I only allow 18 characters max for counter names. Try making the counter name simple!',
         })
         .catch(InteractionFailedHandler);
 
@@ -106,10 +108,11 @@ export abstract class CounterCreateCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You didn't pass in a proper emoji. You need to pass in a Discord emoji.`,
+          content:
+            "Hey! You didn't pass in a proper emoji. You need to pass in a Discord emoji.",
         })
         .catch(
-          MessageWithErrorHandler(`Failed to alert user of invalid emojis.`)
+          MessageWithErrorHandler('Failed to alert user of invalid emojis.')
         );
 
     const emojiId = unicodeEmoji[0];
@@ -119,7 +122,8 @@ export abstract class CounterCreateCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! I had an issue trying to use that emoji. Please wait a moment and try again.`,
+          content:
+            'Hey! I had an issue trying to use that emoji. Please wait a moment and try again.',
         })
         .catch(InteractionFailedHandler);
     }
@@ -130,7 +134,8 @@ export abstract class CounterCreateCommand {
         return await interaction
           .reply({
             ephemeral: true,
-            content: `I'm having trouble finding the role that you are talking about.`,
+            content:
+              "I'm having trouble finding the role that you are talking about.",
           })
           .catch(InteractionFailedHandler);
     }

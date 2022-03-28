@@ -16,7 +16,7 @@ import {isCommandCategory} from '../utils/type-assertion.js';
 @Singleton
 export default class HelpService {
   #getCommandCategory({name}: DApplicationCommand): TCommandCategory {
-    let commandCategory = name.substring(0, name.indexOf('-'));
+    const commandCategory = name.substring(0, name.indexOf('-'));
     if (isCommandCategory(commandCategory)) return commandCategory;
     return 'general';
   }
@@ -38,7 +38,7 @@ export default class HelpService {
     return this.metadata.applicationCommandSlashes;
   }
   get categories() {
-    let categories = new Map<TCommandCategory, DApplicationCommand[]>(
+    const categories = new Map<TCommandCategory, DApplicationCommand[]>(
       (Object.keys(ECommandCategory) as TCommandCategory[]).map(category => [
         category,
         [],

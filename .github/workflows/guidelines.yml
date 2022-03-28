@@ -1,0 +1,31 @@
+name: Guidelines
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+    branches-ignore:
+      - main
+
+jobs:
+  guidelines:
+    runs-on: ubuntu-latest
+    name: Guidelines
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Setup Node v16
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'npm'
+          cache-dependency-path: 'package.json'
+      - name: Install Dependencies
+        run: npm install -D
+      - name: Run Prettier
+        run: npm run format-check
+      - name: Run ESLint
+        run: npm run lint

@@ -8,6 +8,7 @@ import {
   MessageActionRow,
   MessageSelectMenu,
   SelectMenuInteraction,
+  GuildMember,
 } from 'discord.js';
 import {Discord, Slash, SlashOption} from 'discordx';
 import {
@@ -40,7 +41,8 @@ export abstract class ReactMessageCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! I had an issue handling the option you selected for \`/react-channel\`. Please wait a moment and try again.`,
+          content:
+            'Hey! I had an issue handling the option you selected for `/react-channel`. Please wait a moment and try again.',
         })
         .catch(InteractionFailedHandler);
     }
@@ -52,7 +54,7 @@ export abstract class ReactMessageCommand {
         `User gave message[${messageId}] that doesn't exist in channel[${channelId}] in guild[${guildId}]`
       );
       return await interaction.reply(
-        `Hey! I had an issue finding that message. Give me a sec and try again.`
+        'Hey! I had an issue finding that message. Give me a sec and try again.'
       );
     }
 
@@ -63,7 +65,7 @@ export abstract class ReactMessageCommand {
         `Category[${categoryId}] is missing for guild[${guildId}] despite having passed previous check.`
       );
       return await interaction.reply(
-        `Hey! I had an issue finding that category. Please wait a second and try again.`
+        'Hey! I had an issue finding that category. Please wait a second and try again.'
       );
     }
 
@@ -75,7 +77,7 @@ export abstract class ReactMessageCommand {
       );
 
       return await interaction.reply(
-        `Hey! I had issues getting the react roles for the category. Can you wait a sec and try again?`
+        'Hey! I had issues getting the react roles for the category. Can you wait a sec and try again?'
       );
     }
 
@@ -84,7 +86,7 @@ export abstract class ReactMessageCommand {
         ephemeral: true,
         content: `I'm reacting to the message with all react roles associated with ${category.name}. Please give me a moment to react fully before obtaining roles.`,
       })
-      .catch(MessageWithErrorHandler(`Failed to tell user we're reacting.`));
+      .catch(MessageWithErrorHandler("Failed to tell user we're reacting."));
 
     reactToMessage(
       message,
@@ -115,27 +117,31 @@ export abstract class ReactMessageCommand {
         content: 'Hey! `/react-message` can only be used in a server.',
       });
 
-    if (!this.#permissionService.canManageRoles(interaction.member))
+    if (
+      !this.#permissionService.canManageRoles(
+        interaction.member as GuildMember | null
+      )
+    )
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You don't have permission to use \`/react-message\`.`,
+          content: "Hey! You don't have permission to use `/react-message`.",
         })
         .catch(InteractionFailedHandler);
 
     if (!messageLink)
       return await interaction
         .reply(
-          `Hmm, I'm not sure what happened but I can't see the message link. Please try again.`
+          "Hmm, I'm not sure what happened but I can't see the message link. Please try again."
         )
         .catch(InteractionFailedHandler);
 
-    const [_, channelId, messageId] = messageLink.match(/\d+/g) ?? [];
+    const [channelId, messageId] = messageLink.match(/\d+/g)?.slice(1) ?? [];
 
     if (!channelId || !messageId)
       return await interaction
         .reply(
-          `Hey! That doesn't look like a valid message link. Make sure to right click and copy \`Copy Message Link \``
+          "Hey! That doesn't look like a valid message link. Make sure to right click and copy `Copy Message Link `"
         )
         .catch(
           MessageWithErrorHandler(
@@ -153,7 +159,7 @@ export abstract class ReactMessageCommand {
     if (!channel || !isTextChannel(channel))
       return await interaction
         .reply(
-          `Hey! I couldn't find that channel, make sure you're copying the message link right.`
+          "Hey! I couldn't find that channel, make sure you're copying the message link right."
         )
         .catch(InteractionFailedHandler);
 
@@ -167,12 +173,14 @@ export abstract class ReactMessageCommand {
     if (!message)
       return await interaction
         .reply(
-          `Hey! I couldn't find that message, make sure you're copying the message link right.`
+          "Hey! I couldn't find that message, make sure you're copying the message link right."
         )
         .catch(InteractionFailedHandler);
 
-    const guildHasNoCategories = `It appears there are no categories! Try out \`/category-create\` to create a category reaction pack to store and manage your roles much easier.`;
-    const allCategoriesAreEmpty = `Hey! It appears all your categories are empty. I can't react to the message you want if you have at least one react role in at least one category. Check out \`/category-add\` to start adding roles to a category.`;
+    const guildHasNoCategories =
+      'It appears there are no categories! Try out `/category-create` to create a category reaction pack to store and manage your roles much easier.';
+    const allCategoriesAreEmpty =
+      "Hey! It appears all your categories are empty. I can't react to the message you want if you have at least one react role in at least one category. Check out `/category-add` to start adding roles to a category.";
 
     const categories = await GET_GUILD_CATEGORIES(interaction.guildId).catch(
       MessageWithErrorHandler(
@@ -181,7 +189,7 @@ export abstract class ReactMessageCommand {
     );
     if (!categories)
       return await interaction.reply(
-        `Hey! I'm encountering an issue trying to access the servers categories. Please be patient.`
+        "Hey! I'm encountering an issue trying to access the servers categories. Please be patient."
       );
 
     const guildHasCategories = categories.length;
@@ -209,7 +217,7 @@ export abstract class ReactMessageCommand {
     const selectMenu = new MessageActionRow({
       components: [
         new MessageSelectMenu({
-          custom_id: `select-message`,
+          custom_id: 'select-message',
           placeholder: 'Pick a category to react with.',
           options: categories.map((c, idx) => ({
             label: c.name ?? `Category-${idx}`,
@@ -222,7 +230,8 @@ export abstract class ReactMessageCommand {
 
     await interaction
       .reply({
-        content: `Let's make this easier for you. Select a category and I will use the reaction roles in that category to react to the message.`,
+        content:
+          "Let's make this easier for you. Select a category and I will use the reaction roles in that category to react to the message.",
         components: [selectMenu],
       })
       .catch(InteractionFailedHandler);

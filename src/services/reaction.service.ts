@@ -35,7 +35,7 @@ export default class ReactionHandler {
     if (!guild) return;
 
     const hasReact = await GET_REACT_MESSAGE_BY_MESSAGE_ID(message.id).catch(
-      MessageWithErrorHandler(`Failed to query for react message.`)
+      MessageWithErrorHandler('Failed to query for react message.')
     );
     if (!hasReact) return log.debug('not a react message, ingore.');
 
@@ -48,7 +48,7 @@ export default class ReactionHandler {
     const reactMessage = await GET_REACT_MESSAGE_BY_MSGID_AND_EMOJI_ID(
       message.id,
       emojiId
-    ).catch(MessageWithErrorHandler(`Failed to query for react message.`));
+    ).catch(MessageWithErrorHandler('Failed to query for react message.'));
     if (!reactMessage)
       return await reaction
         .remove()
@@ -125,24 +125,30 @@ export default class ReactionHandler {
           `Failed to fetch role[${reactMessage.roleId}] for guild[${guild.id}]`
         )
       );
-    if (!role) return log.debug(`Role not found.`);
+    if (!role) return log.debug('Role not found.');
 
     await Promise.all(
       reaction.message.reactions.cache.map(
         other =>
-          new Promise<void>(async (resolve, reject) => {
+          new Promise<void>((resolve, reject) => {
             if (other.emoji.id ?? other.emoji.name !== reactMessage.emojiId) {
-              const members = await other.users.fetch().catch(reject);
-              if (members!.has(member.id))
-                await other.users.remove(member).catch(reject);
+              other.users
+                .fetch()
+                .then(members => {
+                  if (members!.has(member.id))
+                    other.users
+                      .remove(member)
+                      .then(() => resolve())
+                      .catch(reject);
+                })
+                .catch(reject);
             }
-            resolve();
           })
       )
     );
     updatedRoleList.set(role.id, role);
     await member
       .edit({roles: updatedRoleList})
-      .catch(MessageWithErrorHandler(`Failed to update members roles.`));
+      .catch(MessageWithErrorHandler('Failed to update members roles.'));
   };
 }

@@ -2,6 +2,7 @@
  * @file      singleton.model.ts
  * @brief     The Singleton decorator.
  */
+/* eslint @typescript-eslint/no-explicit-any: [0] */
 
 import {Abstract, Constructor} from './object.types.js';
 

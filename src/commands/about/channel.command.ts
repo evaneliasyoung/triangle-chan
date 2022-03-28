@@ -18,7 +18,7 @@ export abstract class AboutBotCommand {
   #embedService = new EmbedService();
 
   @Slash('about-channel', {
-    description: `Provides information about a channel.`,
+    description: 'Provides information about a channel.',
   })
   async execute(
     @SlashOption('channel', {

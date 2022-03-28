@@ -2,6 +2,7 @@
  * @file      log.service.ts
  * @brief     Main logger controller.
  */
+/* eslint @typescript-eslint/no-explicit-any: [0] */
 
 import {sep} from 'path';
 import {inspect} from 'util';

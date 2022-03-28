@@ -6,16 +6,14 @@
 import {ActivitiesOptions} from 'discord.js';
 import {DateTime} from 'luxon';
 
-export namespace BotInfo {
-  export const source =
-    '[GitHub](https://github.com/evaneliasyoung/triangle-chan)';
-  export const tagline = `Triangle-Chan: The Tenaciously Tasteful Discord Tease`;
-  export const library =
-    '[discord.ts / Node](https://github.com/oceanroleplay/discord.ts)';
-  export const version = '0.3.2';
-  export const date = DateTime.fromObject({year: 2022, month: 3, day: 14});
-  export const activity: ActivitiesOptions = {
+export const BotInfo = {
+  source: '[GitHub](https://github.com/evaneliasyoung/triangle-chan)',
+  tagline: 'Triangle-Chan: The Tenaciously Tasteful Discord Tease',
+  library: '[discord.ts / Node](https://github.com/oceanroleplay/discord.ts)',
+  version: '0.3.3',
+  date: DateTime.fromObject({year: 2022, month: 3, day: 28}),
+  activity: {
     name: 'Triangle',
     type: 'WATCHING',
-  };
-}
+  } as ActivitiesOptions,
+};

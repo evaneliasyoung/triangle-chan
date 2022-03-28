@@ -22,12 +22,12 @@ export abstract class AboutServerCommand {
     const {guild, member} = interaction;
     if (!guild)
       return await interaction
-        .reply(`I'm having trouble finding the server you're talking about.`)
+        .reply("I'm having trouble finding the server you're talking about.")
         .catch(InteractionFailedHandler);
 
     await interaction
       .reply({
-        content: !!member ? `Here you go, ${member}!` : `Here you go!`,
+        content: member ? `Here you go, ${member}!` : 'Here you go!',
         embeds: [await this.#embedService.aboutServerEmbed(guild)],
       })
       .catch(InteractionFailedHandler);

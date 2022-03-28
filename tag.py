@@ -93,16 +93,16 @@ def update_package(ver: Version, pkg: Any) -> None:
 def update_info(ver: Version, info: list[str]) -> None:
     now: dt = dt.now()
     for i in range(len(info) - 1, 0, -1):
-        if "export const date" in info[i]:
+        if "date: DateTime.fromObject(" in info[i]:
             info[i] = (
-                "  export const date = DateTime.fromObject("
+                "  date: DateTime.fromObject("
                 + now.strftime(
                     f"{{year: %Y, month: %{NOPAD_CHAR}m, day: %{NOPAD_CHAR}d}}"
                 )
-                + ");\n"
+                + "),\n"
             )
-        elif "export const version" in info[i]:
-            info[i] = f"  export const version = '{ver}';\n"
+        elif "version:" in info[i]:
+            info[i] = f"  version: '{ver}',\n"
     with open("src/info.ts", "w") as f:
         f.writelines(info)
 

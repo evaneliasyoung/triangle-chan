@@ -64,7 +64,7 @@ export abstract class ReactRoleCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You don't have permission to use \`/role-remove\`.`,
+          content: "Hey! You don't have permission to use `/role-remove`.",
         })
         .catch(InteractionFailedHandler);
 
@@ -132,10 +132,11 @@ export abstract class ReactRoleCommand {
         return await interaction
           .reply({
             ephemeral: true,
-            content: `Hey! You didn't pass in a proper emoji. You need to either pass in a Discord emoji or a servers custom emoji.`,
+            content:
+              "Hey! You didn't pass in a proper emoji. You need to either pass in a Discord emoji or a servers custom emoji.",
           })
           .catch(
-            MessageWithErrorHandler(`Failed to alert user of invalid emojis.`)
+            MessageWithErrorHandler('Failed to alert user of invalid emojis.')
           );
       }
 
@@ -148,7 +149,8 @@ export abstract class ReactRoleCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! I had an issue trying to use that emoji. Please wait a moment and try again.`,
+          content:
+            'Hey! I had an issue trying to use that emoji. Please wait a moment and try again.',
         })
         .catch(InteractionFailedHandler);
     }

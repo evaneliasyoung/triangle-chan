@@ -10,9 +10,9 @@ import {BotInfo} from '../info.js';
 const log = logger(import.meta);
 
 @Discord()
-abstract class CommonEvents {
+export default abstract class CommonEvents {
   @On('ready')
-  async onReady(_n: never[], client: Client, _guard: any) {
+  async onReady(_n: never[], client: Client, _guard: unknown) {
     await client.guilds.fetch();
 
     const options = {guild: {log: true}, global: {log: true}};
@@ -32,7 +32,7 @@ abstract class CommonEvents {
   async onInteraction(
     [interaction]: ClientEvents['interactionCreate'],
     client: Client,
-    _guard: any
+    _guard: unknown
   ) {
     client.executeInteraction(interaction);
   }
@@ -41,7 +41,7 @@ abstract class CommonEvents {
   async onMessage(
     [message]: ClientEvents['messageCreate'],
     client: Client,
-    _guard: any
+    _guard: unknown
   ) {
     client.executeCommand(message);
   }
