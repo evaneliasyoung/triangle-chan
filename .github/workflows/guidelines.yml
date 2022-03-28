@@ -23,7 +23,8 @@ jobs:
           node-version: '16'
           cache: 'npm'
           cache-dependency-path: 'package.json'
-        run: npm install
+      - name: Install Dependencies
+        run: npm install -D
       - name: Run Prettier
         run: npm run format-check
       - name: Run ESLint
