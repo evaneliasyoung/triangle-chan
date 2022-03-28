@@ -5,7 +5,7 @@
 
 import {CommandInteraction} from 'discord.js';
 import {Discord, Slash, SlashOption} from 'discordx';
-import {math} from '../../utils/native/math';
+import {math} from '../../utils/native/math.js';
 
 @Discord()
 export default abstract class RandomRangeCommand {
