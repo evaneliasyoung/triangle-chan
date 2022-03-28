@@ -2,6 +2,7 @@
  * @file      channel.command.ts
  * @brief     Send all categories with react roles to the selected channel.
  */
+/* eslint @typescript-eslint/no-explicit-any: [0] */
 
 import {
   AnyChannel,
@@ -26,7 +27,6 @@ import {
 } from '../../services/log.service.js';
 import {timeout} from '../../utils/native/timeout.js';
 import PermissionService from '../../services/permission.service.js';
-import {SafeAny} from '../../models/object.types.js';
 const log = logger(import.meta);
 const MessageWithErrorHandler = MessageWithErrorHandlerGenerator(log);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
@@ -176,11 +176,11 @@ Why do I need these permissions in this channel?
           false,
           log
         );
-      } catch (e) {
+      } catch (e: any) {
         log.error('Failed to send embeds');
         log.error(`${e}`);
 
-        if ((e as SafeAny | undefined)?.httpStatus === 403)
+        if (e?.httpStatus === 403)
           return await interaction.editReply(permissionError);
 
         return await interaction.editReply(

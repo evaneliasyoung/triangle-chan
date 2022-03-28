@@ -7,13 +7,12 @@ import {ClientEvents, PresenceData} from 'discord.js';
 import {Discord, Client, On} from 'discordx';
 import {logger} from '../services/log.service.js';
 import {BotInfo} from '../info.js';
-import {SafeAny} from '../models/object.types.js';
 const log = logger(import.meta);
 
 @Discord()
 export default abstract class CommonEvents {
   @On('ready')
-  async onReady(_n: never[], client: Client, _guard: SafeAny) {
+  async onReady(_n: never[], client: Client, _guard: unknown) {
     await client.guilds.fetch();
 
     const options = {guild: {log: true}, global: {log: true}};
@@ -33,7 +32,7 @@ export default abstract class CommonEvents {
   async onInteraction(
     [interaction]: ClientEvents['interactionCreate'],
     client: Client,
-    _guard: SafeAny
+    _guard: unknown
   ) {
     client.executeInteraction(interaction);
   }
@@ -42,7 +41,7 @@ export default abstract class CommonEvents {
   async onMessage(
     [message]: ClientEvents['messageCreate'],
     client: Client,
-    _guard: SafeAny
+    _guard: unknown
   ) {
     client.executeCommand(message);
   }

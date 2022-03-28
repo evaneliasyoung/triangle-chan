@@ -2,11 +2,11 @@
  * @file      log.service.ts
  * @brief     Main logger controller.
  */
+/* eslint @typescript-eslint/no-explicit-any: [0] */
 
 import {sep} from 'path';
 import {inspect} from 'util';
 import winston from 'winston';
-import {SafeAny} from '../models/object.types';
 const {createLogger, format, transports} = winston;
 const {combine, metadata, label, colorize, timestamp, align, printf} = format;
 
@@ -35,7 +35,7 @@ export const logger = ({url}: ImportMeta) =>
   });
 
 export const MessageWithErrorHandlerGenerator =
-  (logger: winston.Logger) => (message: string) => (e: SafeAny) => {
+  (logger: winston.Logger) => (message: string) => (e: any) => {
     logger.error(message, e);
   };
 

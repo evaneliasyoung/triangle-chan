@@ -5,7 +5,6 @@
 
 import {Client, ClientEvents} from 'discord.js';
 import {Discord, On} from 'discordx';
-import {SafeAny} from '../models/object.types.js';
 import CounterService from '../services/counter.service.js';
 import {logger} from '../services/log.service.js';
 const log = logger(import.meta);
@@ -18,7 +17,7 @@ export abstract class GuildEvents {
   async onMemberAdd(
     [member]: ClientEvents['guildMemberAdd'],
     _client: Client,
-    _guard: SafeAny
+    _guard: unknown
   ) {
     log.debug('member add', {member: member.user.username});
     await this.#counterService.handleGuild(member.guild);
@@ -28,7 +27,7 @@ export abstract class GuildEvents {
   async onMemberRemove(
     [member]: ClientEvents['guildMemberRemove'],
     _client: Client,
-    _guard: SafeAny
+    _guard: unknown
   ) {
     log.debug('member remove', {member: member.user.username});
     await this.#counterService.handleGuild(member.guild);
@@ -38,7 +37,7 @@ export abstract class GuildEvents {
   async onMemberUpdate(
     [oldMember, newMember]: ClientEvents['guildMemberUpdate'],
     _client: Client,
-    _guard: SafeAny
+    _guard: unknown
   ) {
     if (oldMember.premiumSince !== newMember.premiumSince) {
       log.debug('member update', {member: newMember.user.username});
@@ -50,7 +49,7 @@ export abstract class GuildEvents {
   async onPresenceUpdate(
     [oldPresence, newPresence]: ClientEvents['presenceUpdate'],
     _client: Client,
-    _guard: SafeAny
+    _guard: unknown
   ) {
     if (oldPresence?.status !== newPresence.status) {
       log.debug('presence update', {
@@ -67,7 +66,7 @@ export abstract class GuildEvents {
   async onGuildUpdate(
     [_oldGuild, newGuild]: ClientEvents['guildUpdate'],
     _client: Client,
-    _guard: SafeAny
+    _guard: unknown
   ) {
     await this.#counterService.handleGuild(newGuild);
   }
