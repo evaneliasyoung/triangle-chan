@@ -30,13 +30,14 @@ export abstract class ReactNukeCommand {
     if (!interaction.guildId)
       return await interaction.reply({
         ephemeral: true,
-        content: `Hey! For some reason Discord didn't send me your guild info. No longer nuking.`,
+        content:
+          "Hey! For some reason Discord didn't send me your guild info. No longer nuking.",
       });
 
     await interaction
       .reply({
         ephemeral: true,
-        content: `Okay well, you asked for all react-roles to be deleted.`,
+        content: 'Okay well, you asked for all react-roles to be deleted.',
       })
       .catch(InteractionFailedHandler);
 
@@ -48,10 +49,11 @@ export abstract class ReactNukeCommand {
         await interaction
           .followUp({
             ephemeral: true,
-            content: `Hey! I deleted all your react roles. Any categories you had should still stand.`,
+            content:
+              'Hey! I deleted all your react roles. Any categories you had should still stand.',
           })
           .catch(
-            MessageWithErrorHandler(`Failed to send interaction followup.`)
+            MessageWithErrorHandler('Failed to send interaction followup.')
           );
       })
       .catch(async e => {
@@ -63,7 +65,7 @@ export abstract class ReactNukeCommand {
         await interaction
           .followUp({
             ephemeral: true,
-            content: `Hey! I had an issue deleting all the react roles.`,
+            content: 'Hey! I had an issue deleting all the react roles.',
           })
           .catch(
             MessageWithErrorHandler('Failed to send interaction followup.')
@@ -85,7 +87,7 @@ export abstract class ReactNukeCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You don't have permission to use \`/role-nuke\`.`,
+          content: "Hey! You don't have permission to use `/role-nuke`.",
         })
         .catch(InteractionFailedHandler);
 
@@ -102,7 +104,7 @@ export abstract class ReactNukeCommand {
     await interaction.reply({
       ephemeral: true,
       components: [buttons],
-      content: `ARE YOU SURE YOU WANT TO DELETE ALL YOUR REACT ROLES?`,
+      content: 'ARE YOU SURE YOU WANT TO DELETE ALL YOUR REACT ROLES?',
     });
   }
 }

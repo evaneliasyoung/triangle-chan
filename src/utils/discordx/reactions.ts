@@ -28,7 +28,7 @@ export const reactToMessage = (
   channelId: string,
   categoryId: number,
   isCustomMessage: boolean,
-  log: Logger
+  _log: Logger
 ) => {
   return Promise.all(
     categoryRoles.map(r => {
@@ -88,7 +88,7 @@ export const updateReactMessages = async (
 
     const categoryRoles = await GET_REACT_ROLES_BY_CATEGORY_ID(categoryId);
     if (!reactMessage.categoryId)
-      return log.error(`ReactMessage has no category somehow`);
+      return log.error('ReactMessage has no category somehow');
     const category = await GET_CATEGORY_BY_ID(reactMessage.categoryId);
     if (!category)
       return log.error(
@@ -117,7 +117,7 @@ export const updateReactMessages = async (
       );
     }
   } catch (e) {
-    log.error(`Caught an error updating reaction messages.`);
+    log.error('Caught an error updating reaction messages.');
     log.error(`${e}`);
   }
 };

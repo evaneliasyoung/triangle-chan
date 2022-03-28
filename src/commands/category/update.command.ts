@@ -3,7 +3,7 @@
  * @brief     Have an existing react role embed you want updated? Use this command!.
  */
 
-import {CommandInteraction} from 'discord.js';
+import {CommandInteraction, GuildMember} from 'discord.js';
 import {Discord, Slash, SlashOption} from 'discordx';
 import {
   GET_REACT_MESSAGE_BY_MESSAGE_ID,
@@ -46,11 +46,12 @@ export abstract class CategoryUpdateCommand {
       });
 
     const {member} = interaction;
-    if (!this.#permissionService.canManageRoles(member))
+    if (!this.#permissionService.canManageRoles(member as GuildMember | null))
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You don't have permission to use \`/category-add\` command.`,
+          content:
+            "Hey! You don't have permission to use `/category-add` command.",
         })
         .catch(InteractionFailedHandler);
 
@@ -62,18 +63,19 @@ export abstract class CategoryUpdateCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! Something happened and I can't see the passed in emssage link. Could you try again?`,
+          content:
+            "Hey! Something happened and I can't see the passed in emssage link. Could you try again?",
         })
         .catch(InteractionFailedHandler);
     }
 
-    const [_, channelId, messageId] = messageLink.match(/\d+/g) ?? [];
+    const [channelId, messageId] = messageLink.match(/\d+/g)?.slice(1) ?? [];
     const channel = await interaction.guild?.channels.fetch(channelId);
 
     if (!channel || !isTextChannel(channel)) {
       return await interaction
         .reply(
-          `Hey! I couldn't find that channel, make sure you're copying the message link right.`
+          "Hey! I couldn't find that channel, make sure you're copying the message link right."
         )
         .catch(InteractionFailedHandler);
     }
@@ -83,7 +85,7 @@ export abstract class CategoryUpdateCommand {
     if (!message) {
       return await interaction
         .reply(
-          `Hey! I couldn't find that message, make sure you're copying the message link right.`
+          "Hey! I couldn't find that message, make sure you're copying the message link right."
         )
         .catch(InteractionFailedHandler);
     }
@@ -97,12 +99,13 @@ export abstract class CategoryUpdateCommand {
 
       return await interaction.reply({
         ephemeral: true,
-        content: `Hey! I looked and didn't see any react roles saved that are associated with that message.`,
+        content:
+          "Hey! I looked and didn't see any react roles saved that are associated with that message.",
       });
     }
 
     if (!reactMessage.categoryId)
-      return log.error(`ReactMessage has no category somehow`);
+      return log.error('ReactMessage has no category somehow');
     const category = await GET_CATEGORY_BY_ID(reactMessage.categoryId);
 
     if (!category) {
@@ -112,7 +115,7 @@ export abstract class CategoryUpdateCommand {
 
       return await interaction
         .reply(
-          `Hey! I couldn't find a category with that name. The name is _case sensitive_ so make sure it's typed correctly.`
+          "Hey! I couldn't find a category with that name. The name is _case sensitive_ so make sure it's typed correctly."
         )
         .catch(InteractionFailedHandler);
     }
@@ -142,7 +145,8 @@ export abstract class CategoryUpdateCommand {
 
           await interaction.reply({
             ephemeral: true,
-            content: `Hey! I updated the react role embed message related to this category.`,
+            content:
+              'Hey! I updated the react role embed message related to this category.',
           });
         })
         .catch(async e => {
@@ -151,7 +155,8 @@ export abstract class CategoryUpdateCommand {
 
           await interaction.reply({
             ephemeral: true,
-            content: `Hey! I wasn't able to update the message for some reason. Most likely a message history / manage permission issue.`,
+            content:
+              "Hey! I wasn't able to update the message for some reason. Most likely a message history / manage permission issue.",
           });
         });
 

@@ -30,7 +30,7 @@ export abstract class CounterEditCommand {
   #permissionService = new PermissionService();
 
   @Slash('counter-edit', {
-    description: `Edit any counter's name, emoji, or purpose.`,
+    description: "Edit any counter's name, emoji, or purpose.",
   })
   async execute(
     @SlashOption('name', {
@@ -61,7 +61,8 @@ export abstract class CounterEditCommand {
     })
     newType: string | null,
     @SlashOption('new-role', {
-      description: `Change the counter's role. Only used if \`type\` or \`new-type\` is set to \`role\`.`,
+      description:
+        "Change the counter's role. Only used if `type` or `new-type` is set to `role`.",
       type: 'ROLE',
       required: false,
     })
@@ -78,26 +79,28 @@ export abstract class CounterEditCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You don't have permission to use \`/counter-create\`.`,
+          content: "Hey! You don't have permission to use `/counter-create`.",
         })
         .catch(InteractionFailedHandler);
 
     if (!newName && !newEmoji && !newType) {
-      log.debug(`User didn't change anything about the counter`);
+      log.debug("User didn't change anything about the counter");
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You need to pass at _least_ one updated field about the counter.`,
+          content:
+            'Hey! You need to pass at _least_ one updated field about the counter.',
         })
         .catch(InteractionFailedHandler);
     }
 
     if (!name) {
-      log.error(`Required option name was undefined.`);
+      log.error('Required option name was undefined.');
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! I had an issue finding the counter. Please wait a second and try again.`,
+          content:
+            'Hey! I had an issue finding the counter. Please wait a second and try again.',
         })
         .catch(InteractionFailedHandler);
     }
@@ -110,7 +113,7 @@ export abstract class CounterEditCommand {
 
       return await interaction
         .reply(
-          `Hey! I couldn't find a counter with that name. The name is _case sensitive_ so make sure it's typed correctly.`
+          "Hey! I couldn't find a counter with that name. The name is _case sensitive_ so make sure it's typed correctly."
         )
         .catch(InteractionFailedHandler);
     }
@@ -132,10 +135,11 @@ export abstract class CounterEditCommand {
         return await interaction
           .reply({
             ephemeral: true,
-            content: `Hey! You didn't pass in a proper emoji. You need to pass in a Discord emoji.`,
+            content:
+              "Hey! You didn't pass in a proper emoji. You need to pass in a Discord emoji.",
           })
           .catch(
-            MessageWithErrorHandler(`Failed to alert user of invalid emojis.`)
+            MessageWithErrorHandler('Failed to alert user of invalid emojis.')
           );
 
       if (!unicodeEmoji[0] || unicodeEmoji[0] === '') {
@@ -146,7 +150,8 @@ export abstract class CounterEditCommand {
         return await interaction
           .reply({
             ephemeral: true,
-            content: `Hey! I had an issue trying to use that emoji. Please wait a moment and try again.`,
+            content:
+              'Hey! I had an issue trying to use that emoji. Please wait a moment and try again.',
           })
           .catch(InteractionFailedHandler);
       }
@@ -160,14 +165,14 @@ export abstract class CounterEditCommand {
       } else if (!roleId)
         return await interaction.reply({
           ephemeral: true,
-          content: `I'm having trouble making a role counter without a role!`,
+          content: "I'm having trouble making a role counter without a role!",
         });
     } else {
       if (counter.roleId) counter.roleId = undefined;
       if (newRole)
         return await interaction.reply({
           ephemeral: true,
-          content: `I'm having trouble figuring out why you gave me a role.`,
+          content: "I'm having trouble figuring out why you gave me a role.",
         });
     }
 

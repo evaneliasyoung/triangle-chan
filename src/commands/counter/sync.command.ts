@@ -34,7 +34,7 @@ export abstract class CounterSyncCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You don't have permission to use \`/counter-create\`.`,
+          content: "Hey! You don't have permission to use `/counter-create`.",
         })
         .catch(InteractionFailedHandler);
 
@@ -46,7 +46,7 @@ export abstract class CounterSyncCommand {
     } catch (e) {
       log.debug('Failed to sync counters.', e);
       await interaction
-        .reply(`I'm having trouble syncing the counters.`)
+        .reply("I'm having trouble syncing the counters.")
         .catch(InteractionFailedHandler);
     }
   }

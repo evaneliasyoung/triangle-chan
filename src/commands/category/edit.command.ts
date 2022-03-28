@@ -23,7 +23,8 @@ export abstract class CategoryEditCommand {
   #permissionService = new PermissionService();
 
   @Slash('category-edit', {
-    description: `Edit any category's name, description, or if it's mutually exclusive.`,
+    description:
+      "Edit any category's name, description, or if it's mutually exclusive.",
   })
   async execute(
     @SlashOption('name', {
@@ -66,26 +67,29 @@ export abstract class CategoryEditCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You don't have permission to use \`/category-create\` command.`,
+          content:
+            "Hey! You don't have permission to use `/category-create` command.",
         })
         .catch(InteractionFailedHandler);
 
     if (!newName && !newDesc && mutuallyExclusive === null) {
-      log.debug(`User didn't change anything about the category`);
+      log.debug("User didn't change anything about the category");
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You need to pass at _least_ one updated field about the category.`,
+          content:
+            'Hey! You need to pass at _least_ one updated field about the category.',
         })
         .catch(InteractionFailedHandler);
     }
 
     if (!name) {
-      log.error(`Required option name was undefined.`);
+      log.error('Required option name was undefined.');
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! I had an issue finding the category. Please wait a second and try again.`,
+          content:
+            'Hey! I had an issue finding the category. Please wait a second and try again.',
         })
         .catch(InteractionFailedHandler);
     }
@@ -98,7 +102,7 @@ export abstract class CategoryEditCommand {
 
       return await interaction
         .reply(
-          `Hey! I couldn't find a category with that name. The name is _case sensitive_ so make sure it's typed correctly.`
+          "Hey! I couldn't find a category with that name. The name is _case sensitive_ so make sure it's typed correctly."
         )
         .catch(InteractionFailedHandler);
     }

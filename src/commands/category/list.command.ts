@@ -41,7 +41,8 @@ export abstract class CategoryListCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You don't have permission to use \`/category-create\` command.`,
+          content:
+            "Hey! You don't have permission to use `/category-create` command.",
         })
         .catch(InteractionFailedHandler);
 
@@ -55,14 +56,14 @@ export abstract class CategoryListCommand {
       log.debug(`Guild[${interaction.guildId}] did not have any categories.`);
       return await interaction
         .reply(
-          `Hey! It appears that there aren't any categories for this server... however, if there ARE supposed to be some and you see this please wait a second and try again.`
+          "Hey! It appears that there aren't any categories for this server... however, if there ARE supposed to be some and you see this please wait a second and try again."
         )
         .catch(InteractionFailedHandler);
     }
 
     await interaction
       .reply(
-        `Hey! Let me build these embeds for you real quick and send them...`
+        'Hey! Let me build these embeds for you real quick and send them...'
       )
       .catch(InteractionFailedHandler);
 

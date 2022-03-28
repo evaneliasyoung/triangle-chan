@@ -18,7 +18,7 @@ export abstract class AboutBotCommand {
   #embedService = new EmbedService();
 
   @Slash('about-bot', {
-    description: `Provides information about Triangle-Chan.`,
+    description: 'Provides information about Triangle-Chan.',
   })
   async execute(interaction: CommandInteraction) {
     const {client} = interaction;
@@ -26,7 +26,7 @@ export abstract class AboutBotCommand {
 
     if (!user)
       return await interaction
-        .reply(`Oh no! I can't find myself in the Discord registry!`)
+        .reply("Oh no! I can't find myself in the Discord registry!")
         .catch(InteractionFailedHandler);
 
     await interaction

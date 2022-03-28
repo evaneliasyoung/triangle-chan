@@ -18,7 +18,7 @@ export abstract class AboutUserCommand {
   #embedService = new EmbedService();
 
   @Slash('about-user', {
-    description: `Provides information about a user.`,
+    description: 'Provides information about a user.',
   })
   async execute(
     @SlashOption('user', {

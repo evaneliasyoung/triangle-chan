@@ -14,7 +14,7 @@ const log = logger(import.meta);
 const InteractionFailedHandler = InteractionFailedHandlerGenerator(log);
 
 @Discord()
-abstract class PingCommand {
+export default abstract class PingCommand {
   @Slash('ping', {
     description: 'Pings the server to determine interaction delay.',
   })

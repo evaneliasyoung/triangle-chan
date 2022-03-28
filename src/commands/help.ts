@@ -33,7 +33,7 @@ export abstract class HelpCommand {
     const rawType = interaction.values[0].split('_')[1];
     let type: ECommandCategory = ECommandCategory.general;
     if (isCommandCategory(rawType)) type = rawType;
-    else log.debug(`Unknown command type`, {rawType});
+    else log.debug('Unknown command type', {rawType});
 
     const embed = this.#embedService.helpEmbed(
       type,
@@ -60,7 +60,8 @@ export abstract class HelpCommand {
 
     const embed = new MessageEmbed({
       title: 'Command Help',
-      description: `Hey! I got a new look with Discord's awesome slash-commands! \n\n\nThanks for using me!`,
+      description:
+        "Hey! I got a new look with Discord's awesome slash-commands! \n\n\nThanks for using me!",
       author: {
         name: user.username,
         icon_url: user.avatarURL() ?? '',

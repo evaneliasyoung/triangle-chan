@@ -5,12 +5,12 @@
 
 import {CommandInteraction} from 'discord.js';
 import {Discord, Slash, SlashOption} from 'discordx';
-import {Random} from '../../utils/native/random.js';
+import {math} from '../../utils/native/math.js';
 
 @Discord()
-abstract class Ball8Command {
+export default abstract class Ball8Command {
   get next() {
-    return Random.pick(
+    return math.random.pick(
       'It is certain',
       'It is decidedly so',
       'Without a doubt',
@@ -26,7 +26,7 @@ abstract class Ball8Command {
       'Better not tell you now',
       'Cannot predict now',
       'Concentrate and ask again',
-      `Don't count on it`,
+      "Don't count on it",
       'My reply is no',
       'My sources say no',
       'Outlook not so good',

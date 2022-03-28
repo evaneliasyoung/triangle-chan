@@ -5,9 +5,9 @@
 
 import {BaseEntity, PrimaryGeneratedColumn} from 'typeorm';
 
-export interface IGuildConfig {}
+// export interface IGuildConfig {}
 
-export class GuildConfig extends BaseEntity implements IGuildConfig {
+export class GuildConfig extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 }

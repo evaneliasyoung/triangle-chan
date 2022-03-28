@@ -44,7 +44,8 @@ export abstract class CategoryRemoveCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You don't have permission to use \`/category-add\` command.`,
+          content:
+            "Hey! You don't have permission to use `/category-add` command.",
         })
         .catch(InteractionFailedHandler);
 
@@ -54,7 +55,7 @@ export abstract class CategoryRemoveCommand {
       );
       return await interaction
         .reply(
-          `Hey! I don't think you passed in a name. Could you please try again?`
+          "Hey! I don't think you passed in a name. Could you please try again?"
         )
         .catch(InteractionFailedHandler);
     }
@@ -93,7 +94,7 @@ export abstract class CategoryRemoveCommand {
 
         await interaction
           .reply(
-            `Hey! I had an issue deleting the category. Please wait a second and try again.`
+            'Hey! I had an issue deleting the category. Please wait a second and try again.'
           )
           .catch(InteractionFailedHandler);
       });

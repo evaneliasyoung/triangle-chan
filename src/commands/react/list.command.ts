@@ -36,7 +36,7 @@ export abstract class ReactListCommand {
       return await interaction
         .reply({
           ephemeral: true,
-          content: `Hey! You don't have permission to use \`/react-list\`.`,
+          content: "Hey! You don't have permission to use `/react-list`.",
         })
         .catch(InteractionFailedHandler);
 
@@ -51,13 +51,14 @@ export abstract class ReactListCommand {
     if (!reactRoles || !reactRoles.length)
       return await interaction
         .reply({
-          content: `Hey! Turns out this server doesn't have any react roles setup. Start creating some with \`/react-role\`!`,
+          content:
+            "Hey! Turns out this server doesn't have any react roles setup. Start creating some with `/react-role`!",
         })
         .catch(InteractionFailedHandler);
 
     await interaction
       .reply({
-        content: `Hey! Here's your react roles.`,
+        content: "Hey! Here's your react roles.",
         embeds: [this.#embedService.reactRoleListEmbed(reactRoles)],
       })
       .catch(InteractionFailedHandler);

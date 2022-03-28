@@ -94,7 +94,7 @@ export default class EmbedService {
     const categoryRoles = await GET_REACT_ROLES_BY_CATEGORY_ID(category.id);
     const reactRoles = categoryRoles.length
       ? this.reactRolesFormattedString(categoryRoles)
-      : `This category has no react roles! Add some react roles to this category by using \`/category-add\`!`;
+      : 'This category has no react roles! Add some react roles to this category by using `/category-add`!';
     const desc =
       category.description === '' || !category.description
         ? 'Description not set. Set it in `/category-edit`'
@@ -249,7 +249,7 @@ export default class EmbedService {
     const joined: DateTime = expandDateToUTC(joinedAt);
 
     return new MessageEmbed({
-      title: `Member Information`,
+      title: 'Member Information',
       thumbnail: {url: icon},
       description: `${username}#${discriminator}`,
       fields: [
