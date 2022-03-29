@@ -1,12 +1,13 @@
 # triangle-chan
 
+[![Tests][tests-image]][tests-url]
 [![discord.js Version][discordjs-image]][discordjs-url]
 [![discordx Version][discordx-image]][discordx-url]
-[![Release Version][release-image]][release-url]
-[![Beta Version][beta-image]][beta-url]
+[![triangle-chan Version][version-image]][version-url]
 [![Issues][issues-image]][issues-url]
 [![Known Vulnerabilities][snyk-image]][snyk-url]
 [![TypeScript Style Guide][gts-image]][gts-url]
+[![Gitmoji][gitmoji-image]][gitmoji-url]
 
 Triangle-Chan is a [Discord](https://discord.com/) application with a variety of functions.
 
@@ -65,10 +66,8 @@ Running `./tag.py 1.2.3` will make changes to the above files, commit, push, mer
 [discordjs-url]: https://www.npmjs.com/package/discord.js
 [discordx-image]: https://img.shields.io/github/package-json/dependency-version/evaneliasyoung/triangle-chan/discordx?color=5865F2
 [discordx-url]: https://www.npmjs.com/package/discordx
-[release-image]: https://img.shields.io/github/package-json/v/evaneliasyoung/triangle-chan/main?color=brightgreen
-[release-url]: https://github.com/evaneliasyoung/triangle-chan
-[beta-image]: https://img.shields.io/github/package-json/v/evaneliasyoung/triangle-chan/dev?color=yellow
-[beta-url]: https://github.com/evaneliasyoung/triangle-chan/tree/dev
+[version-image]: https://img.shields.io/github/package-json/v/evaneliasyoung/triangle-chan?color=brightgreen
+[version-url]: https://github.com/evaneliasyoung/triangle-chan
 [issues-image]: https://img.shields.io/github/issues/evaneliasyoung/triangle-chan?color=important
 [issues-url]: https://github.com/evaneliasyoung/triangle-chan/issues
 [snyk-image]: https://snyk.io/test/github/evaneliasyoung/triangle-chan/badge.svg
@@ -77,3 +76,7 @@ Running `./tag.py 1.2.3` will make changes to the above files, commit, push, mer
 [snyk-url]: https://snyk.io/test/github/evaneliasyoung/triangle-chan
 [gts-image]: https://img.shields.io/badge/code%20style-google-blueviolet.svg
 [gts-url]: https://github.com/google/gts
+[gitmoji-image]: https://img.shields.io/badge/git-%20😜%20😍-FFDD67.svg
+[gitmoji-url]: https://gitmoji.dev
+[tests-image]: https://github.com/evaneliasyoung/triangle-chan/actions/workflows/test.yml/badge.svg
+[tests-url]: https://github.com/evaneliasyoung/triangle-chan/actions/workflows/test.yml
