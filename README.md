@@ -7,6 +7,7 @@
 [![Issues][issues-image]][issues-url]
 [![Known Vulnerabilities][snyk-image]][snyk-url]
 [![TypeScript Style Guide][gts-image]][gts-url]
+[![Gitmoji][gitmoji-image]][gitmoji-url]
 
 Triangle-Chan is a [Discord](https://discord.com/) application with a variety of functions.
 
@@ -77,3 +78,5 @@ Running `./tag.py 1.2.3` will make changes to the above files, commit, push, mer
 [snyk-url]: https://snyk.io/test/github/evaneliasyoung/triangle-chan
 [gts-image]: https://img.shields.io/badge/code%20style-google-blueviolet.svg
 [gts-url]: https://github.com/google/gts
+[gitmoji-image]: https://img.shields.io/badge/git-%20😜%20😍-FFDD67.svg
+[gitmoji-url]: https://gitmoji.dev
