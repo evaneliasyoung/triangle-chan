@@ -33,7 +33,7 @@
   "dependencies": {
     "@discordx/importer": "^1.1.2",
     "@discordx/pagination": "^2.0.1",
-    "@discordx/utilities": "^4.1.0",
+    "@discordx/utilities": "^4.2.2",
     "axios": "^0.26.1",
     "bignumber.js": "^9.0.2",
     "cheerio": "^1.0.0-rc.10",
