@@ -48,7 +48,7 @@
     "nodemon": "^2.0.15",
     "reflect-metadata": "^0.1.13",
     "ts-node": "^10.4.0",
-    "typeorm": "^0.3.4",
+    "typeorm": "^0.3.6",
     "winston": "^3.7.2"
   },
   "devDependencies": {
