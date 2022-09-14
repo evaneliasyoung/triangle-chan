@@ -52,7 +52,7 @@
     "winston": "^3.7.2"
   },
   "devDependencies": {
-    "@jest/globals": "^27.5.1",
+    "@jest/globals": "^29.0.3",
     "@types/humanize-duration": "^3.27.1",
     "@types/jest": "^27.4.1",
     "@types/luxon": "^2.3.1",
