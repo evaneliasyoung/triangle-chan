@@ -56,7 +56,7 @@
     "@types/humanize-duration": "^3.27.1",
     "@types/jest": "^27.4.1",
     "@types/luxon": "^3.0.1",
-    "@types/node": "^18.0.0",
+    "@types/node": "^18.11.7",
     "@typescript-eslint/parser": "^5.20.0",
     "eslint": "^8.23.1",
     "eslint-plugin-github": "^4.3.7",
